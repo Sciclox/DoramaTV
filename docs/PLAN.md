@@ -51,6 +51,15 @@
 
 ---
 
-### Fase 5: Unificación de ViewModels y Limpieza de MovieRepository (Siguiente Paso)
-- [ ] Mover lógica compartida de catálogo de `MobileHomeViewModel` y `HomeViewModel` a un UseCase o ViewModel base en `:core`.
-- [ ] Refactorizar `MovieRepository.kt` para usar `ExtractorRegistry` y separar caches de red.
+### Fase 5: Unificación de ViewModels y Casos de Uso en `:core` (Completada)
+- [x] Crear caso de uso unificado [`GetHomeCatalogUseCase.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/domain/GetHomeCatalogUseCase.kt) en `:core`:
+  - Manejo concurrente de taxonomías (`emision`, `latino`, `sub`, `cdrama`, `jdrama`, `peliculas`, `doramasflix`, catálogo local).
+  - Optimización de backdrops de alta resolución.
+  - Generación de secciones (Top 10, Doramas en emisión, géneros temáticos) y fallback offline garantizado.
+- [x] Pruebas unitarias para `GetHomeCatalogUseCase`:
+  - [`GetHomeCatalogUseCaseTest.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/test/java/com/tvpro/core/domain/GetHomeCatalogUseCaseTest.kt) (`:core:testDebugUnitTest` -> `BUILD SUCCESSFUL`).
+- [x] Refactorizar [`HomeViewModel.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app/src/main/java/com/tvpro/app/ui/screens/HomeViewModel.kt) (TV) y [`MobileHomeViewModel.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app-mobile/src/main/java/com/tvpro/mobile/ui/screens/MobileHomeViewModel.kt) (Mobile) para delegar en `GetHomeCatalogUseCase`:
+  - Se eliminaron más de 200 líneas de lógica de red y async duplicada en ambas capas de presentación.
+- [x] Validación total de suites de pruebas en simultáneo:
+  - `.\gradlew.bat :core:testDebugUnitTest :app:testDebugUnitTest :app-mobile:testDebugUnitTest` -> `BUILD SUCCESSFUL`.
+- [x] Validación de paridad TV / Mobile (`:app:compileDebugKotlin :app-mobile:compileDebugKotlin` -> `BUILD SUCCESSFUL`).
