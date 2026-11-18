@@ -27,12 +27,18 @@
 
 ---
 
-### Fase 3: Desduplicación de Recursos y Fuentes (Siguiente Paso)
-- [ ] Eliminar fuentes duplicadas entre `:app` y `:app-mobile` (`res/font/`).
+### Fase 3: Desduplicación de Recursos y Fuentes (Completada)
+- [x] Eliminar fuentes duplicadas entre `:app` y `:app-mobile` (`res/font/`), centralizándolas en `:core/src/main/res/font/` (ahorro de 3.2 MB).
 
 ---
 
-### Fase 4: Modularización de ViewModels y PlayerScreen
-- [ ] Extraer lógica común del reproductor a `PlayerViewModel` en `:core`.
-- [ ] Fragmentar `PlayerScreen.kt` en sub-componentes.
-- [ ] Crear suite de pruebas unitarias en `:app-mobile/src/test/`.
+### Fase 4: Modularización de ViewModels, Dominio y Tests (En Progreso)
+- [x] Configurar suite de pruebas unitarias en `:app-mobile/build.gradle.kts` e implementar [`MovieUiUtilsTest.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app-mobile/src/test/java/com/tvpro/mobile/ui/MovieUiUtilsTest.kt) (`:app-mobile:testDebugUnitTest` -> `BUILD SUCCESSFUL`).
+- [x] Extraer lógica de dominio del reproductor a `:core`:
+  - [`PlayerTimeUtils.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/domain/PlayerTimeUtils.kt) (Formateo unificado de tiempo).
+  - [`StreamRanker.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/domain/StreamRanker.kt) (Detección de enlaces caídos y ordenamiento inteligente por servidor).
+  - [`EpisodeNavigator.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/domain/EpisodeNavigator.kt) (Navegación entre temporadas y episodios).
+- [x] Suite de pruebas de dominio validada en `:core`:
+  - [`PlayerDomainTest.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/test/java/com/tvpro/core/domain/PlayerDomainTest.kt) (`:core:testDebugUnitTest` -> `BUILD SUCCESSFUL`).
+- [x] Validación de paridad TV / Mobile (`:app:compileDebugKotlin` y `:app-mobile:compileDebugKotlin` -> `BUILD SUCCESSFUL`).
+- [ ] Fragmentar `PlayerScreen.kt` en sub-componentes modulares.

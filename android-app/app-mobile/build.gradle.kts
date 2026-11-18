@@ -80,4 +80,8 @@ dependencies {
 
     // Palette for dynamic backdrop colors
     implementation("androidx.palette:palette-ktx:1.0.0")
+
+    // Unit Testing
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
 }
