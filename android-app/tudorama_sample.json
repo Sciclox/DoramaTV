@@ -1,0 +1,1221 @@
+﻿{
+    "id":  9160,
+    "date":  "2026-11-12T10:01:00",
+    "date_gmt":  "2026-11-12T14:01:00",
+    "guid":  {
+                 "rendered":  "https://tudorama.com/?post_type=serie\u0026#038;p=9160"
+             },
+    "modified":  "2026-11-12T10:01:01",
+    "modified_gmt":  "2026-11-12T14:01:01",
+    "slug":  "happy-anding",
+    "status":  "publish",
+    "type":  "serie",
+    "link":  "https://tudorama.com/serie/happy-anding/",
+    "title":  {
+                  "rendered":  "Happy Anding"
+              },
+    "content":  {
+                    "rendered":  "",
+                    "protected":  false
+                },
+    "excerpt":  {
+                    "rendered":  "",
+                    "protected":  false
+                },
+    "featured_media":  9162,
+    "comment_status":  "open",
+    "ping_status":  "closed",
+    "template":  "",
+    "categories":  [
+                       245,
+                       623,
+                       244
+                   ],
+    "crvs-genres":  [
+                        3,
+                        2
+                    ],
+    "crvs-year":  [
+                      528
+                  ],
+    "crvs-cast":  [
+                      1508,
+                      1510,
+                      1145,
+                      1512,
+                      1509,
+                      535,
+                      863,
+                      67,
+                      1511
+                  ],
+    "crvs-director":  [
+                          377
+                      ],
+    "class_list":  [
+                       "post-9160",
+                       "serie",
+                       "type-serie",
+                       "status-publish",
+                       "has-post-thumbnail",
+                       "hentry",
+                       "category-emision",
+                       "category-sub-espanol",
+                       "category-series",
+                       "crvs-genres-comedia",
+                       "crvs-genres-drama",
+                       "crvs-year-528",
+                       "crvs-cast-cho-hyun-chul",
+                       "crvs-cast-choi-moon-hee",
+                       "crvs-cast-kang-hoon",
+                       "crvs-cast-kim-dong-gyun",
+                       "crvs-cast-kim-jeong-jin",
+                       "crvs-cast-lee-e-dam",
+                       "crvs-cast-lee-seo-hwan",
+                       "crvs-cast-oh-eui-sik",
+                       "crvs-cast-yoon-ga-i",
+                       "crvs-director-jung-jee-hyun"
+                   ],
+    "yoast_head":  "\u003c!-- This site is optimized with the Yoast SEO plugin v28.8 - https://yoast.com/product/yoast-seo-wordpress/ --\u003e\n\u003ctitle\u003eHappy Anding \u0026#187; TuDorama\u003c/title\u003e\n\u003cmeta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\" /\u003e\n\u003clink rel=\"canonical\" href=\"https://tudorama.com/serie/happy-anding/\" /\u003e\n\u003cmeta property=\"og:locale\" content=\"es_ES\" /\u003e\n\u003cmeta property=\"og:type\" content=\"article\" /\u003e\n\u003cmeta property=\"og:title\" content=\"Happy Anding \u0026#187; TuDorama\" /\u003e\n\u003cmeta property=\"og:url\" content=\"https://tudorama.com/serie/happy-anding/\" /\u003e\n\u003cmeta property=\"og:site_name\" content=\"TuDorama\" /\u003e\n\u003cmeta property=\"article:publisher\" content=\"https://www.facebook.com/tudoramacom\" /\u003e\n\u003cmeta property=\"article:modified_time\" content=\"2026-11-12T14:01:01+00:00\" /\u003e\n\u003cmeta property=\"og:image\" content=\"https://tudorama.com/wp-content/uploads/2026/10/뜨거운-안녕-9160-serie.jpg\" /\u003e\n\t\u003cmeta property=\"og:image:width\" content=\"1280\" /\u003e\n\t\u003cmeta property=\"og:image:height\" content=\"719\" /\u003e\n\t\u003cmeta property=\"og:image:type\" content=\"image/jpeg\" /\u003e\n\u003cmeta name=\"twitter:card\" content=\"summary_large_image\" /\u003e\n\u003cscript type=\"application/ld+json\" class=\"yoast-schema-graph\"\u003e{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"WebPage\",\"@id\":\"https:\\/\\/tudorama.com\\/serie\\/happy-anding\\/\",\"url\":\"https:\\/\\/tudorama.com\\/serie\\/happy-anding\\/\",\"name\":\"Happy Anding \u0026#187; TuDorama\",\"isPartOf\":{\"@id\":\"https:\\/\\/tudorama.com\\/#website\"},\"primaryImageOfPage\":{\"@id\":\"https:\\/\\/tudorama.com\\/serie\\/happy-anding\\/#primaryimage\"},\"image\":{\"@id\":\"https:\\/\\/tudorama.com\\/serie\\/happy-anding\\/#primaryimage\"},\"thumbnailUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2026\\/10\\/뜨거운-안녕-9160-serie.jpg\",\"datePublished\":\"2026-11-12T14:01:00+00:00\",\"dateModified\":\"2026-11-12T14:01:01+00:00\",\"breadcrumb\":{\"@id\":\"https:\\/\\/tudorama.com\\/serie\\/happy-anding\\/#breadcrumb\"},\"inLanguage\":\"es\",\"potentialAction\":[{\"@type\":\"ReadAction\",\"target\":[\"https:\\/\\/tudorama.com\\/serie\\/happy-anding\\/\"]}]},{\"@type\":\"ImageObject\",\"inLanguage\":\"es\",\"@id\":\"https:\\/\\/tudorama.com\\/serie\\/happy-anding\\/#primaryimage\",\"url\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2026\\/10\\/뜨거운-안녕-9160-serie.jpg\",\"contentUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2026\\/10\\/뜨거운-안녕-9160-serie.jpg\",\"width\":1280,\"height\":719},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/tudorama.com\\/serie\\/happy-anding\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Portada\",\"item\":\"https:\\/\\/tudorama.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Series\",\"item\":\"https:\\/\\/tudorama.com\\/serie\\/\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"Happy Anding\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/tudorama.com\\/#website\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"name\":\"TuDorama\",\"description\":\"Ver Doramas Online Gratis en Español\",\"publisher\":{\"@id\":\"https:\\/\\/tudorama.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/tudorama.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"es\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/tudorama.com\\/#organization\",\"name\":\"TuDorama\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"es\",\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"contentUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"width\":800,\"height\":567,\"caption\":\"TuDorama\"},\"image\":{\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.facebook.com\\/tudoramacom\",\"https:\\/\\/www.instagram.com\\/tudoramacom\",\"https:\\/\\/www.tiktok.com\\/@tudoramacom\"]}]}\u003c/script\u003e\n\u003c!-- / Yoast SEO plugin. --\u003e",
+    "yoast_head_json":  {
+                            "title":  "Happy Anding \u0026#187; TuDorama",
+                            "robots":  {
+                                           "index":  "index",
+                                           "follow":  "follow",
+                                           "max-snippet":  "max-snippet:-1",
+                                           "max-image-preview":  "max-image-preview:large",
+                                           "max-video-preview":  "max-video-preview:-1"
+                                       },
+                            "canonical":  "https://tudorama.com/serie/happy-anding/",
+                            "og_locale":  "es_ES",
+                            "og_type":  "article",
+                            "og_title":  "Happy Anding \u0026#187; TuDorama",
+                            "og_url":  "https://tudorama.com/serie/happy-anding/",
+                            "og_site_name":  "TuDorama",
+                            "article_publisher":  "https://www.facebook.com/tudoramacom",
+                            "article_modified_time":  "2026-11-12T14:01:01+00:00",
+                            "og_image":  [
+                                             {
+                                                 "width":  1280,
+                                                 "height":  719,
+                                                 "url":  "https://tudorama.com/wp-content/uploads/2026/10/뜨거운-안녕-9160-serie.jpg",
+                                                 "type":  "image/jpeg"
+                                             }
+                                         ],
+                            "twitter_card":  "summary_large_image",
+                            "schema":  {
+                                           "@context":  "https://schema.org",
+                                           "@graph":  [
+                                                          {
+                                                              "@type":  "WebPage",
+                                                              "@id":  "https://tudorama.com/serie/happy-anding/",
+                                                              "url":  "https://tudorama.com/serie/happy-anding/",
+                                                              "name":  "Happy Anding \u0026#187; TuDorama",
+                                                              "isPartOf":  {
+                                                                               "@id":  "https://tudorama.com/#website"
+                                                                           },
+                                                              "primaryImageOfPage":  {
+                                                                                         "@id":  "https://tudorama.com/serie/happy-anding/#primaryimage"
+                                                                                     },
+                                                              "image":  {
+                                                                            "@id":  "https://tudorama.com/serie/happy-anding/#primaryimage"
+                                                                        },
+                                                              "thumbnailUrl":  "https://tudorama.com/wp-content/uploads/2026/10/뜨거운-안녕-9160-serie.jpg",
+                                                              "datePublished":  "2026-11-12T14:01:00+00:00",
+                                                              "dateModified":  "2026-11-12T14:01:01+00:00",
+                                                              "breadcrumb":  {
+                                                                                 "@id":  "https://tudorama.com/serie/happy-anding/#breadcrumb"
+                                                                             },
+                                                              "inLanguage":  "es",
+                                                              "potentialAction":  [
+                                                                                      {
+                                                                                          "@type":  "ReadAction",
+                                                                                          "target":  "https://tudorama.com/serie/happy-anding/"
+                                                                                      }
+                                                                                  ]
+                                                          },
+                                                          {
+                                                              "@type":  "ImageObject",
+                                                              "inLanguage":  "es",
+                                                              "@id":  "https://tudorama.com/serie/happy-anding/#primaryimage",
+                                                              "url":  "https://tudorama.com/wp-content/uploads/2026/10/뜨거운-안녕-9160-serie.jpg",
+                                                              "contentUrl":  "https://tudorama.com/wp-content/uploads/2026/10/뜨거운-안녕-9160-serie.jpg",
+                                                              "width":  1280,
+                                                              "height":  719
+                                                          },
+                                                          {
+                                                              "@type":  "BreadcrumbList",
+                                                              "@id":  "https://tudorama.com/serie/happy-anding/#breadcrumb",
+                                                              "itemListElement":  [
+                                                                                      {
+                                                                                          "@type":  "ListItem",
+                                                                                          "position":  1,
+                                                                                          "name":  "Portada",
+                                                                                          "item":  "https://tudorama.com/"
+                                                                                      },
+                                                                                      {
+                                                                                          "@type":  "ListItem",
+                                                                                          "position":  2,
+                                                                                          "name":  "Series",
+                                                                                          "item":  "https://tudorama.com/serie/"
+                                                                                      },
+                                                                                      {
+                                                                                          "@type":  "ListItem",
+                                                                                          "position":  3,
+                                                                                          "name":  "Happy Anding"
+                                                                                      }
+                                                                                  ]
+                                                          },
+                                                          {
+                                                              "@type":  "WebSite",
+                                                              "@id":  "https://tudorama.com/#website",
+                                                              "url":  "https://tudorama.com/",
+                                                              "name":  "TuDorama",
+                                                              "description":  "Ver Doramas Online Gratis en Español",
+                                                              "publisher":  {
+                                                                                "@id":  "https://tudorama.com/#organization"
+                                                                            },
+                                                              "potentialAction":  [
+                                                                                      {
+                                                                                          "@type":  "SearchAction",
+                                                                                          "target":  "@{@type=EntryPoint; urlTemplate=https://tudorama.com/?s={search_term_string}}",
+                                                                                          "query-input":  "@{@type=PropertyValueSpecification; valueRequired=True; valueName=search_term_string}"
+                                                                                      }
+                                                                                  ],
+                                                              "inLanguage":  "es"
+                                                          },
+                                                          {
+                                                              "@type":  "Organization",
+                                                              "@id":  "https://tudorama.com/#organization",
+                                                              "name":  "TuDorama",
+                                                              "url":  "https://tudorama.com/",
+                                                              "logo":  {
+                                                                           "@type":  "ImageObject",
+                                                                           "inLanguage":  "es",
+                                                                           "@id":  "https://tudorama.com/#/schema/logo/image/",
+                                                                           "url":  "https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png",
+                                                                           "contentUrl":  "https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png",
+                                                                           "width":  800,
+                                                                           "height":  567,
+                                                                           "caption":  "TuDorama"
+                                                                       },
+                                                              "image":  {
+                                                                            "@id":  "https://tudorama.com/#/schema/logo/image/"
+                                                                        },
+                                                              "sameAs":  [
+                                                                             "https://www.facebook.com/tudoramacom",
+                                                                             "https://www.instagram.com/tudoramacom",
+                                                                             "https://www.tiktok.com/@tudoramacom"
+                                                                         ]
+                                                          }
+                                                      ]
+                                       }
+                        },
+    "_links":  {
+                   "self":  [
+                                {
+                                    "href":  "https://tudorama.com/wp-json/wp/v2/serie/9160",
+                                    "targetHints":  {
+                                                        "allow":  [
+                                                                      "GET"
+                                                                  ]
+                                                    }
+                                }
+                            ],
+                   "collection":  [
+                                      {
+                                          "href":  "https://tudorama.com/wp-json/wp/v2/serie"
+                                      }
+                                  ],
+                   "about":  [
+                                 {
+                                     "href":  "https://tudorama.com/wp-json/wp/v2/types/serie"
+                                 }
+                             ],
+                   "replies":  [
+                                   {
+                                       "embeddable":  true,
+                                       "href":  "https://tudorama.com/wp-json/wp/v2/comments?post=9160"
+                                   }
+                               ],
+                   "wp:featuredmedia":  [
+                                            {
+                                                "embeddable":  true,
+                                                "href":  "https://tudorama.com/wp-json/wp/v2/media/9162"
+                                            }
+                                        ],
+                   "wp:attachment":  [
+                                         {
+                                             "href":  "https://tudorama.com/wp-json/wp/v2/media?parent=9160"
+                                         }
+                                     ],
+                   "wp:term":  [
+                                   {
+                                       "taxonomy":  "category",
+                                       "embeddable":  true,
+                                       "href":  "https://tudorama.com/wp-json/wp/v2/categories?post=9160"
+                                   },
+                                   {
+                                       "taxonomy":  "crvs-genres",
+                                       "embeddable":  true,
+                                       "href":  "https://tudorama.com/wp-json/wp/v2/crvs-genres?post=9160"
+                                   },
+                                   {
+                                       "taxonomy":  "crvs-year",
+                                       "embeddable":  true,
+                                       "href":  "https://tudorama.com/wp-json/wp/v2/crvs-year?post=9160"
+                                   },
+                                   {
+                                       "taxonomy":  "crvs-cast",
+                                       "embeddable":  true,
+                                       "href":  "https://tudorama.com/wp-json/wp/v2/crvs-cast?post=9160"
+                                   },
+                                   {
+                                       "taxonomy":  "crvs-director",
+                                       "embeddable":  true,
+                                       "href":  "https://tudorama.com/wp-json/wp/v2/crvs-director?post=9160"
+                                   }
+                               ],
+                   "curies":  [
+                                  {
+                                      "name":  "wp",
+                                      "href":  "https://api.w.org/{rel}",
+                                      "templated":  true
+                                  }
+                              ]
+               },
+    "_embedded":  {
+                      "wp:featuredmedia":  [
+                                               {
+                                                   "id":  9162,
+                                                   "date":  "2026-10-29T14:54:23",
+                                                   "slug":  "%eb%9c%a8%ea%b1%b0%ec%9a%b4-%ec%95%88%eb%85%95-9160-serie-jpg",
+                                                   "type":  "attachment",
+                                                   "link":  "https://tudorama.com/%eb%9c%a8%ea%b1%b0%ec%9a%b4-%ec%95%88%eb%85%95-9160-serie-jpg/",
+                                                   "title":  {
+                                                                 "rendered":  "뜨거운-안녕-9160-serie.jpg"
+                                                             },
+                                                   "author":  1,
+                                                   "featured_media":  0,
+                                                   "caption":  {
+                                                                   "rendered":  ""
+                                                               },
+                                                   "alt_text":  "",
+                                                   "media_type":  "image",
+                                                   "mime_type":  "image/jpeg",
+                                                   "media_details":  {
+                                                                         "width":  1280,
+                                                                         "height":  719,
+                                                                         "file":  "2026/10/뜨거운-안녕-9160-serie.jpg",
+                                                                         "filesize":  210903,
+                                                                         "sizes":  {
+                                                                                       "medium":  {
+                                                                                                      "file":  "뜨거운-안녕-9160-serie-300x169.jpg",
+                                                                                                      "width":  300,
+                                                                                                      "height":  169,
+                                                                                                      "filesize":  14973,
+                                                                                                      "mime_type":  "image/jpeg",
+                                                                                                      "source_url":  "https://tudorama.com/wp-content/uploads/2026/10/뜨거운-안녕-9160-serie-300x169.jpg"
+                                                                                                  },
+                                                                                       "large":  {
+                                                                                                     "file":  "뜨거운-안녕-9160-serie-1024x575.jpg",
+                                                                                                     "width":  1024,
+                                                                                                     "height":  575,
+                                                                                                     "filesize":  103717,
+                                                                                                     "mime_type":  "image/jpeg",
+                                                                                                     "source_url":  "https://tudorama.com/wp-content/uploads/2026/10/뜨거운-안녕-9160-serie-1024x575.jpg"
+                                                                                                 },
+                                                                                       "thumbnail":  {
+                                                                                                         "file":  "뜨거운-안녕-9160-serie-150x150.jpg",
+                                                                                                         "width":  150,
+                                                                                                         "height":  150,
+                                                                                                         "filesize":  7739,
+                                                                                                         "mime_type":  "image/jpeg",
+                                                                                                         "source_url":  "https://tudorama.com/wp-content/uploads/2026/10/뜨거운-안녕-9160-serie-150x150.jpg"
+                                                                                                     },
+                                                                                       "medium_large":  {
+                                                                                                            "file":  "뜨거운-안녕-9160-serie-768x431.jpg",
+                                                                                                            "width":  768,
+                                                                                                            "height":  431,
+                                                                                                            "filesize":  64852,
+                                                                                                            "mime_type":  "image/jpeg",
+                                                                                                            "source_url":  "https://tudorama.com/wp-content/uploads/2026/10/뜨거운-안녕-9160-serie-768x431.jpg"
+                                                                                                        },
+                                                                                       "crvs_poster_single":  {
+                                                                                                                  "file":  "뜨거운-안녕-9160-serie-320x180.jpg",
+                                                                                                                  "width":  320,
+                                                                                                                  "height":  180,
+                                                                                                                  "filesize":  16525,
+                                                                                                                  "mime_type":  "image/jpeg",
+                                                                                                                  "source_url":  "https://tudorama.com/wp-content/uploads/2026/10/뜨거운-안녕-9160-serie-320x180.jpg"
+                                                                                                              },
+                                                                                       "crvs_poster_popular":  {
+                                                                                                                   "file":  "뜨거운-안녕-9160-serie-60x90.jpg",
+                                                                                                                   "width":  60,
+                                                                                                                   "height":  90,
+                                                                                                                   "filesize":  2498,
+                                                                                                                   "mime_type":  "image/jpeg",
+                                                                                                                   "source_url":  "https://tudorama.com/wp-content/uploads/2026/10/뜨거운-안녕-9160-serie-60x90.jpg"
+                                                                                                               },
+                                                                                       "crvs_thumbnail_episode":  {
+                                                                                                                      "file":  "뜨거운-안녕-9160-serie-92x63.jpg",
+                                                                                                                      "width":  92,
+                                                                                                                      "height":  63,
+                                                                                                                      "filesize":  2685,
+                                                                                                                      "mime_type":  "image/jpeg",
+                                                                                                                      "source_url":  "https://tudorama.com/wp-content/uploads/2026/10/뜨거운-안녕-9160-serie-92x63.jpg"
+                                                                                                                  },
+                                                                                       "crvs_list_episode":  {
+                                                                                                                 "file":  "뜨거운-안녕-9160-serie-51x54.jpg",
+                                                                                                                 "width":  51,
+                                                                                                                 "height":  54,
+                                                                                                                 "filesize":  1630,
+                                                                                                                 "mime_type":  "image/jpeg",
+                                                                                                                 "source_url":  "https://tudorama.com/wp-content/uploads/2026/10/뜨거운-안녕-9160-serie-51x54.jpg"
+                                                                                                             },
+                                                                                       "full":  {
+                                                                                                    "file":  "뜨거운-안녕-9160-serie.jpg",
+                                                                                                    "width":  1280,
+                                                                                                    "height":  719,
+                                                                                                    "mime_type":  "image/jpeg",
+                                                                                                    "source_url":  "https://tudorama.com/wp-content/uploads/2026/10/뜨거운-안녕-9160-serie.jpg"
+                                                                                                }
+                                                                                   },
+                                                                         "image_meta":  {
+                                                                                            "aperture":  "0",
+                                                                                            "credit":  "",
+                                                                                            "camera":  "",
+                                                                                            "caption":  "",
+                                                                                            "created_timestamp":  "0",
+                                                                                            "copyright":  "",
+                                                                                            "focal_length":  "0",
+                                                                                            "iso":  "0",
+                                                                                            "shutter_speed":  "0",
+                                                                                            "title":  "",
+                                                                                            "orientation":  "0",
+                                                                                            "keywords":  [
+
+                                                                                                         ],
+                                                                                            "alt":  ""
+                                                                                        }
+                                                                     },
+                                                   "source_url":  "https://tudorama.com/wp-content/uploads/2026/10/뜨거운-안녕-9160-serie.jpg",
+                                                   "_links":  {
+                                                                  "self":  [
+                                                                               {
+                                                                                   "href":  "https://tudorama.com/wp-json/wp/v2/media/9162",
+                                                                                   "targetHints":  "@{allow=System.Object[]}"
+                                                                               }
+                                                                           ],
+                                                                  "collection":  [
+                                                                                     {
+                                                                                         "href":  "https://tudorama.com/wp-json/wp/v2/media"
+                                                                                     }
+                                                                                 ],
+                                                                  "about":  [
+                                                                                {
+                                                                                    "href":  "https://tudorama.com/wp-json/wp/v2/types/attachment"
+                                                                                }
+                                                                            ],
+                                                                  "author":  [
+                                                                                 {
+                                                                                     "embeddable":  true,
+                                                                                     "href":  "https://tudorama.com/wp-json/wp/v2/users/1"
+                                                                                 }
+                                                                             ],
+                                                                  "replies":  [
+                                                                                  {
+                                                                                      "embeddable":  true,
+                                                                                      "href":  "https://tudorama.com/wp-json/wp/v2/comments?post=9162"
+                                                                                  }
+                                                                              ]
+                                                              }
+                                               }
+                                           ],
+                      "wp:term":  [
+                                      [
+                                          {
+                                              "id":  245,
+                                              "link":  "https://tudorama.com/genero/emision/",
+                                              "name":  "Doramas en Emisión",
+                                              "slug":  "emision",
+                                              "taxonomy":  "category",
+                                              "yoast_head":  "\u003c!-- This site is optimized with the Yoast SEO plugin v28.8 - https://yoast.com/product/yoast-seo-wordpress/ --\u003e\n\u003ctitle\u003eDoramas en Emisión \u0026#187; TuDorama\u003c/title\u003e\n\u003cmeta name=\"description\" content=\"Aquí puedes encontrar los doramas que están actualmente en emisión y seguir sus nuevos episodios conforme se van estrenando. Mantente al día con las series que estás siguiendo.\" /\u003e\n\u003cmeta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\" /\u003e\n\u003clink rel=\"canonical\" href=\"https://tudorama.com/genero/emision/\" /\u003e\n\u003cmeta property=\"og:locale\" content=\"es_ES\" /\u003e\n\u003cmeta property=\"og:type\" content=\"article\" /\u003e\n\u003cmeta property=\"og:title\" content=\"Doramas en Emisión \u0026#187; TuDorama\" /\u003e\n\u003cmeta property=\"og:description\" content=\"Aquí puedes encontrar los doramas que están actualmente en emisión y seguir sus nuevos episodios conforme se van estrenando. Mantente al día con las series que estás siguiendo.\" /\u003e\n\u003cmeta property=\"og:url\" content=\"https://tudorama.com/genero/emision/\" /\u003e\n\u003cmeta property=\"og:site_name\" content=\"TuDorama\" /\u003e\n\u003cmeta property=\"og:image\" content=\"https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png\" /\u003e\n\t\u003cmeta property=\"og:image:width\" content=\"800\" /\u003e\n\t\u003cmeta property=\"og:image:height\" content=\"567\" /\u003e\n\t\u003cmeta property=\"og:image:type\" content=\"image/png\" /\u003e\n\u003cmeta name=\"twitter:card\" content=\"summary_large_image\" /\u003e\n\u003cscript type=\"application/ld+json\" class=\"yoast-schema-graph\"\u003e{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https:\\/\\/tudorama.com\\/genero\\/emision\\/\",\"url\":\"https:\\/\\/tudorama.com\\/genero\\/emision\\/\",\"name\":\"Doramas en Emisión \u0026#187; TuDorama\",\"isPartOf\":{\"@id\":\"https:\\/\\/tudorama.com\\/#website\"},\"description\":\"Aquí puedes encontrar los doramas que están actualmente en emisión y seguir sus nuevos episodios conforme se van estrenando. Mantente al día con las series que estás siguiendo.\",\"breadcrumb\":{\"@id\":\"https:\\/\\/tudorama.com\\/genero\\/emision\\/#breadcrumb\"},\"inLanguage\":\"es\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/tudorama.com\\/genero\\/emision\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Portada\",\"item\":\"https:\\/\\/tudorama.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Doramas en Emisión\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/tudorama.com\\/#website\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"name\":\"TuDorama\",\"description\":\"Ver Doramas Online Gratis en Español\",\"publisher\":{\"@id\":\"https:\\/\\/tudorama.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/tudorama.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"es\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/tudorama.com\\/#organization\",\"name\":\"TuDorama\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"es\",\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"contentUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"width\":800,\"height\":567,\"caption\":\"TuDorama\"},\"image\":{\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.facebook.com\\/tudoramacom\",\"https:\\/\\/www.instagram.com\\/tudoramacom\",\"https:\\/\\/www.tiktok.com\\/@tudoramacom\"]}]}\u003c/script\u003e\n\u003c!-- / Yoast SEO plugin. --\u003e",
+                                              "yoast_head_json":  {
+                                                                      "title":  "Doramas en Emisión \u0026#187; TuDorama",
+                                                                      "description":  "Aquí puedes encontrar los doramas que están actualmente en emisión y seguir sus nuevos episodios conforme se van estrenando. Mantente al día con las series que estás siguiendo.",
+                                                                      "robots":  {
+                                                                                     "index":  "index",
+                                                                                     "follow":  "follow",
+                                                                                     "max-snippet":  "max-snippet:-1",
+                                                                                     "max-image-preview":  "max-image-preview:large",
+                                                                                     "max-video-preview":  "max-video-preview:-1"
+                                                                                 },
+                                                                      "canonical":  "https://tudorama.com/genero/emision/",
+                                                                      "og_locale":  "es_ES",
+                                                                      "og_type":  "article",
+                                                                      "og_title":  "Doramas en Emisión \u0026#187; TuDorama",
+                                                                      "og_description":  "Aquí puedes encontrar los doramas que están actualmente en emisión y seguir sus nuevos episodios conforme se van estrenando. Mantente al día con las series que estás siguiendo.",
+                                                                      "og_url":  "https://tudorama.com/genero/emision/",
+                                                                      "og_site_name":  "TuDorama",
+                                                                      "og_image":  [
+                                                                                       "@{width=800; height=567; url=https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png; type=image/png}"
+                                                                                   ],
+                                                                      "twitter_card":  "summary_large_image",
+                                                                      "schema":  {
+                                                                                     "@context":  "https://schema.org",
+                                                                                     "@graph":  "   "
+                                                                                 }
+                                                                  },
+                                              "_links":  {
+                                                             "self":  [
+                                                                          "@{href=https://tudorama.com/wp-json/wp/v2/categories/245; targetHints=}"
+                                                                      ],
+                                                             "collection":  [
+                                                                                "@{href=https://tudorama.com/wp-json/wp/v2/categories}"
+                                                                            ],
+                                                             "about":  [
+                                                                           "@{href=https://tudorama.com/wp-json/wp/v2/taxonomies/category}"
+                                                                       ],
+                                                             "wp:post_type":  [
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/posts?categories=245}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/serie?categories=245}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/movie?categories=245}"
+                                                                              ],
+                                                             "curies":  [
+                                                                            "@{name=wp; href=https://api.w.org/{rel}; templated=True}"
+                                                                        ]
+                                                         }
+                                          },
+                                          {
+                                              "id":  623,
+                                              "link":  "https://tudorama.com/genero/sub-espanol/",
+                                              "name":  "Ver Doramas Sub Español Online",
+                                              "slug":  "sub-espanol",
+                                              "taxonomy":  "category",
+                                              "yoast_head":  "\u003c!-- This site is optimized with the Yoast SEO plugin v28.8 - https://yoast.com/product/yoast-seo-wordpress/ --\u003e\n\u003ctitle\u003eVer Doramas Sub Español Online \u0026#187; TuDorama\u003c/title\u003e\n\u003cmeta name=\"description\" content=\"Todos los doramas con subtítulos en español y audio original. Estrenos y clásicos asiáticos sub español con la mejor calidad en TuDorama.\" /\u003e\n\u003cmeta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\" /\u003e\n\u003clink rel=\"canonical\" href=\"https://tudorama.com/genero/sub-espanol/\" /\u003e\n\u003cmeta property=\"og:locale\" content=\"es_ES\" /\u003e\n\u003cmeta property=\"og:type\" content=\"article\" /\u003e\n\u003cmeta property=\"og:title\" content=\"Ver Doramas Sub Español Online \u0026#187; TuDorama\" /\u003e\n\u003cmeta property=\"og:description\" content=\"Todos los doramas con subtítulos en español y audio original. Estrenos y clásicos asiáticos sub español con la mejor calidad en TuDorama.\" /\u003e\n\u003cmeta property=\"og:url\" content=\"https://tudorama.com/genero/sub-espanol/\" /\u003e\n\u003cmeta property=\"og:site_name\" content=\"TuDorama\" /\u003e\n\u003cmeta property=\"og:image\" content=\"https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png\" /\u003e\n\t\u003cmeta property=\"og:image:width\" content=\"800\" /\u003e\n\t\u003cmeta property=\"og:image:height\" content=\"567\" /\u003e\n\t\u003cmeta property=\"og:image:type\" content=\"image/png\" /\u003e\n\u003cmeta name=\"twitter:card\" content=\"summary_large_image\" /\u003e\n\u003cscript type=\"application/ld+json\" class=\"yoast-schema-graph\"\u003e{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https:\\/\\/tudorama.com\\/genero\\/sub-espanol\\/\",\"url\":\"https:\\/\\/tudorama.com\\/genero\\/sub-espanol\\/\",\"name\":\"Ver Doramas Sub Español Online \u0026#187; TuDorama\",\"isPartOf\":{\"@id\":\"https:\\/\\/tudorama.com\\/#website\"},\"description\":\"Todos los doramas con subtítulos en español y audio original. Estrenos y clásicos asiáticos sub español con la mejor calidad en TuDorama.\",\"breadcrumb\":{\"@id\":\"https:\\/\\/tudorama.com\\/genero\\/sub-espanol\\/#breadcrumb\"},\"inLanguage\":\"es\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/tudorama.com\\/genero\\/sub-espanol\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Portada\",\"item\":\"https:\\/\\/tudorama.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Ver Doramas Sub Español Online\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/tudorama.com\\/#website\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"name\":\"TuDorama\",\"description\":\"Ver Doramas Online Gratis en Español\",\"publisher\":{\"@id\":\"https:\\/\\/tudorama.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/tudorama.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"es\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/tudorama.com\\/#organization\",\"name\":\"TuDorama\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"es\",\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"contentUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"width\":800,\"height\":567,\"caption\":\"TuDorama\"},\"image\":{\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.facebook.com\\/tudoramacom\",\"https:\\/\\/www.instagram.com\\/tudoramacom\",\"https:\\/\\/www.tiktok.com\\/@tudoramacom\"]}]}\u003c/script\u003e\n\u003c!-- / Yoast SEO plugin. --\u003e",
+                                              "yoast_head_json":  {
+                                                                      "title":  "Ver Doramas Sub Español Online \u0026#187; TuDorama",
+                                                                      "description":  "Todos los doramas con subtítulos en español y audio original. Estrenos y clásicos asiáticos sub español con la mejor calidad en TuDorama.",
+                                                                      "robots":  {
+                                                                                     "index":  "index",
+                                                                                     "follow":  "follow",
+                                                                                     "max-snippet":  "max-snippet:-1",
+                                                                                     "max-image-preview":  "max-image-preview:large",
+                                                                                     "max-video-preview":  "max-video-preview:-1"
+                                                                                 },
+                                                                      "canonical":  "https://tudorama.com/genero/sub-espanol/",
+                                                                      "og_locale":  "es_ES",
+                                                                      "og_type":  "article",
+                                                                      "og_title":  "Ver Doramas Sub Español Online \u0026#187; TuDorama",
+                                                                      "og_description":  "Todos los doramas con subtítulos en español y audio original. Estrenos y clásicos asiáticos sub español con la mejor calidad en TuDorama.",
+                                                                      "og_url":  "https://tudorama.com/genero/sub-espanol/",
+                                                                      "og_site_name":  "TuDorama",
+                                                                      "og_image":  [
+                                                                                       "@{width=800; height=567; url=https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png; type=image/png}"
+                                                                                   ],
+                                                                      "twitter_card":  "summary_large_image",
+                                                                      "schema":  {
+                                                                                     "@context":  "https://schema.org",
+                                                                                     "@graph":  "   "
+                                                                                 }
+                                                                  },
+                                              "_links":  {
+                                                             "self":  [
+                                                                          "@{href=https://tudorama.com/wp-json/wp/v2/categories/623; targetHints=}"
+                                                                      ],
+                                                             "collection":  [
+                                                                                "@{href=https://tudorama.com/wp-json/wp/v2/categories}"
+                                                                            ],
+                                                             "about":  [
+                                                                           "@{href=https://tudorama.com/wp-json/wp/v2/taxonomies/category}"
+                                                                       ],
+                                                             "wp:post_type":  [
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/posts?categories=623}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/serie?categories=623}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/movie?categories=623}"
+                                                                              ],
+                                                             "curies":  [
+                                                                            "@{name=wp; href=https://api.w.org/{rel}; templated=True}"
+                                                                        ]
+                                                         }
+                                          },
+                                          {
+                                              "id":  244,
+                                              "link":  "https://tudorama.com/genero/series/",
+                                              "name":  "Ver Doramas y Series Asiáticas Online",
+                                              "slug":  "series",
+                                              "taxonomy":  "category",
+                                              "yoast_head":  "\u003c!-- This site is optimized with the Yoast SEO plugin v28.8 - https://yoast.com/product/yoast-seo-wordpress/ --\u003e\n\u003ctitle\u003eVer Doramas y Series Asiáticas Online \u0026#187; TuDorama\u003c/title\u003e\n\u003cmeta name=\"description\" content=\"Explora el catálogo de series asiáticas y doramas. Descubre nuevas historias, vuelve a tus favoritas y encuentra títulos de diferentes estilos y países en un solo lugar.\" /\u003e\n\u003cmeta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\" /\u003e\n\u003clink rel=\"canonical\" href=\"https://tudorama.com/genero/series/\" /\u003e\n\u003cmeta property=\"og:locale\" content=\"es_ES\" /\u003e\n\u003cmeta property=\"og:type\" content=\"article\" /\u003e\n\u003cmeta property=\"og:title\" content=\"Ver Doramas y Series Asiáticas Online \u0026#187; TuDorama\" /\u003e\n\u003cmeta property=\"og:description\" content=\"Explora el catálogo de series asiáticas y doramas. Descubre nuevas historias, vuelve a tus favoritas y encuentra títulos de diferentes estilos y países en un solo lugar.\" /\u003e\n\u003cmeta property=\"og:url\" content=\"https://tudorama.com/genero/series/\" /\u003e\n\u003cmeta property=\"og:site_name\" content=\"TuDorama\" /\u003e\n\u003cmeta property=\"og:image\" content=\"https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png\" /\u003e\n\t\u003cmeta property=\"og:image:width\" content=\"800\" /\u003e\n\t\u003cmeta property=\"og:image:height\" content=\"567\" /\u003e\n\t\u003cmeta property=\"og:image:type\" content=\"image/png\" /\u003e\n\u003cmeta name=\"twitter:card\" content=\"summary_large_image\" /\u003e\n\u003cscript type=\"application/ld+json\" class=\"yoast-schema-graph\"\u003e{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https:\\/\\/tudorama.com\\/genero\\/series\\/\",\"url\":\"https:\\/\\/tudorama.com\\/genero\\/series\\/\",\"name\":\"Ver Doramas y Series Asiáticas Online \u0026#187; TuDorama\",\"isPartOf\":{\"@id\":\"https:\\/\\/tudorama.com\\/#website\"},\"description\":\"Explora el catálogo de series asiáticas y doramas. Descubre nuevas historias, vuelve a tus favoritas y encuentra títulos de diferentes estilos y países en un solo lugar.\",\"breadcrumb\":{\"@id\":\"https:\\/\\/tudorama.com\\/genero\\/series\\/#breadcrumb\"},\"inLanguage\":\"es\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/tudorama.com\\/genero\\/series\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Portada\",\"item\":\"https:\\/\\/tudorama.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Ver Doramas y Series Asiáticas Online\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/tudorama.com\\/#website\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"name\":\"TuDorama\",\"description\":\"Ver Doramas Online Gratis en Español\",\"publisher\":{\"@id\":\"https:\\/\\/tudorama.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/tudorama.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"es\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/tudorama.com\\/#organization\",\"name\":\"TuDorama\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"es\",\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"contentUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"width\":800,\"height\":567,\"caption\":\"TuDorama\"},\"image\":{\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.facebook.com\\/tudoramacom\",\"https:\\/\\/www.instagram.com\\/tudoramacom\",\"https:\\/\\/www.tiktok.com\\/@tudoramacom\"]}]}\u003c/script\u003e\n\u003c!-- / Yoast SEO plugin. --\u003e",
+                                              "yoast_head_json":  {
+                                                                      "title":  "Ver Doramas y Series Asiáticas Online \u0026#187; TuDorama",
+                                                                      "description":  "Explora el catálogo de series asiáticas y doramas. Descubre nuevas historias, vuelve a tus favoritas y encuentra títulos de diferentes estilos y países en un solo lugar.",
+                                                                      "robots":  {
+                                                                                     "index":  "index",
+                                                                                     "follow":  "follow",
+                                                                                     "max-snippet":  "max-snippet:-1",
+                                                                                     "max-image-preview":  "max-image-preview:large",
+                                                                                     "max-video-preview":  "max-video-preview:-1"
+                                                                                 },
+                                                                      "canonical":  "https://tudorama.com/genero/series/",
+                                                                      "og_locale":  "es_ES",
+                                                                      "og_type":  "article",
+                                                                      "og_title":  "Ver Doramas y Series Asiáticas Online \u0026#187; TuDorama",
+                                                                      "og_description":  "Explora el catálogo de series asiáticas y doramas. Descubre nuevas historias, vuelve a tus favoritas y encuentra títulos de diferentes estilos y países en un solo lugar.",
+                                                                      "og_url":  "https://tudorama.com/genero/series/",
+                                                                      "og_site_name":  "TuDorama",
+                                                                      "og_image":  [
+                                                                                       "@{width=800; height=567; url=https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png; type=image/png}"
+                                                                                   ],
+                                                                      "twitter_card":  "summary_large_image",
+                                                                      "schema":  {
+                                                                                     "@context":  "https://schema.org",
+                                                                                     "@graph":  "   "
+                                                                                 }
+                                                                  },
+                                              "_links":  {
+                                                             "self":  [
+                                                                          "@{href=https://tudorama.com/wp-json/wp/v2/categories/244; targetHints=}"
+                                                                      ],
+                                                             "collection":  [
+                                                                                "@{href=https://tudorama.com/wp-json/wp/v2/categories}"
+                                                                            ],
+                                                             "about":  [
+                                                                           "@{href=https://tudorama.com/wp-json/wp/v2/taxonomies/category}"
+                                                                       ],
+                                                             "wp:post_type":  [
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/posts?categories=244}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/serie?categories=244}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/movie?categories=244}"
+                                                                              ],
+                                                             "curies":  [
+                                                                            "@{name=wp; href=https://api.w.org/{rel}; templated=True}"
+                                                                        ]
+                                                         }
+                                          }
+                                      ],
+                                      [
+                                          {
+                                              "id":  3,
+                                              "link":  "https://tudorama.com/genres/comedia/",
+                                              "name":  "Comedia",
+                                              "slug":  "comedia",
+                                              "taxonomy":  "crvs-genres",
+                                              "yoast_head":  "\u003c!-- This site is optimized with the Yoast SEO plugin v28.8 - https://yoast.com/product/yoast-seo-wordpress/ --\u003e\n\u003ctitle\u003eDoramas de Comedia \u0026#187; TuDorama\u003c/title\u003e\n\u003cmeta name=\"description\" content=\"Explora los mejores Doramas de Comedia con historias intensas y emocionantes. Descubre los títulos más populares y estrenos en TuDorama. ¡Entra ya!\" /\u003e\n\u003cmeta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\" /\u003e\n\u003clink rel=\"canonical\" href=\"https://tudorama.com/genres/comedia/\" /\u003e\n\u003cmeta property=\"og:locale\" content=\"es_ES\" /\u003e\n\u003cmeta property=\"og:type\" content=\"article\" /\u003e\n\u003cmeta property=\"og:title\" content=\"Doramas de Comedia \u0026#187; TuDorama\" /\u003e\n\u003cmeta property=\"og:description\" content=\"Explora los mejores Doramas de Comedia con historias intensas y emocionantes. Descubre los títulos más populares y estrenos en TuDorama. ¡Entra ya!\" /\u003e\n\u003cmeta property=\"og:url\" content=\"https://tudorama.com/genres/comedia/\" /\u003e\n\u003cmeta property=\"og:site_name\" content=\"TuDorama\" /\u003e\n\u003cmeta property=\"og:image\" content=\"https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png\" /\u003e\n\t\u003cmeta property=\"og:image:width\" content=\"800\" /\u003e\n\t\u003cmeta property=\"og:image:height\" content=\"567\" /\u003e\n\t\u003cmeta property=\"og:image:type\" content=\"image/png\" /\u003e\n\u003cmeta name=\"twitter:card\" content=\"summary_large_image\" /\u003e\n\u003cscript type=\"application/ld+json\" class=\"yoast-schema-graph\"\u003e{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https:\\/\\/tudorama.com\\/genres\\/comedia\\/\",\"url\":\"https:\\/\\/tudorama.com\\/genres\\/comedia\\/\",\"name\":\"Doramas de Comedia \u0026#187; TuDorama\",\"isPartOf\":{\"@id\":\"https:\\/\\/tudorama.com\\/#website\"},\"description\":\"Explora los mejores Doramas de Comedia con historias intensas y emocionantes. Descubre los títulos más populares y estrenos en TuDorama. ¡Entra ya!\",\"breadcrumb\":{\"@id\":\"https:\\/\\/tudorama.com\\/genres\\/comedia\\/#breadcrumb\"},\"inLanguage\":\"es\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/tudorama.com\\/genres\\/comedia\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Portada\",\"item\":\"https:\\/\\/tudorama.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Comedia\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/tudorama.com\\/#website\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"name\":\"TuDorama\",\"description\":\"Ver Doramas Online Gratis en Español\",\"publisher\":{\"@id\":\"https:\\/\\/tudorama.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/tudorama.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"es\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/tudorama.com\\/#organization\",\"name\":\"TuDorama\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"es\",\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"contentUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"width\":800,\"height\":567,\"caption\":\"TuDorama\"},\"image\":{\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.facebook.com\\/tudoramacom\",\"https:\\/\\/www.instagram.com\\/tudoramacom\",\"https:\\/\\/www.tiktok.com\\/@tudoramacom\"]}]}\u003c/script\u003e\n\u003c!-- / Yoast SEO plugin. --\u003e",
+                                              "yoast_head_json":  {
+                                                                      "title":  "Doramas de Comedia \u0026#187; TuDorama",
+                                                                      "description":  "Explora los mejores Doramas de Comedia con historias intensas y emocionantes. Descubre los títulos más populares y estrenos en TuDorama. ¡Entra ya!",
+                                                                      "robots":  {
+                                                                                     "index":  "index",
+                                                                                     "follow":  "follow",
+                                                                                     "max-snippet":  "max-snippet:-1",
+                                                                                     "max-image-preview":  "max-image-preview:large",
+                                                                                     "max-video-preview":  "max-video-preview:-1"
+                                                                                 },
+                                                                      "canonical":  "https://tudorama.com/genres/comedia/",
+                                                                      "og_locale":  "es_ES",
+                                                                      "og_type":  "article",
+                                                                      "og_title":  "Doramas de Comedia \u0026#187; TuDorama",
+                                                                      "og_description":  "Explora los mejores Doramas de Comedia con historias intensas y emocionantes. Descubre los títulos más populares y estrenos en TuDorama. ¡Entra ya!",
+                                                                      "og_url":  "https://tudorama.com/genres/comedia/",
+                                                                      "og_site_name":  "TuDorama",
+                                                                      "og_image":  [
+                                                                                       "@{width=800; height=567; url=https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png; type=image/png}"
+                                                                                   ],
+                                                                      "twitter_card":  "summary_large_image",
+                                                                      "schema":  {
+                                                                                     "@context":  "https://schema.org",
+                                                                                     "@graph":  "   "
+                                                                                 }
+                                                                  },
+                                              "_links":  {
+                                                             "self":  [
+                                                                          "@{href=https://tudorama.com/wp-json/wp/v2/crvs-genres/3; targetHints=}"
+                                                                      ],
+                                                             "collection":  [
+                                                                                "@{href=https://tudorama.com/wp-json/wp/v2/crvs-genres}"
+                                                                            ],
+                                                             "about":  [
+                                                                           "@{href=https://tudorama.com/wp-json/wp/v2/taxonomies/crvs-genres}"
+                                                                       ],
+                                                             "wp:post_type":  [
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/serie?crvs-genres=3}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/movie?crvs-genres=3}"
+                                                                              ],
+                                                             "curies":  [
+                                                                            "@{name=wp; href=https://api.w.org/{rel}; templated=True}"
+                                                                        ]
+                                                         }
+                                          },
+                                          {
+                                              "id":  2,
+                                              "link":  "https://tudorama.com/genres/drama/",
+                                              "name":  "Drama",
+                                              "slug":  "drama",
+                                              "taxonomy":  "crvs-genres",
+                                              "yoast_head":  "\u003c!-- This site is optimized with the Yoast SEO plugin v28.8 - https://yoast.com/product/yoast-seo-wordpress/ --\u003e\n\u003ctitle\u003eDoramas de Drama \u0026#187; TuDorama\u003c/title\u003e\n\u003cmeta name=\"description\" content=\"Explora los mejores Doramas de Drama con historias intensas y emocionantes. Descubre los títulos más populares y estrenos en TuDorama. ¡Entra ya!\" /\u003e\n\u003cmeta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\" /\u003e\n\u003clink rel=\"canonical\" href=\"https://tudorama.com/genres/drama/\" /\u003e\n\u003cmeta property=\"og:locale\" content=\"es_ES\" /\u003e\n\u003cmeta property=\"og:type\" content=\"article\" /\u003e\n\u003cmeta property=\"og:title\" content=\"Doramas de Drama \u0026#187; TuDorama\" /\u003e\n\u003cmeta property=\"og:description\" content=\"Explora los mejores Doramas de Drama con historias intensas y emocionantes. Descubre los títulos más populares y estrenos en TuDorama. ¡Entra ya!\" /\u003e\n\u003cmeta property=\"og:url\" content=\"https://tudorama.com/genres/drama/\" /\u003e\n\u003cmeta property=\"og:site_name\" content=\"TuDorama\" /\u003e\n\u003cmeta property=\"og:image\" content=\"https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png\" /\u003e\n\t\u003cmeta property=\"og:image:width\" content=\"800\" /\u003e\n\t\u003cmeta property=\"og:image:height\" content=\"567\" /\u003e\n\t\u003cmeta property=\"og:image:type\" content=\"image/png\" /\u003e\n\u003cmeta name=\"twitter:card\" content=\"summary_large_image\" /\u003e\n\u003cscript type=\"application/ld+json\" class=\"yoast-schema-graph\"\u003e{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https:\\/\\/tudorama.com\\/genres\\/drama\\/\",\"url\":\"https:\\/\\/tudorama.com\\/genres\\/drama\\/\",\"name\":\"Doramas de Drama \u0026#187; TuDorama\",\"isPartOf\":{\"@id\":\"https:\\/\\/tudorama.com\\/#website\"},\"description\":\"Explora los mejores Doramas de Drama con historias intensas y emocionantes. Descubre los títulos más populares y estrenos en TuDorama. ¡Entra ya!\",\"breadcrumb\":{\"@id\":\"https:\\/\\/tudorama.com\\/genres\\/drama\\/#breadcrumb\"},\"inLanguage\":\"es\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/tudorama.com\\/genres\\/drama\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Portada\",\"item\":\"https:\\/\\/tudorama.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Drama\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/tudorama.com\\/#website\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"name\":\"TuDorama\",\"description\":\"Ver Doramas Online Gratis en Español\",\"publisher\":{\"@id\":\"https:\\/\\/tudorama.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/tudorama.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"es\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/tudorama.com\\/#organization\",\"name\":\"TuDorama\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"es\",\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"contentUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"width\":800,\"height\":567,\"caption\":\"TuDorama\"},\"image\":{\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.facebook.com\\/tudoramacom\",\"https:\\/\\/www.instagram.com\\/tudoramacom\",\"https:\\/\\/www.tiktok.com\\/@tudoramacom\"]}]}\u003c/script\u003e\n\u003c!-- / Yoast SEO plugin. --\u003e",
+                                              "yoast_head_json":  {
+                                                                      "title":  "Doramas de Drama \u0026#187; TuDorama",
+                                                                      "description":  "Explora los mejores Doramas de Drama con historias intensas y emocionantes. Descubre los títulos más populares y estrenos en TuDorama. ¡Entra ya!",
+                                                                      "robots":  {
+                                                                                     "index":  "index",
+                                                                                     "follow":  "follow",
+                                                                                     "max-snippet":  "max-snippet:-1",
+                                                                                     "max-image-preview":  "max-image-preview:large",
+                                                                                     "max-video-preview":  "max-video-preview:-1"
+                                                                                 },
+                                                                      "canonical":  "https://tudorama.com/genres/drama/",
+                                                                      "og_locale":  "es_ES",
+                                                                      "og_type":  "article",
+                                                                      "og_title":  "Doramas de Drama \u0026#187; TuDorama",
+                                                                      "og_description":  "Explora los mejores Doramas de Drama con historias intensas y emocionantes. Descubre los títulos más populares y estrenos en TuDorama. ¡Entra ya!",
+                                                                      "og_url":  "https://tudorama.com/genres/drama/",
+                                                                      "og_site_name":  "TuDorama",
+                                                                      "og_image":  [
+                                                                                       "@{width=800; height=567; url=https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png; type=image/png}"
+                                                                                   ],
+                                                                      "twitter_card":  "summary_large_image",
+                                                                      "schema":  {
+                                                                                     "@context":  "https://schema.org",
+                                                                                     "@graph":  "   "
+                                                                                 }
+                                                                  },
+                                              "_links":  {
+                                                             "self":  [
+                                                                          "@{href=https://tudorama.com/wp-json/wp/v2/crvs-genres/2; targetHints=}"
+                                                                      ],
+                                                             "collection":  [
+                                                                                "@{href=https://tudorama.com/wp-json/wp/v2/crvs-genres}"
+                                                                            ],
+                                                             "about":  [
+                                                                           "@{href=https://tudorama.com/wp-json/wp/v2/taxonomies/crvs-genres}"
+                                                                       ],
+                                                             "wp:post_type":  [
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/serie?crvs-genres=2}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/movie?crvs-genres=2}"
+                                                                              ],
+                                                             "curies":  [
+                                                                            "@{name=wp; href=https://api.w.org/{rel}; templated=True}"
+                                                                        ]
+                                                         }
+                                          }
+                                      ],
+                                      [
+                                          {
+                                              "id":  528,
+                                              "link":  "https://tudorama.com/year/2026/",
+                                              "name":  "2026",
+                                              "slug":  "2026",
+                                              "taxonomy":  "crvs-year",
+                                              "yoast_head":  "\u003c!-- This site is optimized with the Yoast SEO plugin v28.8 - https://yoast.com/product/yoast-seo-wordpress/ --\u003e\n\u003ctitle\u003e2026 \u0026#187; TuDorama\u003c/title\u003e\n\u003cmeta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\" /\u003e\n\u003clink rel=\"canonical\" href=\"https://tudorama.com/year/2026/\" /\u003e\n\u003cmeta property=\"og:locale\" content=\"es_ES\" /\u003e\n\u003cmeta property=\"og:type\" content=\"article\" /\u003e\n\u003cmeta property=\"og:title\" content=\"2026 \u0026#187; TuDorama\" /\u003e\n\u003cmeta property=\"og:url\" content=\"https://tudorama.com/year/2026/\" /\u003e\n\u003cmeta property=\"og:site_name\" content=\"TuDorama\" /\u003e\n\u003cmeta property=\"og:image\" content=\"https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png\" /\u003e\n\t\u003cmeta property=\"og:image:width\" content=\"800\" /\u003e\n\t\u003cmeta property=\"og:image:height\" content=\"567\" /\u003e\n\t\u003cmeta property=\"og:image:type\" content=\"image/png\" /\u003e\n\u003cmeta name=\"twitter:card\" content=\"summary_large_image\" /\u003e\n\u003cscript type=\"application/ld+json\" class=\"yoast-schema-graph\"\u003e{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https:\\/\\/tudorama.com\\/year\\/2026\\/\",\"url\":\"https:\\/\\/tudorama.com\\/year\\/2026\\/\",\"name\":\"2026 \u0026#187; TuDorama\",\"isPartOf\":{\"@id\":\"https:\\/\\/tudorama.com\\/#website\"},\"breadcrumb\":{\"@id\":\"https:\\/\\/tudorama.com\\/year\\/2026\\/#breadcrumb\"},\"inLanguage\":\"es\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/tudorama.com\\/year\\/2026\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Portada\",\"item\":\"https:\\/\\/tudorama.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"2026\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/tudorama.com\\/#website\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"name\":\"TuDorama\",\"description\":\"Ver Doramas Online Gratis en Español\",\"publisher\":{\"@id\":\"https:\\/\\/tudorama.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/tudorama.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"es\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/tudorama.com\\/#organization\",\"name\":\"TuDorama\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"es\",\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"contentUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"width\":800,\"height\":567,\"caption\":\"TuDorama\"},\"image\":{\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.facebook.com\\/tudoramacom\",\"https:\\/\\/www.instagram.com\\/tudoramacom\",\"https:\\/\\/www.tiktok.com\\/@tudoramacom\"]}]}\u003c/script\u003e\n\u003c!-- / Yoast SEO plugin. --\u003e",
+                                              "yoast_head_json":  {
+                                                                      "title":  "2026 \u0026#187; TuDorama",
+                                                                      "robots":  {
+                                                                                     "index":  "index",
+                                                                                     "follow":  "follow",
+                                                                                     "max-snippet":  "max-snippet:-1",
+                                                                                     "max-image-preview":  "max-image-preview:large",
+                                                                                     "max-video-preview":  "max-video-preview:-1"
+                                                                                 },
+                                                                      "canonical":  "https://tudorama.com/year/2026/",
+                                                                      "og_locale":  "es_ES",
+                                                                      "og_type":  "article",
+                                                                      "og_title":  "2026 \u0026#187; TuDorama",
+                                                                      "og_url":  "https://tudorama.com/year/2026/",
+                                                                      "og_site_name":  "TuDorama",
+                                                                      "og_image":  [
+                                                                                       "@{width=800; height=567; url=https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png; type=image/png}"
+                                                                                   ],
+                                                                      "twitter_card":  "summary_large_image",
+                                                                      "schema":  {
+                                                                                     "@context":  "https://schema.org",
+                                                                                     "@graph":  "   "
+                                                                                 }
+                                                                  },
+                                              "_links":  {
+                                                             "self":  [
+                                                                          "@{href=https://tudorama.com/wp-json/wp/v2/crvs-year/528; targetHints=}"
+                                                                      ],
+                                                             "collection":  [
+                                                                                "@{href=https://tudorama.com/wp-json/wp/v2/crvs-year}"
+                                                                            ],
+                                                             "about":  [
+                                                                           "@{href=https://tudorama.com/wp-json/wp/v2/taxonomies/crvs-year}"
+                                                                       ],
+                                                             "wp:post_type":  [
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/serie?crvs-year=528}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/movie?crvs-year=528}"
+                                                                              ],
+                                                             "curies":  [
+                                                                            "@{name=wp; href=https://api.w.org/{rel}; templated=True}"
+                                                                        ]
+                                                         }
+                                          }
+                                      ],
+                                      [
+                                          {
+                                              "id":  1508,
+                                              "link":  "https://tudorama.com/cast/cho-hyun-chul/",
+                                              "name":  "Cho Hyun-chul",
+                                              "slug":  "cho-hyun-chul",
+                                              "taxonomy":  "crvs-cast",
+                                              "yoast_head":  "\u003c!-- This site is optimized with the Yoast SEO plugin v28.8 - https://yoast.com/product/yoast-seo-wordpress/ --\u003e\n\u003ctitle\u003eDoramas de Cho Hyun-chul \u0026#187; TuDorama\u003c/title\u003e\n\u003cmeta name=\"robots\" content=\"noindex, follow\" /\u003e\n\u003cmeta property=\"og:locale\" content=\"es_ES\" /\u003e\n\u003cmeta property=\"og:type\" content=\"article\" /\u003e\n\u003cmeta property=\"og:title\" content=\"Doramas de Cho Hyun-chul \u0026#187; TuDorama\" /\u003e\n\u003cmeta property=\"og:url\" content=\"https://tudorama.com/cast/cho-hyun-chul/\" /\u003e\n\u003cmeta property=\"og:site_name\" content=\"TuDorama\" /\u003e\n\u003cmeta property=\"og:image\" content=\"https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png\" /\u003e\n\t\u003cmeta property=\"og:image:width\" content=\"800\" /\u003e\n\t\u003cmeta property=\"og:image:height\" content=\"567\" /\u003e\n\t\u003cmeta property=\"og:image:type\" content=\"image/png\" /\u003e\n\u003cmeta name=\"twitter:card\" content=\"summary_large_image\" /\u003e\n\u003cscript type=\"application/ld+json\" class=\"yoast-schema-graph\"\u003e{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/cho-hyun-chul\\/\",\"url\":\"https:\\/\\/tudorama.com\\/cast\\/cho-hyun-chul\\/\",\"name\":\"Doramas de Cho Hyun-chul \u0026#187; TuDorama\",\"isPartOf\":{\"@id\":\"https:\\/\\/tudorama.com\\/#website\"},\"breadcrumb\":{\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/cho-hyun-chul\\/#breadcrumb\"},\"inLanguage\":\"es\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/cho-hyun-chul\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Portada\",\"item\":\"https:\\/\\/tudorama.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Cho Hyun-chul\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/tudorama.com\\/#website\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"name\":\"TuDorama\",\"description\":\"Ver Doramas Online Gratis en Español\",\"publisher\":{\"@id\":\"https:\\/\\/tudorama.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/tudorama.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"es\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/tudorama.com\\/#organization\",\"name\":\"TuDorama\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"es\",\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"contentUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"width\":800,\"height\":567,\"caption\":\"TuDorama\"},\"image\":{\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.facebook.com\\/tudoramacom\",\"https:\\/\\/www.instagram.com\\/tudoramacom\",\"https:\\/\\/www.tiktok.com\\/@tudoramacom\"]}]}\u003c/script\u003e\n\u003c!-- / Yoast SEO plugin. --\u003e",
+                                              "yoast_head_json":  {
+                                                                      "title":  "Doramas de Cho Hyun-chul \u0026#187; TuDorama",
+                                                                      "robots":  {
+                                                                                     "index":  "noindex",
+                                                                                     "follow":  "follow"
+                                                                                 },
+                                                                      "og_locale":  "es_ES",
+                                                                      "og_type":  "article",
+                                                                      "og_title":  "Doramas de Cho Hyun-chul \u0026#187; TuDorama",
+                                                                      "og_url":  "https://tudorama.com/cast/cho-hyun-chul/",
+                                                                      "og_site_name":  "TuDorama",
+                                                                      "og_image":  [
+                                                                                       "@{width=800; height=567; url=https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png; type=image/png}"
+                                                                                   ],
+                                                                      "twitter_card":  "summary_large_image",
+                                                                      "schema":  {
+                                                                                     "@context":  "https://schema.org",
+                                                                                     "@graph":  "   "
+                                                                                 }
+                                                                  },
+                                              "_links":  {
+                                                             "self":  [
+                                                                          "@{href=https://tudorama.com/wp-json/wp/v2/crvs-cast/1508; targetHints=}"
+                                                                      ],
+                                                             "collection":  [
+                                                                                "@{href=https://tudorama.com/wp-json/wp/v2/crvs-cast}"
+                                                                            ],
+                                                             "about":  [
+                                                                           "@{href=https://tudorama.com/wp-json/wp/v2/taxonomies/crvs-cast}"
+                                                                       ],
+                                                             "wp:post_type":  [
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/serie?crvs-cast=1508}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/movie?crvs-cast=1508}"
+                                                                              ],
+                                                             "curies":  [
+                                                                            "@{name=wp; href=https://api.w.org/{rel}; templated=True}"
+                                                                        ]
+                                                         }
+                                          },
+                                          {
+                                              "id":  1510,
+                                              "link":  "https://tudorama.com/cast/choi-moon-hee/",
+                                              "name":  "Choi Moon-hee",
+                                              "slug":  "choi-moon-hee",
+                                              "taxonomy":  "crvs-cast",
+                                              "yoast_head":  "\u003c!-- This site is optimized with the Yoast SEO plugin v28.8 - https://yoast.com/product/yoast-seo-wordpress/ --\u003e\n\u003ctitle\u003eDoramas de Choi Moon-hee \u0026#187; TuDorama\u003c/title\u003e\n\u003cmeta name=\"robots\" content=\"noindex, follow\" /\u003e\n\u003cmeta property=\"og:locale\" content=\"es_ES\" /\u003e\n\u003cmeta property=\"og:type\" content=\"article\" /\u003e\n\u003cmeta property=\"og:title\" content=\"Doramas de Choi Moon-hee \u0026#187; TuDorama\" /\u003e\n\u003cmeta property=\"og:url\" content=\"https://tudorama.com/cast/choi-moon-hee/\" /\u003e\n\u003cmeta property=\"og:site_name\" content=\"TuDorama\" /\u003e\n\u003cmeta property=\"og:image\" content=\"https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png\" /\u003e\n\t\u003cmeta property=\"og:image:width\" content=\"800\" /\u003e\n\t\u003cmeta property=\"og:image:height\" content=\"567\" /\u003e\n\t\u003cmeta property=\"og:image:type\" content=\"image/png\" /\u003e\n\u003cmeta name=\"twitter:card\" content=\"summary_large_image\" /\u003e\n\u003cscript type=\"application/ld+json\" class=\"yoast-schema-graph\"\u003e{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/choi-moon-hee\\/\",\"url\":\"https:\\/\\/tudorama.com\\/cast\\/choi-moon-hee\\/\",\"name\":\"Doramas de Choi Moon-hee \u0026#187; TuDorama\",\"isPartOf\":{\"@id\":\"https:\\/\\/tudorama.com\\/#website\"},\"breadcrumb\":{\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/choi-moon-hee\\/#breadcrumb\"},\"inLanguage\":\"es\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/choi-moon-hee\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Portada\",\"item\":\"https:\\/\\/tudorama.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Choi Moon-hee\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/tudorama.com\\/#website\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"name\":\"TuDorama\",\"description\":\"Ver Doramas Online Gratis en Español\",\"publisher\":{\"@id\":\"https:\\/\\/tudorama.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/tudorama.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"es\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/tudorama.com\\/#organization\",\"name\":\"TuDorama\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"es\",\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"contentUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"width\":800,\"height\":567,\"caption\":\"TuDorama\"},\"image\":{\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.facebook.com\\/tudoramacom\",\"https:\\/\\/www.instagram.com\\/tudoramacom\",\"https:\\/\\/www.tiktok.com\\/@tudoramacom\"]}]}\u003c/script\u003e\n\u003c!-- / Yoast SEO plugin. --\u003e",
+                                              "yoast_head_json":  {
+                                                                      "title":  "Doramas de Choi Moon-hee \u0026#187; TuDorama",
+                                                                      "robots":  {
+                                                                                     "index":  "noindex",
+                                                                                     "follow":  "follow"
+                                                                                 },
+                                                                      "og_locale":  "es_ES",
+                                                                      "og_type":  "article",
+                                                                      "og_title":  "Doramas de Choi Moon-hee \u0026#187; TuDorama",
+                                                                      "og_url":  "https://tudorama.com/cast/choi-moon-hee/",
+                                                                      "og_site_name":  "TuDorama",
+                                                                      "og_image":  [
+                                                                                       "@{width=800; height=567; url=https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png; type=image/png}"
+                                                                                   ],
+                                                                      "twitter_card":  "summary_large_image",
+                                                                      "schema":  {
+                                                                                     "@context":  "https://schema.org",
+                                                                                     "@graph":  "   "
+                                                                                 }
+                                                                  },
+                                              "_links":  {
+                                                             "self":  [
+                                                                          "@{href=https://tudorama.com/wp-json/wp/v2/crvs-cast/1510; targetHints=}"
+                                                                      ],
+                                                             "collection":  [
+                                                                                "@{href=https://tudorama.com/wp-json/wp/v2/crvs-cast}"
+                                                                            ],
+                                                             "about":  [
+                                                                           "@{href=https://tudorama.com/wp-json/wp/v2/taxonomies/crvs-cast}"
+                                                                       ],
+                                                             "wp:post_type":  [
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/serie?crvs-cast=1510}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/movie?crvs-cast=1510}"
+                                                                              ],
+                                                             "curies":  [
+                                                                            "@{name=wp; href=https://api.w.org/{rel}; templated=True}"
+                                                                        ]
+                                                         }
+                                          },
+                                          {
+                                              "id":  1145,
+                                              "link":  "https://tudorama.com/cast/kang-hoon/",
+                                              "name":  "Kang Hoon",
+                                              "slug":  "kang-hoon",
+                                              "taxonomy":  "crvs-cast",
+                                              "yoast_head":  "\u003c!-- This site is optimized with the Yoast SEO plugin v28.8 - https://yoast.com/product/yoast-seo-wordpress/ --\u003e\n\u003ctitle\u003eDoramas de Kang Hoon \u0026#187; TuDorama\u003c/title\u003e\n\u003cmeta name=\"robots\" content=\"noindex, follow\" /\u003e\n\u003cmeta property=\"og:locale\" content=\"es_ES\" /\u003e\n\u003cmeta property=\"og:type\" content=\"article\" /\u003e\n\u003cmeta property=\"og:title\" content=\"Doramas de Kang Hoon \u0026#187; TuDorama\" /\u003e\n\u003cmeta property=\"og:url\" content=\"https://tudorama.com/cast/kang-hoon/\" /\u003e\n\u003cmeta property=\"og:site_name\" content=\"TuDorama\" /\u003e\n\u003cmeta property=\"og:image\" content=\"https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png\" /\u003e\n\t\u003cmeta property=\"og:image:width\" content=\"800\" /\u003e\n\t\u003cmeta property=\"og:image:height\" content=\"567\" /\u003e\n\t\u003cmeta property=\"og:image:type\" content=\"image/png\" /\u003e\n\u003cmeta name=\"twitter:card\" content=\"summary_large_image\" /\u003e\n\u003cscript type=\"application/ld+json\" class=\"yoast-schema-graph\"\u003e{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/kang-hoon\\/\",\"url\":\"https:\\/\\/tudorama.com\\/cast\\/kang-hoon\\/\",\"name\":\"Doramas de Kang Hoon \u0026#187; TuDorama\",\"isPartOf\":{\"@id\":\"https:\\/\\/tudorama.com\\/#website\"},\"breadcrumb\":{\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/kang-hoon\\/#breadcrumb\"},\"inLanguage\":\"es\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/kang-hoon\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Portada\",\"item\":\"https:\\/\\/tudorama.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Kang Hoon\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/tudorama.com\\/#website\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"name\":\"TuDorama\",\"description\":\"Ver Doramas Online Gratis en Español\",\"publisher\":{\"@id\":\"https:\\/\\/tudorama.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/tudorama.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"es\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/tudorama.com\\/#organization\",\"name\":\"TuDorama\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"es\",\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"contentUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"width\":800,\"height\":567,\"caption\":\"TuDorama\"},\"image\":{\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.facebook.com\\/tudoramacom\",\"https:\\/\\/www.instagram.com\\/tudoramacom\",\"https:\\/\\/www.tiktok.com\\/@tudoramacom\"]}]}\u003c/script\u003e\n\u003c!-- / Yoast SEO plugin. --\u003e",
+                                              "yoast_head_json":  {
+                                                                      "title":  "Doramas de Kang Hoon \u0026#187; TuDorama",
+                                                                      "robots":  {
+                                                                                     "index":  "noindex",
+                                                                                     "follow":  "follow"
+                                                                                 },
+                                                                      "og_locale":  "es_ES",
+                                                                      "og_type":  "article",
+                                                                      "og_title":  "Doramas de Kang Hoon \u0026#187; TuDorama",
+                                                                      "og_url":  "https://tudorama.com/cast/kang-hoon/",
+                                                                      "og_site_name":  "TuDorama",
+                                                                      "og_image":  [
+                                                                                       "@{width=800; height=567; url=https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png; type=image/png}"
+                                                                                   ],
+                                                                      "twitter_card":  "summary_large_image",
+                                                                      "schema":  {
+                                                                                     "@context":  "https://schema.org",
+                                                                                     "@graph":  "   "
+                                                                                 }
+                                                                  },
+                                              "_links":  {
+                                                             "self":  [
+                                                                          "@{href=https://tudorama.com/wp-json/wp/v2/crvs-cast/1145; targetHints=}"
+                                                                      ],
+                                                             "collection":  [
+                                                                                "@{href=https://tudorama.com/wp-json/wp/v2/crvs-cast}"
+                                                                            ],
+                                                             "about":  [
+                                                                           "@{href=https://tudorama.com/wp-json/wp/v2/taxonomies/crvs-cast}"
+                                                                       ],
+                                                             "wp:post_type":  [
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/serie?crvs-cast=1145}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/movie?crvs-cast=1145}"
+                                                                              ],
+                                                             "curies":  [
+                                                                            "@{name=wp; href=https://api.w.org/{rel}; templated=True}"
+                                                                        ]
+                                                         }
+                                          },
+                                          {
+                                              "id":  1512,
+                                              "link":  "https://tudorama.com/cast/kim-dong-gyun/",
+                                              "name":  "Kim Dong-gyun",
+                                              "slug":  "kim-dong-gyun",
+                                              "taxonomy":  "crvs-cast",
+                                              "yoast_head":  "\u003c!-- This site is optimized with the Yoast SEO plugin v28.8 - https://yoast.com/product/yoast-seo-wordpress/ --\u003e\n\u003ctitle\u003eDoramas de Kim Dong-gyun \u0026#187; TuDorama\u003c/title\u003e\n\u003cmeta name=\"robots\" content=\"noindex, follow\" /\u003e\n\u003cmeta property=\"og:locale\" content=\"es_ES\" /\u003e\n\u003cmeta property=\"og:type\" content=\"article\" /\u003e\n\u003cmeta property=\"og:title\" content=\"Doramas de Kim Dong-gyun \u0026#187; TuDorama\" /\u003e\n\u003cmeta property=\"og:url\" content=\"https://tudorama.com/cast/kim-dong-gyun/\" /\u003e\n\u003cmeta property=\"og:site_name\" content=\"TuDorama\" /\u003e\n\u003cmeta property=\"og:image\" content=\"https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png\" /\u003e\n\t\u003cmeta property=\"og:image:width\" content=\"800\" /\u003e\n\t\u003cmeta property=\"og:image:height\" content=\"567\" /\u003e\n\t\u003cmeta property=\"og:image:type\" content=\"image/png\" /\u003e\n\u003cmeta name=\"twitter:card\" content=\"summary_large_image\" /\u003e\n\u003cscript type=\"application/ld+json\" class=\"yoast-schema-graph\"\u003e{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/kim-dong-gyun\\/\",\"url\":\"https:\\/\\/tudorama.com\\/cast\\/kim-dong-gyun\\/\",\"name\":\"Doramas de Kim Dong-gyun \u0026#187; TuDorama\",\"isPartOf\":{\"@id\":\"https:\\/\\/tudorama.com\\/#website\"},\"breadcrumb\":{\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/kim-dong-gyun\\/#breadcrumb\"},\"inLanguage\":\"es\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/kim-dong-gyun\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Portada\",\"item\":\"https:\\/\\/tudorama.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Kim Dong-gyun\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/tudorama.com\\/#website\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"name\":\"TuDorama\",\"description\":\"Ver Doramas Online Gratis en Español\",\"publisher\":{\"@id\":\"https:\\/\\/tudorama.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/tudorama.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"es\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/tudorama.com\\/#organization\",\"name\":\"TuDorama\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"es\",\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"contentUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"width\":800,\"height\":567,\"caption\":\"TuDorama\"},\"image\":{\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.facebook.com\\/tudoramacom\",\"https:\\/\\/www.instagram.com\\/tudoramacom\",\"https:\\/\\/www.tiktok.com\\/@tudoramacom\"]}]}\u003c/script\u003e\n\u003c!-- / Yoast SEO plugin. --\u003e",
+                                              "yoast_head_json":  {
+                                                                      "title":  "Doramas de Kim Dong-gyun \u0026#187; TuDorama",
+                                                                      "robots":  {
+                                                                                     "index":  "noindex",
+                                                                                     "follow":  "follow"
+                                                                                 },
+                                                                      "og_locale":  "es_ES",
+                                                                      "og_type":  "article",
+                                                                      "og_title":  "Doramas de Kim Dong-gyun \u0026#187; TuDorama",
+                                                                      "og_url":  "https://tudorama.com/cast/kim-dong-gyun/",
+                                                                      "og_site_name":  "TuDorama",
+                                                                      "og_image":  [
+                                                                                       "@{width=800; height=567; url=https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png; type=image/png}"
+                                                                                   ],
+                                                                      "twitter_card":  "summary_large_image",
+                                                                      "schema":  {
+                                                                                     "@context":  "https://schema.org",
+                                                                                     "@graph":  "   "
+                                                                                 }
+                                                                  },
+                                              "_links":  {
+                                                             "self":  [
+                                                                          "@{href=https://tudorama.com/wp-json/wp/v2/crvs-cast/1512; targetHints=}"
+                                                                      ],
+                                                             "collection":  [
+                                                                                "@{href=https://tudorama.com/wp-json/wp/v2/crvs-cast}"
+                                                                            ],
+                                                             "about":  [
+                                                                           "@{href=https://tudorama.com/wp-json/wp/v2/taxonomies/crvs-cast}"
+                                                                       ],
+                                                             "wp:post_type":  [
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/serie?crvs-cast=1512}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/movie?crvs-cast=1512}"
+                                                                              ],
+                                                             "curies":  [
+                                                                            "@{name=wp; href=https://api.w.org/{rel}; templated=True}"
+                                                                        ]
+                                                         }
+                                          },
+                                          {
+                                              "id":  1509,
+                                              "link":  "https://tudorama.com/cast/kim-jeong-jin/",
+                                              "name":  "Kim Jeong-jin",
+                                              "slug":  "kim-jeong-jin",
+                                              "taxonomy":  "crvs-cast",
+                                              "yoast_head":  "\u003c!-- This site is optimized with the Yoast SEO plugin v28.8 - https://yoast.com/product/yoast-seo-wordpress/ --\u003e\n\u003ctitle\u003eDoramas de Kim Jeong-jin \u0026#187; TuDorama\u003c/title\u003e\n\u003cmeta name=\"robots\" content=\"noindex, follow\" /\u003e\n\u003cmeta property=\"og:locale\" content=\"es_ES\" /\u003e\n\u003cmeta property=\"og:type\" content=\"article\" /\u003e\n\u003cmeta property=\"og:title\" content=\"Doramas de Kim Jeong-jin \u0026#187; TuDorama\" /\u003e\n\u003cmeta property=\"og:url\" content=\"https://tudorama.com/cast/kim-jeong-jin/\" /\u003e\n\u003cmeta property=\"og:site_name\" content=\"TuDorama\" /\u003e\n\u003cmeta property=\"og:image\" content=\"https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png\" /\u003e\n\t\u003cmeta property=\"og:image:width\" content=\"800\" /\u003e\n\t\u003cmeta property=\"og:image:height\" content=\"567\" /\u003e\n\t\u003cmeta property=\"og:image:type\" content=\"image/png\" /\u003e\n\u003cmeta name=\"twitter:card\" content=\"summary_large_image\" /\u003e\n\u003cscript type=\"application/ld+json\" class=\"yoast-schema-graph\"\u003e{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/kim-jeong-jin\\/\",\"url\":\"https:\\/\\/tudorama.com\\/cast\\/kim-jeong-jin\\/\",\"name\":\"Doramas de Kim Jeong-jin \u0026#187; TuDorama\",\"isPartOf\":{\"@id\":\"https:\\/\\/tudorama.com\\/#website\"},\"breadcrumb\":{\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/kim-jeong-jin\\/#breadcrumb\"},\"inLanguage\":\"es\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/kim-jeong-jin\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Portada\",\"item\":\"https:\\/\\/tudorama.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Kim Jeong-jin\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/tudorama.com\\/#website\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"name\":\"TuDorama\",\"description\":\"Ver Doramas Online Gratis en Español\",\"publisher\":{\"@id\":\"https:\\/\\/tudorama.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/tudorama.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"es\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/tudorama.com\\/#organization\",\"name\":\"TuDorama\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"es\",\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"contentUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"width\":800,\"height\":567,\"caption\":\"TuDorama\"},\"image\":{\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.facebook.com\\/tudoramacom\",\"https:\\/\\/www.instagram.com\\/tudoramacom\",\"https:\\/\\/www.tiktok.com\\/@tudoramacom\"]}]}\u003c/script\u003e\n\u003c!-- / Yoast SEO plugin. --\u003e",
+                                              "yoast_head_json":  {
+                                                                      "title":  "Doramas de Kim Jeong-jin \u0026#187; TuDorama",
+                                                                      "robots":  {
+                                                                                     "index":  "noindex",
+                                                                                     "follow":  "follow"
+                                                                                 },
+                                                                      "og_locale":  "es_ES",
+                                                                      "og_type":  "article",
+                                                                      "og_title":  "Doramas de Kim Jeong-jin \u0026#187; TuDorama",
+                                                                      "og_url":  "https://tudorama.com/cast/kim-jeong-jin/",
+                                                                      "og_site_name":  "TuDorama",
+                                                                      "og_image":  [
+                                                                                       "@{width=800; height=567; url=https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png; type=image/png}"
+                                                                                   ],
+                                                                      "twitter_card":  "summary_large_image",
+                                                                      "schema":  {
+                                                                                     "@context":  "https://schema.org",
+                                                                                     "@graph":  "   "
+                                                                                 }
+                                                                  },
+                                              "_links":  {
+                                                             "self":  [
+                                                                          "@{href=https://tudorama.com/wp-json/wp/v2/crvs-cast/1509; targetHints=}"
+                                                                      ],
+                                                             "collection":  [
+                                                                                "@{href=https://tudorama.com/wp-json/wp/v2/crvs-cast}"
+                                                                            ],
+                                                             "about":  [
+                                                                           "@{href=https://tudorama.com/wp-json/wp/v2/taxonomies/crvs-cast}"
+                                                                       ],
+                                                             "wp:post_type":  [
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/serie?crvs-cast=1509}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/movie?crvs-cast=1509}"
+                                                                              ],
+                                                             "curies":  [
+                                                                            "@{name=wp; href=https://api.w.org/{rel}; templated=True}"
+                                                                        ]
+                                                         }
+                                          },
+                                          {
+                                              "id":  535,
+                                              "link":  "https://tudorama.com/cast/lee-e-dam/",
+                                              "name":  "Lee E-dam",
+                                              "slug":  "lee-e-dam",
+                                              "taxonomy":  "crvs-cast",
+                                              "yoast_head":  "\u003c!-- This site is optimized with the Yoast SEO plugin v28.8 - https://yoast.com/product/yoast-seo-wordpress/ --\u003e\n\u003ctitle\u003eDoramas de Lee E-dam \u0026#187; TuDorama\u003c/title\u003e\n\u003cmeta name=\"robots\" content=\"noindex, follow\" /\u003e\n\u003cmeta property=\"og:locale\" content=\"es_ES\" /\u003e\n\u003cmeta property=\"og:type\" content=\"article\" /\u003e\n\u003cmeta property=\"og:title\" content=\"Doramas de Lee E-dam \u0026#187; TuDorama\" /\u003e\n\u003cmeta property=\"og:url\" content=\"https://tudorama.com/cast/lee-e-dam/\" /\u003e\n\u003cmeta property=\"og:site_name\" content=\"TuDorama\" /\u003e\n\u003cmeta property=\"og:image\" content=\"https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png\" /\u003e\n\t\u003cmeta property=\"og:image:width\" content=\"800\" /\u003e\n\t\u003cmeta property=\"og:image:height\" content=\"567\" /\u003e\n\t\u003cmeta property=\"og:image:type\" content=\"image/png\" /\u003e\n\u003cmeta name=\"twitter:card\" content=\"summary_large_image\" /\u003e\n\u003cscript type=\"application/ld+json\" class=\"yoast-schema-graph\"\u003e{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/lee-e-dam\\/\",\"url\":\"https:\\/\\/tudorama.com\\/cast\\/lee-e-dam\\/\",\"name\":\"Doramas de Lee E-dam \u0026#187; TuDorama\",\"isPartOf\":{\"@id\":\"https:\\/\\/tudorama.com\\/#website\"},\"breadcrumb\":{\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/lee-e-dam\\/#breadcrumb\"},\"inLanguage\":\"es\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/lee-e-dam\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Portada\",\"item\":\"https:\\/\\/tudorama.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Lee E-dam\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/tudorama.com\\/#website\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"name\":\"TuDorama\",\"description\":\"Ver Doramas Online Gratis en Español\",\"publisher\":{\"@id\":\"https:\\/\\/tudorama.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/tudorama.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"es\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/tudorama.com\\/#organization\",\"name\":\"TuDorama\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"es\",\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"contentUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"width\":800,\"height\":567,\"caption\":\"TuDorama\"},\"image\":{\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.facebook.com\\/tudoramacom\",\"https:\\/\\/www.instagram.com\\/tudoramacom\",\"https:\\/\\/www.tiktok.com\\/@tudoramacom\"]}]}\u003c/script\u003e\n\u003c!-- / Yoast SEO plugin. --\u003e",
+                                              "yoast_head_json":  {
+                                                                      "title":  "Doramas de Lee E-dam \u0026#187; TuDorama",
+                                                                      "robots":  {
+                                                                                     "index":  "noindex",
+                                                                                     "follow":  "follow"
+                                                                                 },
+                                                                      "og_locale":  "es_ES",
+                                                                      "og_type":  "article",
+                                                                      "og_title":  "Doramas de Lee E-dam \u0026#187; TuDorama",
+                                                                      "og_url":  "https://tudorama.com/cast/lee-e-dam/",
+                                                                      "og_site_name":  "TuDorama",
+                                                                      "og_image":  [
+                                                                                       "@{width=800; height=567; url=https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png; type=image/png}"
+                                                                                   ],
+                                                                      "twitter_card":  "summary_large_image",
+                                                                      "schema":  {
+                                                                                     "@context":  "https://schema.org",
+                                                                                     "@graph":  "   "
+                                                                                 }
+                                                                  },
+                                              "_links":  {
+                                                             "self":  [
+                                                                          "@{href=https://tudorama.com/wp-json/wp/v2/crvs-cast/535; targetHints=}"
+                                                                      ],
+                                                             "collection":  [
+                                                                                "@{href=https://tudorama.com/wp-json/wp/v2/crvs-cast}"
+                                                                            ],
+                                                             "about":  [
+                                                                           "@{href=https://tudorama.com/wp-json/wp/v2/taxonomies/crvs-cast}"
+                                                                       ],
+                                                             "wp:post_type":  [
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/serie?crvs-cast=535}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/movie?crvs-cast=535}"
+                                                                              ],
+                                                             "curies":  [
+                                                                            "@{name=wp; href=https://api.w.org/{rel}; templated=True}"
+                                                                        ]
+                                                         }
+                                          },
+                                          {
+                                              "id":  863,
+                                              "link":  "https://tudorama.com/cast/lee-seo-hwan/",
+                                              "name":  "Lee Seo-hwan",
+                                              "slug":  "lee-seo-hwan",
+                                              "taxonomy":  "crvs-cast",
+                                              "yoast_head":  "\u003c!-- This site is optimized with the Yoast SEO plugin v28.8 - https://yoast.com/product/yoast-seo-wordpress/ --\u003e\n\u003ctitle\u003eDoramas de Lee Seo-hwan \u0026#187; TuDorama\u003c/title\u003e\n\u003cmeta name=\"robots\" content=\"noindex, follow\" /\u003e\n\u003cmeta property=\"og:locale\" content=\"es_ES\" /\u003e\n\u003cmeta property=\"og:type\" content=\"article\" /\u003e\n\u003cmeta property=\"og:title\" content=\"Doramas de Lee Seo-hwan \u0026#187; TuDorama\" /\u003e\n\u003cmeta property=\"og:url\" content=\"https://tudorama.com/cast/lee-seo-hwan/\" /\u003e\n\u003cmeta property=\"og:site_name\" content=\"TuDorama\" /\u003e\n\u003cmeta property=\"og:image\" content=\"https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png\" /\u003e\n\t\u003cmeta property=\"og:image:width\" content=\"800\" /\u003e\n\t\u003cmeta property=\"og:image:height\" content=\"567\" /\u003e\n\t\u003cmeta property=\"og:image:type\" content=\"image/png\" /\u003e\n\u003cmeta name=\"twitter:card\" content=\"summary_large_image\" /\u003e\n\u003cscript type=\"application/ld+json\" class=\"yoast-schema-graph\"\u003e{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/lee-seo-hwan\\/\",\"url\":\"https:\\/\\/tudorama.com\\/cast\\/lee-seo-hwan\\/\",\"name\":\"Doramas de Lee Seo-hwan \u0026#187; TuDorama\",\"isPartOf\":{\"@id\":\"https:\\/\\/tudorama.com\\/#website\"},\"breadcrumb\":{\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/lee-seo-hwan\\/#breadcrumb\"},\"inLanguage\":\"es\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/lee-seo-hwan\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Portada\",\"item\":\"https:\\/\\/tudorama.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Lee Seo-hwan\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/tudorama.com\\/#website\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"name\":\"TuDorama\",\"description\":\"Ver Doramas Online Gratis en Español\",\"publisher\":{\"@id\":\"https:\\/\\/tudorama.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/tudorama.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"es\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/tudorama.com\\/#organization\",\"name\":\"TuDorama\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"es\",\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"contentUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"width\":800,\"height\":567,\"caption\":\"TuDorama\"},\"image\":{\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.facebook.com\\/tudoramacom\",\"https:\\/\\/www.instagram.com\\/tudoramacom\",\"https:\\/\\/www.tiktok.com\\/@tudoramacom\"]}]}\u003c/script\u003e\n\u003c!-- / Yoast SEO plugin. --\u003e",
+                                              "yoast_head_json":  {
+                                                                      "title":  "Doramas de Lee Seo-hwan \u0026#187; TuDorama",
+                                                                      "robots":  {
+                                                                                     "index":  "noindex",
+                                                                                     "follow":  "follow"
+                                                                                 },
+                                                                      "og_locale":  "es_ES",
+                                                                      "og_type":  "article",
+                                                                      "og_title":  "Doramas de Lee Seo-hwan \u0026#187; TuDorama",
+                                                                      "og_url":  "https://tudorama.com/cast/lee-seo-hwan/",
+                                                                      "og_site_name":  "TuDorama",
+                                                                      "og_image":  [
+                                                                                       "@{width=800; height=567; url=https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png; type=image/png}"
+                                                                                   ],
+                                                                      "twitter_card":  "summary_large_image",
+                                                                      "schema":  {
+                                                                                     "@context":  "https://schema.org",
+                                                                                     "@graph":  "   "
+                                                                                 }
+                                                                  },
+                                              "_links":  {
+                                                             "self":  [
+                                                                          "@{href=https://tudorama.com/wp-json/wp/v2/crvs-cast/863; targetHints=}"
+                                                                      ],
+                                                             "collection":  [
+                                                                                "@{href=https://tudorama.com/wp-json/wp/v2/crvs-cast}"
+                                                                            ],
+                                                             "about":  [
+                                                                           "@{href=https://tudorama.com/wp-json/wp/v2/taxonomies/crvs-cast}"
+                                                                       ],
+                                                             "wp:post_type":  [
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/serie?crvs-cast=863}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/movie?crvs-cast=863}"
+                                                                              ],
+                                                             "curies":  [
+                                                                            "@{name=wp; href=https://api.w.org/{rel}; templated=True}"
+                                                                        ]
+                                                         }
+                                          },
+                                          {
+                                              "id":  67,
+                                              "link":  "https://tudorama.com/cast/oh-eui-sik/",
+                                              "name":  "Oh Eui-sik",
+                                              "slug":  "oh-eui-sik",
+                                              "taxonomy":  "crvs-cast",
+                                              "yoast_head":  "\u003c!-- This site is optimized with the Yoast SEO plugin v28.8 - https://yoast.com/product/yoast-seo-wordpress/ --\u003e\n\u003ctitle\u003eDoramas de Oh Eui-sik \u0026#187; TuDorama\u003c/title\u003e\n\u003cmeta name=\"robots\" content=\"noindex, follow\" /\u003e\n\u003cmeta property=\"og:locale\" content=\"es_ES\" /\u003e\n\u003cmeta property=\"og:type\" content=\"article\" /\u003e\n\u003cmeta property=\"og:title\" content=\"Doramas de Oh Eui-sik \u0026#187; TuDorama\" /\u003e\n\u003cmeta property=\"og:url\" content=\"https://tudorama.com/cast/oh-eui-sik/\" /\u003e\n\u003cmeta property=\"og:site_name\" content=\"TuDorama\" /\u003e\n\u003cmeta property=\"og:image\" content=\"https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png\" /\u003e\n\t\u003cmeta property=\"og:image:width\" content=\"800\" /\u003e\n\t\u003cmeta property=\"og:image:height\" content=\"567\" /\u003e\n\t\u003cmeta property=\"og:image:type\" content=\"image/png\" /\u003e\n\u003cmeta name=\"twitter:card\" content=\"summary_large_image\" /\u003e\n\u003cscript type=\"application/ld+json\" class=\"yoast-schema-graph\"\u003e{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/oh-eui-sik\\/\",\"url\":\"https:\\/\\/tudorama.com\\/cast\\/oh-eui-sik\\/\",\"name\":\"Doramas de Oh Eui-sik \u0026#187; TuDorama\",\"isPartOf\":{\"@id\":\"https:\\/\\/tudorama.com\\/#website\"},\"breadcrumb\":{\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/oh-eui-sik\\/#breadcrumb\"},\"inLanguage\":\"es\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/oh-eui-sik\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Portada\",\"item\":\"https:\\/\\/tudorama.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Oh Eui-sik\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/tudorama.com\\/#website\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"name\":\"TuDorama\",\"description\":\"Ver Doramas Online Gratis en Español\",\"publisher\":{\"@id\":\"https:\\/\\/tudorama.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/tudorama.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"es\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/tudorama.com\\/#organization\",\"name\":\"TuDorama\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"es\",\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"contentUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"width\":800,\"height\":567,\"caption\":\"TuDorama\"},\"image\":{\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.facebook.com\\/tudoramacom\",\"https:\\/\\/www.instagram.com\\/tudoramacom\",\"https:\\/\\/www.tiktok.com\\/@tudoramacom\"]}]}\u003c/script\u003e\n\u003c!-- / Yoast SEO plugin. --\u003e",
+                                              "yoast_head_json":  {
+                                                                      "title":  "Doramas de Oh Eui-sik \u0026#187; TuDorama",
+                                                                      "robots":  {
+                                                                                     "index":  "noindex",
+                                                                                     "follow":  "follow"
+                                                                                 },
+                                                                      "og_locale":  "es_ES",
+                                                                      "og_type":  "article",
+                                                                      "og_title":  "Doramas de Oh Eui-sik \u0026#187; TuDorama",
+                                                                      "og_url":  "https://tudorama.com/cast/oh-eui-sik/",
+                                                                      "og_site_name":  "TuDorama",
+                                                                      "og_image":  [
+                                                                                       "@{width=800; height=567; url=https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png; type=image/png}"
+                                                                                   ],
+                                                                      "twitter_card":  "summary_large_image",
+                                                                      "schema":  {
+                                                                                     "@context":  "https://schema.org",
+                                                                                     "@graph":  "   "
+                                                                                 }
+                                                                  },
+                                              "_links":  {
+                                                             "self":  [
+                                                                          "@{href=https://tudorama.com/wp-json/wp/v2/crvs-cast/67; targetHints=}"
+                                                                      ],
+                                                             "collection":  [
+                                                                                "@{href=https://tudorama.com/wp-json/wp/v2/crvs-cast}"
+                                                                            ],
+                                                             "about":  [
+                                                                           "@{href=https://tudorama.com/wp-json/wp/v2/taxonomies/crvs-cast}"
+                                                                       ],
+                                                             "wp:post_type":  [
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/serie?crvs-cast=67}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/movie?crvs-cast=67}"
+                                                                              ],
+                                                             "curies":  [
+                                                                            "@{name=wp; href=https://api.w.org/{rel}; templated=True}"
+                                                                        ]
+                                                         }
+                                          },
+                                          {
+                                              "id":  1511,
+                                              "link":  "https://tudorama.com/cast/yoon-ga-i/",
+                                              "name":  "Yoon Ga-i",
+                                              "slug":  "yoon-ga-i",
+                                              "taxonomy":  "crvs-cast",
+                                              "yoast_head":  "\u003c!-- This site is optimized with the Yoast SEO plugin v28.8 - https://yoast.com/product/yoast-seo-wordpress/ --\u003e\n\u003ctitle\u003eDoramas de Yoon Ga-i \u0026#187; TuDorama\u003c/title\u003e\n\u003cmeta name=\"robots\" content=\"noindex, follow\" /\u003e\n\u003cmeta property=\"og:locale\" content=\"es_ES\" /\u003e\n\u003cmeta property=\"og:type\" content=\"article\" /\u003e\n\u003cmeta property=\"og:title\" content=\"Doramas de Yoon Ga-i \u0026#187; TuDorama\" /\u003e\n\u003cmeta property=\"og:url\" content=\"https://tudorama.com/cast/yoon-ga-i/\" /\u003e\n\u003cmeta property=\"og:site_name\" content=\"TuDorama\" /\u003e\n\u003cmeta property=\"og:image\" content=\"https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png\" /\u003e\n\t\u003cmeta property=\"og:image:width\" content=\"800\" /\u003e\n\t\u003cmeta property=\"og:image:height\" content=\"567\" /\u003e\n\t\u003cmeta property=\"og:image:type\" content=\"image/png\" /\u003e\n\u003cmeta name=\"twitter:card\" content=\"summary_large_image\" /\u003e\n\u003cscript type=\"application/ld+json\" class=\"yoast-schema-graph\"\u003e{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/yoon-ga-i\\/\",\"url\":\"https:\\/\\/tudorama.com\\/cast\\/yoon-ga-i\\/\",\"name\":\"Doramas de Yoon Ga-i \u0026#187; TuDorama\",\"isPartOf\":{\"@id\":\"https:\\/\\/tudorama.com\\/#website\"},\"breadcrumb\":{\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/yoon-ga-i\\/#breadcrumb\"},\"inLanguage\":\"es\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/tudorama.com\\/cast\\/yoon-ga-i\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Portada\",\"item\":\"https:\\/\\/tudorama.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Yoon Ga-i\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/tudorama.com\\/#website\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"name\":\"TuDorama\",\"description\":\"Ver Doramas Online Gratis en Español\",\"publisher\":{\"@id\":\"https:\\/\\/tudorama.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/tudorama.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"es\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/tudorama.com\\/#organization\",\"name\":\"TuDorama\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"es\",\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"contentUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"width\":800,\"height\":567,\"caption\":\"TuDorama\"},\"image\":{\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.facebook.com\\/tudoramacom\",\"https:\\/\\/www.instagram.com\\/tudoramacom\",\"https:\\/\\/www.tiktok.com\\/@tudoramacom\"]}]}\u003c/script\u003e\n\u003c!-- / Yoast SEO plugin. --\u003e",
+                                              "yoast_head_json":  {
+                                                                      "title":  "Doramas de Yoon Ga-i \u0026#187; TuDorama",
+                                                                      "robots":  {
+                                                                                     "index":  "noindex",
+                                                                                     "follow":  "follow"
+                                                                                 },
+                                                                      "og_locale":  "es_ES",
+                                                                      "og_type":  "article",
+                                                                      "og_title":  "Doramas de Yoon Ga-i \u0026#187; TuDorama",
+                                                                      "og_url":  "https://tudorama.com/cast/yoon-ga-i/",
+                                                                      "og_site_name":  "TuDorama",
+                                                                      "og_image":  [
+                                                                                       "@{width=800; height=567; url=https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png; type=image/png}"
+                                                                                   ],
+                                                                      "twitter_card":  "summary_large_image",
+                                                                      "schema":  {
+                                                                                     "@context":  "https://schema.org",
+                                                                                     "@graph":  "   "
+                                                                                 }
+                                                                  },
+                                              "_links":  {
+                                                             "self":  [
+                                                                          "@{href=https://tudorama.com/wp-json/wp/v2/crvs-cast/1511; targetHints=}"
+                                                                      ],
+                                                             "collection":  [
+                                                                                "@{href=https://tudorama.com/wp-json/wp/v2/crvs-cast}"
+                                                                            ],
+                                                             "about":  [
+                                                                           "@{href=https://tudorama.com/wp-json/wp/v2/taxonomies/crvs-cast}"
+                                                                       ],
+                                                             "wp:post_type":  [
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/serie?crvs-cast=1511}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/movie?crvs-cast=1511}"
+                                                                              ],
+                                                             "curies":  [
+                                                                            "@{name=wp; href=https://api.w.org/{rel}; templated=True}"
+                                                                        ]
+                                                         }
+                                          }
+                                      ],
+                                      [
+                                          {
+                                              "id":  377,
+                                              "link":  "https://tudorama.com/director/jung-jee-hyun/",
+                                              "name":  "Jung Jee-hyun",
+                                              "slug":  "jung-jee-hyun",
+                                              "taxonomy":  "crvs-director",
+                                              "yoast_head":  "\u003c!-- This site is optimized with the Yoast SEO plugin v28.8 - https://yoast.com/product/yoast-seo-wordpress/ --\u003e\n\u003ctitle\u003eJung Jee-hyun \u0026#187; TuDorama\u003c/title\u003e\n\u003cmeta name=\"robots\" content=\"noindex, follow\" /\u003e\n\u003cmeta property=\"og:locale\" content=\"es_ES\" /\u003e\n\u003cmeta property=\"og:type\" content=\"article\" /\u003e\n\u003cmeta property=\"og:title\" content=\"Jung Jee-hyun \u0026#187; TuDorama\" /\u003e\n\u003cmeta property=\"og:url\" content=\"https://tudorama.com/director/jung-jee-hyun/\" /\u003e\n\u003cmeta property=\"og:site_name\" content=\"TuDorama\" /\u003e\n\u003cmeta property=\"og:image\" content=\"https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png\" /\u003e\n\t\u003cmeta property=\"og:image:width\" content=\"800\" /\u003e\n\t\u003cmeta property=\"og:image:height\" content=\"567\" /\u003e\n\t\u003cmeta property=\"og:image:type\" content=\"image/png\" /\u003e\n\u003cmeta name=\"twitter:card\" content=\"summary_large_image\" /\u003e\n\u003cscript type=\"application/ld+json\" class=\"yoast-schema-graph\"\u003e{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https:\\/\\/tudorama.com\\/director\\/jung-jee-hyun\\/\",\"url\":\"https:\\/\\/tudorama.com\\/director\\/jung-jee-hyun\\/\",\"name\":\"Jung Jee-hyun \u0026#187; TuDorama\",\"isPartOf\":{\"@id\":\"https:\\/\\/tudorama.com\\/#website\"},\"breadcrumb\":{\"@id\":\"https:\\/\\/tudorama.com\\/director\\/jung-jee-hyun\\/#breadcrumb\"},\"inLanguage\":\"es\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/tudorama.com\\/director\\/jung-jee-hyun\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Portada\",\"item\":\"https:\\/\\/tudorama.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Jung Jee-hyun\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/tudorama.com\\/#website\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"name\":\"TuDorama\",\"description\":\"Ver Doramas Online Gratis en Español\",\"publisher\":{\"@id\":\"https:\\/\\/tudorama.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/tudorama.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"es\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/tudorama.com\\/#organization\",\"name\":\"TuDorama\",\"url\":\"https:\\/\\/tudorama.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"es\",\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"contentUrl\":\"https:\\/\\/tudorama.com\\/wp-content\\/uploads\\/2025\\/12\\/imagen-social.png\",\"width\":800,\"height\":567,\"caption\":\"TuDorama\"},\"image\":{\"@id\":\"https:\\/\\/tudorama.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.facebook.com\\/tudoramacom\",\"https:\\/\\/www.instagram.com\\/tudoramacom\",\"https:\\/\\/www.tiktok.com\\/@tudoramacom\"]}]}\u003c/script\u003e\n\u003c!-- / Yoast SEO plugin. --\u003e",
+                                              "yoast_head_json":  {
+                                                                      "title":  "Jung Jee-hyun \u0026#187; TuDorama",
+                                                                      "robots":  {
+                                                                                     "index":  "noindex",
+                                                                                     "follow":  "follow"
+                                                                                 },
+                                                                      "og_locale":  "es_ES",
+                                                                      "og_type":  "article",
+                                                                      "og_title":  "Jung Jee-hyun \u0026#187; TuDorama",
+                                                                      "og_url":  "https://tudorama.com/director/jung-jee-hyun/",
+                                                                      "og_site_name":  "TuDorama",
+                                                                      "og_image":  [
+                                                                                       "@{width=800; height=567; url=https://tudorama.com/wp-content/uploads/2025/12/imagen-social.png; type=image/png}"
+                                                                                   ],
+                                                                      "twitter_card":  "summary_large_image",
+                                                                      "schema":  {
+                                                                                     "@context":  "https://schema.org",
+                                                                                     "@graph":  "   "
+                                                                                 }
+                                                                  },
+                                              "_links":  {
+                                                             "self":  [
+                                                                          "@{href=https://tudorama.com/wp-json/wp/v2/crvs-director/377; targetHints=}"
+                                                                      ],
+                                                             "collection":  [
+                                                                                "@{href=https://tudorama.com/wp-json/wp/v2/crvs-director}"
+                                                                            ],
+                                                             "about":  [
+                                                                           "@{href=https://tudorama.com/wp-json/wp/v2/taxonomies/crvs-director}"
+                                                                       ],
+                                                             "wp:post_type":  [
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/serie?crvs-director=377}",
+                                                                                  "@{href=https://tudorama.com/wp-json/wp/v2/movie?crvs-director=377}"
+                                                                              ],
+                                                             "curies":  [
+                                                                            "@{name=wp; href=https://api.w.org/{rel}; templated=True}"
+                                                                        ]
+                                                         }
+                                          }
+                                      ]
+                                  ]
+                  }
+}

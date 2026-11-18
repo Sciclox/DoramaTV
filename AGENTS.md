@@ -1,41 +1,66 @@
-This is an Expo/React Native mobile application. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
+# APK-DoramaTV — Reglas de Ingeniería Agéntica y Arquitectura
 
-## Expo has changed — do not trust your training data
+Esta es una aplicación nativa de **Android en Kotlin multi-módulo**, orientada tanto a **Android TV** como a **dispositivos móviles** utilizando **Jetpack Compose**.
 
-Expo ships breaking changes every SDK release. APIs you remember are likely renamed, moved, or removed. Before writing any code that touches an Expo, EAS, or React Native API:
+---
 
-1. Read the major version of the `expo` package in `package.json`.
-2. Fetch the matching versioned docs: `https://docs.expo.dev/versions/v<major>.0.0/`
-3. For anything else, fetch https://docs.expo.dev/llms.txt — an index of all Expo docs with corrections to common LLM misconceptions. Follow its links to the specific page you need; never answer from memory.
+## 1. Estructura del Proyecto y Módulos
 
-## Commands
+El código nativo reside dentro del directorio `android-app/`. Nunca ejecutes comandos de Gradle en la raíz del repositorio; hazlo siempre dentro de `android-app/`.
 
-Use `bunx` instead of `npx` if the project uses bun (`bun.lock` present).
+* `:core` — Lógica de negocio compartida, modelos de datos, clientes HTTP, parsers y repositorios comunes.
+* `:app` — Interfaz y navegación para **Android TV** (soporte estricto de D-Pad / control remoto, Compose for TV / Leanback, foco visual claro).
+* `:app-mobile` — Interfaz táctil para **móviles y tablets** (Jetpack Compose Mobile, orientación adaptable).
 
-```bash
-npx expo install <package>  # ALWAYS use instead of npm/yarn/pnpm/bun add — resolves SDK-compatible versions
-npx expo start              # start the dev server
-npx expo lint               # lint
-npx tsc --noEmit            # typecheck
-npx expo-doctor             # diagnose dependency and config issues
-npx expo install --fix      # fix incompatible package versions
+---
+
+## 2. Pila Tecnológica
+
+* **Lenguaje:** Kotlin 2.2.10
+* **UI:** Jetpack Compose (Compose Compiler 2.2.10)
+* **Build System:** Android Gradle Plugin 9.5.1 + Gradle Kotlin DSL (`*.gradle.kts`)
+* **SDK:** Android SDK moderno con soporte de foojay toolchains
+
+---
+
+## 3. Bucle Obligatorio de Autocorrección (*Self-Healing Build Loop*)
+
+> [!IMPORTANT]
+> **Prohibido pedir al usuario que actúe como QA manual de compilación o sintaxis.**
+> Como agente, tienes acceso a la terminal y debes validar tus propios cambios antes de dar una tarea por finalizada.
+
+### Comandos de Validación (ejecutados en `android-app/`):
+
+```powershell
+# 1. Comprobación rápida de tipos y compilación Kotlin:
+.\gradlew.bat compileDebugKotlin
+
+# 2. Ejecución de suite de tests unitarios:
+.\gradlew.bat testDebugUnitTest
+
+# 3. Compilación de APK debug (si se requiere validar ensamble completo):
+.\gradlew.bat assembleDebug
 ```
 
-Run lint and typecheck before declaring any task done.
+### Reglas del Ciclo de Vida:
+1. **Verificar antes de entregar:** Ejecuta siempre `.\gradlew.bat compileDebugKotlin` o `.\gradlew.bat testDebugUnitTest` tras modificar archivos en `android-app/`.
+2. **Auto-remediación:** Si la salida devuelve `BUILD FAILED` o un error de compilación:
+   - Lee el log de error o la traza completa.
+   - Corrige el código en un bucle autónomo.
+   - Vuelve a ejecutar la validación. Solo presenta el resultado al usuario cuando la salida sea `BUILD SUCCESSFUL`.
+3. **Diagnóstico de Runtime con ADB:**  
+   Si una aplicación falla en tiempo de ejecución en un emulador o dispositivo conectado, inspecciona el error con:
+   ```powershell
+   adb logcat -d *:E
+   ```
+   No solicites que el usuario copie y pegue el logcat si puedes leerlo directamente por ADB.
 
-## Navigation & Routing
+---
 
-- Use **Expo Router** for all navigation. Routes live in `src/app/` — every file there is a screen, `_layout.tsx` files define navigators. Keep non-route code (components, hooks, utils) outside `src/app/`.
-- Import `Link`, `router`, and `useLocalSearchParams` from `expo-router`.
-- Docs: https://docs.expo.dev/router/introduction.md
+## 4. Flujo de Trabajo Basado en Especificaciones (Spec-Driven)
 
-## Building with EAS
-
-Use EAS to build, sign, and submit the app in the cloud (`eas build`, `eas submit`) and to ship over-the-air updates (`eas update`) — no local Xcode or Android Studio required. Run EAS CLI as `bunx eas-cli <command>` in Bun projects, or `npx eas-cli@latest <command>` otherwise; substitute that for bare `eas` in docs examples.
-Docs: https://docs.expo.dev/eas/index.md
-
-## Rules
-
-- If `ios/` and `android/` directories do not exist, they are generated (Continuous Native Generation). Never create or edit them by hand — configure native behavior in `app.json` and config plugins.
-- Expo Go only includes its bundled native modules. After adding a library with native code, the app needs a development build: `npx expo run:ios|android` locally, or `eas build --profile development`.
-- Prefer recommended Expo modules over third-party libraries, and check your available skills before adding dependencies. Docs: https://docs.expo.dev/versions/latest/index.md
+1. Para tareas de arquitectura o refactorizaciones complejas, consulta o crea primero `docs/PLAN.md`.
+2. Mantén la separación estricta de responsabilidades:
+   - La lógica de red, parsing y datos pertenece a `:core`.
+   - La UI de televisión nunca debe mezclar componentes táctiles diseñados para móvil.
+   - La navegación de Android TV debe garantizar que cada elemento interactivo tenga un estado visual enfocado (`isFocused`).

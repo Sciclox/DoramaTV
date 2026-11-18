@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Cute Plum/Lavender Background Capsule -->
+    <path
+        android:fillColor="#23102A"
+        android:strokeColor="#FFB7C5"
+        android:strokeWidth="1.5"
+        android:pathData="M 32,36 H 76 A 16,16 0 0 1 92,52 V 56 A 16,16 0 0 1 76,72 H 32 A 16,16 0 0 1 16,56 V 52 A 16,16 0 0 1 32,36 Z" />
+    <!-- Mochi Cute Blush Left -->
+    <path
+        android:fillColor="#FF8DA1"
+        android:pathData="M 33,56 A 3,2.5 0 1 0 39,56 A 3,2.5 0 1 0 33,56 Z" />
+    <!-- Mochi Cute Blush Right -->
+    <path
+        android:fillColor="#FF8DA1"
+        android:pathData="M 69,56 A 3,2.5 0 1 0 75,56 A 3,2.5 0 1 0 69,56 Z" />
+    <!-- Happy Wink Eye Left -->
+    <path
+        android:strokeColor="#FFF0F5"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:pathData="M 36,50 Q 40,46 44,50" />
+    <!-- Happy Wink Eye Right -->
+    <path
+        android:strokeColor="#FFF0F5"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:pathData="M 64,50 Q 68,46 72,50" />
+    <!-- Glowing Center Heart (Mochi Love) -->
+    <path
+        android:fillColor="#FFB7C5"
+        android:pathData="M 54,60 C 54,60 48,55 48,51 C 48,48 50.5,46 53,48.5 L 54,49.5 L 55,48.5 C 57.5,46 60,48 60,51 C 60,55 54,60 54,60 Z" />
+    <!-- Sparkle Top Right -->
+    <path
+        android:fillColor="#FFF0F5"
+        android:pathData="M 76,34 L 77.5,38 L 81.5,39.5 L 77.5,41 L 76,45 L 74.5,41 L 70.5,39.5 L 74.5,38 Z" />
+</vector>
