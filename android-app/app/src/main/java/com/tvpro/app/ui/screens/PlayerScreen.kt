@@ -100,6 +100,11 @@ import com.tvpro.core.data.model.SubtitleTrackData
 import com.tvpro.core.data.repository.MovieRepository
 import com.tvpro.core.data.repository.WatchHistoryManager
 import com.tvpro.app.ui.theme.*
+import com.tvpro.core.domain.PlayerTimeUtils
+import com.tvpro.app.ui.components.player.DisplayLanguageOption
+import com.tvpro.app.ui.components.player.ExoAudioTrackItem
+import com.tvpro.app.ui.components.player.ExoSubtitleTrackItem
+import com.tvpro.app.ui.components.player.getCleanServerDisplayName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -107,58 +112,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
-data class ExoAudioTrackItem(
-    val group: Tracks.Group,
-    val trackIndex: Int,
-    val name: String,
-    val language: String,
-    val isSelected: Boolean,
-    val isSpanish: Boolean,
-    val isEnglish: Boolean = false
-)
-
-data class ExoSubtitleTrackItem(
-    val group: Tracks.Group,
-    val trackIndex: Int,
-    val name: String,
-    val language: String,
-    val isSelected: Boolean,
-    val isSpanish: Boolean,
-    val isEnglish: Boolean = false
-)
-
-data class DisplayLanguageOption(
-    val id: String,
-    val title: String,
-    val subtitle: String,
-    val isSelected: Boolean,
-    val onSelect: () -> Unit
-)
-
-private fun getCleanServerDisplayName(stream: StreamItem): String {
-    val src = (stream.source ?: "").lowercase()
-    val u = stream.url.lowercase()
-    return when {
-        src.contains("primeload") || u.contains("primeload") -> "★ Primeload [MEJOR]"
-        src.contains("ok.ru") || u.contains("ok.ru") -> "Ok.ru (Full HD)"
-        src.contains("voe") || u.contains("voe") -> "VOE (HD)"
-        src.contains("dood") || u.contains("dood") || u.contains("playmogo") || u.contains("do7go") -> "Doodstream"
-        src.contains("streamtape") || u.contains("streamtape") -> "Streamtape"
-        src.contains("flaswish") || src.contains("flashwish") || u.contains("flaswish") -> "FlashWish"
-        src.contains("uqload") || u.contains("uqload") -> "Uqload"
-        src.contains("mp4upload") || u.contains("mp4upload") -> "Mp4Upload"
-        src.contains("filemoon") || u.contains("filemoon") || u.contains("byse") -> "Filemoon"
-        src.contains("vidhide") || u.contains("vidhide") || u.contains("callistanise") -> "Vidhide"
-        src.contains("mixdrop") || u.contains("mixdrop") -> "Mixdrop"
-        else -> {
-            val clean = (stream.source ?: "Servidor")
-                .replace(Regex("^Servidor\\s*\\d+\\s*:\\s*", RegexOption.IGNORE_CASE), "")
-                .split("(")[0].trim()
-            if (clean.isBlank()) "Servidor" else clean
-        }
-    }
-
-}
 
 @OptIn(UnstableApi::class)
 @Composable
@@ -6941,23 +6894,11 @@ fun PlayerScreen(
 }
 
 internal fun formatTimeHms(seconds: Long): String {
-    val totalSec = seconds.coerceAtLeast(0L)
-    val h = totalSec / 3600
-    val m = (totalSec % 3600) / 60
-    val s = totalSec % 60
-    return String.format("%02d:%02d:%02d", h, m, s)
+    return PlayerTimeUtils.formatTimeHms(seconds)
 }
 
 internal fun formatTimeSec(seconds: Long): String {
-    val totalSec = seconds.coerceAtLeast(0L)
-    val h = totalSec / 3600
-    val m = (totalSec % 3600) / 60
-    val s = totalSec % 60
-    return if (h > 0) {
-        String.format("%d:%02d:%02d", h, m, s)
-    } else {
-        String.format("%02d:%02d", m, s)
-    }
+    return PlayerTimeUtils.formatTimeSec(seconds)
 }
 
 

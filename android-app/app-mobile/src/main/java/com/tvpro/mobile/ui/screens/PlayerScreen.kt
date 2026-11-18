@@ -1,9 +1,14 @@
-@file:OptIn(
+﻿@file:OptIn(
     androidx.media3.common.util.UnstableApi::class,
     androidx.compose.material3.ExperimentalMaterial3Api::class
 )
 
 package com.tvpro.mobile.ui.screens
+
+import com.tvpro.core.domain.PlayerTimeUtils
+import com.tvpro.mobile.ui.components.player.AudioWaveIndicator
+import com.tvpro.mobile.ui.components.player.DoubleTapSeekOverlay
+import com.tvpro.mobile.ui.components.player.InteractiveVerticalBar
 
 import android.app.Activity
 import android.app.PictureInPictureParams
@@ -314,7 +319,7 @@ fun MobilePlayerScreen(
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
 
-        // Hide Status Bar (señal, batería, hora) and Navigation Bar (botones de navegación)
+        // Hide Status Bar (seÃ±al, baterÃ­a, hora) and Navigation Bar (botones de navegaciÃ³n)
         insetsController.systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         insetsController.hide(WindowInsetsCompat.Type.systemBars())
@@ -356,7 +361,7 @@ fun MobilePlayerScreen(
                     selectedStreamIndex = streams.indexOf(working)
                     resolvedStreamUrl = working.url
                 } else {
-                    errorMessage = "No se encontraron enlaces de reproducción disponibles para este episodio."
+                    errorMessage = "No se encontraron enlaces de reproducciÃ³n disponibles para este episodio."
                 }
             } else {
                 val detail = seriesDetailCache ?: MovieRepository.extractMovie(movie, forceRefresh = force)
@@ -390,7 +395,7 @@ fun MobilePlayerScreen(
                 }
             }
         } catch (e: Exception) {
-            errorMessage = "Error de reproducción. Toca para reintentar."
+            errorMessage = "Error de reproducciÃ³n. Toca para reintentar."
         } finally {
             isLoadingStream = false
         }
@@ -487,7 +492,7 @@ fun MobilePlayerScreen(
                                 resolveRetryTrigger++
                             }
                         } else {
-                            errorMessage = "Error de reproducción. Toca para reintentar."
+                            errorMessage = "Error de reproducciÃ³n. Toca para reintentar."
                         }
                     }
                 })
@@ -757,15 +762,7 @@ fun MobilePlayerScreen(
     }
 
     fun formatDuration(ms: Long): String {
-        val totalSec = (ms / 1000).coerceAtLeast(0)
-        val hours = totalSec / 3600
-        val minutes = (totalSec % 3600) / 60
-        val seconds = totalSec % 60
-        return if (hours > 0) {
-            String.format("%02d:%02d:%02d", hours, minutes, seconds)
-        } else {
-            String.format("%02d:%02d", minutes, seconds)
-        }
+        return PlayerTimeUtils.formatTimeMs(ms)
     }
 
     fun enterPictureInPicture() {
@@ -1434,7 +1431,7 @@ fun MobilePlayerScreen(
                                 modifier = Modifier.size(20.dp)
                             )
                             Text(
-                                text = "Pantalla Bloqueada • Toca para desbloquear",
+                                text = "Pantalla Bloqueada â€¢ Toca para desbloquear",
                                 color = WarmIvory,
                                 fontSize = 12.5.sp,
                                 fontFamily = Inter,
@@ -1468,7 +1465,7 @@ fun MobilePlayerScreen(
                         ) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Atrás",
+                                contentDescription = "AtrÃ¡s",
                                 tint = Color.White,
                                 modifier = Modifier.size(18.dp)
                             )
@@ -1479,7 +1476,7 @@ fun MobilePlayerScreen(
                         val ep = currentEpisode
                         val cleanMovieTitle = movie.title.cleanTitle()
                         val displayTitle = if (ep != null) {
-                            "$cleanMovieTitle • T${ep.seasonNumber}:E${ep.episodeNumber}"
+                            "$cleanMovieTitle â€¢ T${ep.seasonNumber}:E${ep.episodeNumber}"
                         } else {
                             cleanMovieTitle
                         }
@@ -1506,7 +1503,7 @@ fun MobilePlayerScreen(
                                     .padding(horizontal = 10.dp, vertical = 5.dp)
                             ) {
                                 Text(
-                                    text = "Servidor ${selectedStreamIndex + 1} ▾",
+                                    text = "Servidor ${selectedStreamIndex + 1} â–¾",
                                     color = WarmIvory,
                                     fontSize = 11.sp,
                                     fontFamily = Inter,
@@ -1547,7 +1544,7 @@ fun MobilePlayerScreen(
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Subtitles,
-                                contentDescription = "Audio y Subtítulos",
+                                contentDescription = "Audio y SubtÃ­tulos",
                                 tint = Color.White,
                                 modifier = Modifier.size(18.dp)
                             )
@@ -1754,7 +1751,7 @@ fun MobilePlayerScreen(
                             fontWeight = FontWeight.Medium
                         )
 
-                        // Series quick navigation buttons: Anterior, Capítulos, Siguiente
+                        // Series quick navigation buttons: Anterior, CapÃ­tulos, Siguiente
                         if (isSeriesContent) {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
@@ -1804,12 +1801,12 @@ fun MobilePlayerScreen(
                                     ) {
                                         Icon(
                                             imageVector = Icons.Default.VideoLibrary,
-                                            contentDescription = "Capítulos",
+                                            contentDescription = "CapÃ­tulos",
                                             tint = WarmIvory,
                                             modifier = Modifier.size(14.dp)
                                         )
                                         Text(
-                                            text = "Capítulos",
+                                            text = "CapÃ­tulos",
                                             color = WarmIvory,
                                             fontSize = 11.sp,
                                             fontFamily = Inter,
@@ -2106,7 +2103,7 @@ fun MobilePlayerScreen(
                                 horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
                                 Text(
-                                    text = "Capítulos",
+                                    text = "CapÃ­tulos",
                                     fontFamily = PlusJakartaSans,
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 20.sp,
@@ -2132,7 +2129,7 @@ fun MobilePlayerScreen(
                             val curEpNum = currentEpisode?.episodeNumber ?: 1
                             val curSeasonNum = currentEpisode?.seasonNumber ?: 1
                             Text(
-                                text = "$cleanMovieTitle • T$curSeasonNum:E$curEpNum en curso",
+                                text = "$cleanMovieTitle â€¢ T$curSeasonNum:E$curEpNum en curso",
                                 fontSize = 12.sp,
                                 color = MochiLavender,
                                 fontFamily = Inter,
@@ -2328,7 +2325,7 @@ fun MobilePlayerScreen(
                                             horizontalArrangement = Arrangement.spacedBy(6.dp)
                                         ) {
                                             Text(
-                                                text = "Capítulo ${ep.episodeNumber}",
+                                                text = "CapÃ­tulo ${ep.episodeNumber}",
                                                 color = if (isCurrent) MochiStrawberryPink else WarmIvory,
                                                 fontWeight = FontWeight.Bold,
                                                 fontSize = 13.5.sp,
@@ -2472,7 +2469,7 @@ fun MobilePlayerScreen(
             ) {
                 Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
                     Text(
-                        text = "Velocidad de Reproducción",
+                        text = "Velocidad de ReproducciÃ³n",
                         fontFamily = PlusJakartaSans,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
@@ -2529,7 +2526,7 @@ fun MobilePlayerScreen(
             ) {
                 Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
                     Text(
-                        text = "Audio y Subtítulos",
+                        text = "Audio y SubtÃ­tulos",
                         fontFamily = PlusJakartaSans,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
@@ -2607,7 +2604,7 @@ fun MobilePlayerScreen(
                     // Subtitle tracks
                     val subtitleGroups = currentTracks?.groups?.filter { it.type == C.TRACK_TYPE_TEXT } ?: emptyList()
                     Text(
-                        text = "SUBTÍTULOS",
+                        text = "SUBTÃTULOS",
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Bold,
                         color = MochiLavender,
@@ -2656,7 +2653,7 @@ fun MobilePlayerScreen(
                         for (i in 0 until trackGroup.length) {
                             val format = trackGroup.getFormat(i)
                             val isSelected = !isSubtitlesDisabled && group.isTrackSelected(i)
-                            val trackLabel = format.label ?: format.language ?: "Subtítulo ${i + 1}"
+                            val trackLabel = format.label ?: format.language ?: "SubtÃ­tulo ${i + 1}"
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -2700,270 +2697,4 @@ fun MobilePlayerScreen(
         }
     }
 }
-}
-
-@Composable
-private fun DoubleTapSeekOverlay(
-    side: String,
-    seconds: Int,
-    trigger: Int,
-    modifier: Modifier = Modifier
-) {
-    val isForward = side == "RIGHT"
-
-    // Infinite wave animation for 3 chevrons
-    val transition = rememberInfiniteTransition(label = "double_tap_wave")
-    val wavePhase by transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 3f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 650, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart
-        ),
-        label = "wave_phase"
-    )
-
-    // Tactile spring bounce on each tap
-    val scaleAnim = remember { Animatable(1f) }
-    LaunchedEffect(trigger) {
-        scaleAnim.snapTo(1.15f)
-        scaleAnim.animateTo(
-            targetValue = 1f,
-            animationSpec = spring(dampingRatio = 0.5f, stiffness = 400f)
-        )
-    }
-
-    // Outer half-screen curved arc
-    Box(
-        modifier = modifier
-            .fillMaxHeight()
-            .fillMaxWidth(0.46f)
-            .clip(
-                if (isForward) RoundedCornerShape(topStartPercent = 100, bottomStartPercent = 100)
-                else RoundedCornerShape(topEndPercent = 100, bottomEndPercent = 100)
-            )
-            .background(
-                Brush.horizontalGradient(
-                    colors = if (isForward) {
-                        listOf(
-                            Color.Transparent,
-                            Color(0x14FFFFFF),
-                            Color(0x30FFFFFF)
-                        )
-                    } else {
-                        listOf(
-                            Color(0x30FFFFFF),
-                            Color(0x14FFFFFF),
-                            Color.Transparent
-                        )
-                    }
-                )
-            ),
-        contentAlignment = Alignment.Center
-    ) {
-        // Floating glass capsule badge
-        Box(
-            modifier = Modifier
-                .graphicsLayer {
-                    scaleX = scaleAnim.value
-                    scaleY = scaleAnim.value
-                }
-                .clip(RoundedCornerShape(28.dp))
-                .background(Color(0x8805080E))
-                .border(1.dp, Color(0x33FFFFFF), RoundedCornerShape(28.dp))
-                .padding(horizontal = 22.dp, vertical = 12.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                // 3 Cascading Chevrons Wave
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy((-6).dp)
-                ) {
-                    val chevronIndices = if (isForward) listOf(0, 1, 2) else listOf(2, 1, 0)
-                    for (i in chevronIndices) {
-                        val distance = (wavePhase - i).mod(3f)
-                        val alpha = if (distance in 0f..1.1f) 1.0f else 0.28f
-                        val chevronScale = if (distance in 0f..1.1f) 1.12f else 0.88f
-
-                        Icon(
-                            imageVector = Icons.Default.PlayArrow,
-                            contentDescription = null,
-                            tint = Color.White.copy(alpha = alpha),
-                            modifier = Modifier
-                                .size(24.dp)
-                                .graphicsLayer {
-                                    scaleX = if (isForward) chevronScale else -chevronScale
-                                    scaleY = chevronScale
-                                }
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(5.dp))
-
-                Text(
-                    text = "${seconds} segundos",
-                    color = Color.White,
-                    fontFamily = Inter,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 12.sp,
-                    letterSpacing = 0.3.sp
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun InteractiveVerticalBar(
-    level: Float,
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
-    accentColor: Color,
-    isLeft: Boolean,
-    onLevelChange: (Float) -> Unit,
-    onInteractionStart: () -> Unit,
-    onInteractionEnd: () -> Unit,
-    onIconClick: (() -> Unit)? = null,
-    modifier: Modifier = Modifier
-) {
-    val cleanLevel = level.coerceIn(0f, 1f)
-    var trackHeightPx by remember { mutableFloatStateOf(120f) }
-    var trackTopInBoxPx by remember { mutableFloatStateOf(40f) }
-
-    Box(
-        modifier = modifier
-            .windowInsetsPadding(WindowInsets.safeDrawing.only(if (isLeft) WindowInsetsSides.Start else WindowInsetsSides.End))
-            .padding(start = if (isLeft) 28.dp else 0.dp, end = if (!isLeft) 28.dp else 0.dp)
-            .width(48.dp)
-            .height(180.dp)
-            .clip(RoundedCornerShape(24.dp))
-            .background(Color(0xD906080C))
-            .border(1.dp, Color.White.copy(alpha = 0.20f), RoundedCornerShape(24.dp))
-            .pointerInput(trackHeightPx, trackTopInBoxPx) {
-                awaitEachGesture {
-                    val down = awaitFirstDown(requireUnconsumed = false)
-                    down.consume()
-                    onInteractionStart()
-
-                    fun calculateFraction(posY: Float): Float {
-                        val safeHeight = trackHeightPx.coerceAtLeast(1f)
-                        val relY = (posY - trackTopInBoxPx).coerceIn(0f, safeHeight)
-                        return (1f - (relY / safeHeight)).coerceIn(0f, 1f)
-                    }
-
-                    onLevelChange(calculateFraction(down.position.y))
-
-                    while (true) {
-                        val event = awaitPointerEvent()
-                        val change = event.changes.firstOrNull { it.id == down.id } ?: break
-                        if (!change.pressed) {
-                            change.consume()
-                            break
-                        }
-                        change.consume()
-                        onLevelChange(calculateFraction(change.position.y))
-                    }
-                    onInteractionEnd()
-                }
-            }
-            .padding(vertical = 12.dp, horizontal = 6.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxHeight(),
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            // Icon button at the top
-            Box(
-                modifier = Modifier
-                    .size(28.dp)
-                    .clip(CircleShape)
-                    .clickable(enabled = onIconClick != null) {
-                        onIconClick?.invoke()
-                    },
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    tint = accentColor,
-                    modifier = Modifier.size(20.dp)
-                )
-            }
-
-            // Vertical Track and Level Fill
-            Box(
-                modifier = Modifier
-                    .width(8.dp)
-                    .weight(1f)
-                    .padding(vertical = 8.dp)
-                    .onGloballyPositioned { coordinates ->
-                        trackHeightPx = coordinates.size.height.toFloat().coerceAtLeast(1f)
-                        trackTopInBoxPx = coordinates.positionInParent().y
-                    }
-                    .clip(RoundedCornerShape(4.dp))
-                    .background(Color.White.copy(alpha = 0.22f)),
-                contentAlignment = Alignment.BottomCenter
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(cleanLevel)
-                        .clip(RoundedCornerShape(4.dp))
-                        .background(accentColor)
-                )
-            }
-
-            // Percentage text at the bottom
-            Text(
-                text = "${(cleanLevel * 100).roundToInt()}%",
-                color = Color.White,
-                fontFamily = Inter,
-                fontWeight = FontWeight.Bold,
-                fontSize = 11.sp,
-                maxLines = 1
-            )
-        }
-    }
-}
-
-@Composable
-fun AudioWaveIndicator(
-    color: Color = MochiStrawberryPink,
-    modifier: Modifier = Modifier
-) {
-    val infiniteTransition = rememberInfiniteTransition(label = "audio_wave")
-    val b1 by infiniteTransition.animateFloat(
-        initialValue = 0.35f,
-        targetValue = 1f,
-        animationSpec = infiniteRepeatable(tween(420, easing = FastOutSlowInEasing), RepeatMode.Reverse),
-        label = "b1"
-    )
-    val b2 by infiniteTransition.animateFloat(
-        initialValue = 0.85f,
-        targetValue = 0.25f,
-        animationSpec = infiniteRepeatable(tween(360, easing = FastOutSlowInEasing), RepeatMode.Reverse),
-        label = "b2"
-    )
-    val b3 by infiniteTransition.animateFloat(
-        initialValue = 0.40f,
-        targetValue = 0.95f,
-        animationSpec = infiniteRepeatable(tween(490, easing = FastOutSlowInEasing), RepeatMode.Reverse),
-        label = "b3"
-    )
-
-    Row(
-        modifier = modifier.size(width = 16.dp, height = 14.dp),
-        horizontalArrangement = Arrangement.spacedBy(2.dp),
-        verticalAlignment = Alignment.Bottom
-    ) {
-        Box(modifier = Modifier.weight(1f).fillMaxHeight(b1).clip(RoundedCornerShape(1.dp)).background(color))
-        Box(modifier = Modifier.weight(1f).fillMaxHeight(b2).clip(RoundedCornerShape(1.dp)).background(color))
-        Box(modifier = Modifier.weight(1f).fillMaxHeight(b3).clip(RoundedCornerShape(1.dp)).background(color))
-    }
 }

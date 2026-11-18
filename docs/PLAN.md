@@ -32,7 +32,7 @@
 
 ---
 
-### Fase 4: Modularización de ViewModels, Dominio y Tests (En Progreso)
+### Fase 4: Modularización de ViewModels, Dominio y UI del Reproductor (Completada)
 - [x] Configurar suite de pruebas unitarias en `:app-mobile/build.gradle.kts` e implementar [`MovieUiUtilsTest.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app-mobile/src/test/java/com/tvpro/mobile/ui/MovieUiUtilsTest.kt) (`:app-mobile:testDebugUnitTest` -> `BUILD SUCCESSFUL`).
 - [x] Extraer lógica de dominio del reproductor a `:core`:
   - [`PlayerTimeUtils.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/domain/PlayerTimeUtils.kt) (Formateo unificado de tiempo).
@@ -40,5 +40,17 @@
   - [`EpisodeNavigator.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/domain/EpisodeNavigator.kt) (Navegación entre temporadas y episodios).
 - [x] Suite de pruebas de dominio validada en `:core`:
   - [`PlayerDomainTest.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/test/java/com/tvpro/core/domain/PlayerDomainTest.kt) (`:core:testDebugUnitTest` -> `BUILD SUCCESSFUL`).
+- [x] Fragmentar componentes visuales del reproductor:
+  - [`MobilePlayerGestures.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app-mobile/src/main/java/com/tvpro/mobile/ui/components/player/MobilePlayerGestures.kt) (Extracción de `DoubleTapSeekOverlay`, `InteractiveVerticalBar`, `AudioWaveIndicator`).
+  - [`PlayerTrackModels.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app/src/main/java/com/tvpro/app/ui/components/player/PlayerTrackModels.kt) (Modelos de audio/subtítulos y normalizador de nombres de servidor para TV).
+  - Unificación de formateadores de tiempo en `PlayerScreen.kt` (TV y Mobile) delegando a `PlayerTimeUtils`.
+- [x] Validación completa de suites de pruebas:
+  - `:app-mobile:testDebugUnitTest` -> `BUILD SUCCESSFUL`.
+  - `:app:testDebugUnitTest` -> `BUILD SUCCESSFUL`.
 - [x] Validación de paridad TV / Mobile (`:app:compileDebugKotlin` y `:app-mobile:compileDebugKotlin` -> `BUILD SUCCESSFUL`).
-- [ ] Fragmentar `PlayerScreen.kt` en sub-componentes modulares.
+
+---
+
+### Fase 5: Unificación de ViewModels y Limpieza de MovieRepository (Siguiente Paso)
+- [ ] Mover lógica compartida de catálogo de `MobileHomeViewModel` y `HomeViewModel` a un UseCase o ViewModel base en `:core`.
+- [ ] Refactorizar `MovieRepository.kt` para usar `ExtractorRegistry` y separar caches de red.
