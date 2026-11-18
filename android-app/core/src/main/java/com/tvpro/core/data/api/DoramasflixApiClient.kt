@@ -1,6 +1,8 @@
 package com.tvpro.core.data.api
 
 import android.util.Base64
+import com.tvpro.core.data.extractor.ExtractorRegistry
+import com.tvpro.core.data.extractor.StreamFormat
 import com.tvpro.core.data.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -436,35 +438,57 @@ object DoramasflixApiClient {
         results
     }
 
+    private fun extractDomainBrand(url: String): String {
+        return try {
+            val uri = java.net.URI(url)
+            val host = uri.host ?: ""
+            val parts = host.removePrefix("www.").split(".")
+            if (parts.size >= 2) {
+                val brand = if (parts.size > 2 && parts.last().length <= 3 && parts[parts.size - 2].length <= 3) {
+                    parts[parts.size - 3]
+                } else {
+                    parts[parts.size - 2]
+                }
+                brand.replaceFirstChar { if (it.isLowerCase()) it.titlecase(java.util.Locale.ROOT) else it.toString() }
+            } else {
+                host.ifBlank { "Alternativo" }
+            }
+        } catch (_: Exception) {
+            "Alternativo"
+        }
+    }
+
     private fun resolveServerInfo(serverCode: String, url: String): Pair<String, Int> {
         val lower = url.lowercase()
         return when {
             serverCode == "1113" || lower.contains("ok.ru") || lower.contains("odnoklassniki") ->
                 Pair("Ok.ru (Full HD)", 1)
-            serverCode == "1230" || lower.contains("voe.sx") || lower.contains("arianathankspecial") || lower.contains("delivery") ->
+            serverCode == "1230" || lower.contains("voe.sx") || lower.contains("voe-network") || lower.contains("arianathankspecial") || lower.contains("delivery") ->
                 Pair("VOE", 2)
-            serverCode == "4721" || lower.contains("primeload") ->
-                Pair("Primeload (Oficial HD)", 3)
-            serverCode == "7286" || lower.contains("dood") || lower.contains("playmogo") || lower.contains("do7go") ->
-                Pair("Doodstream", 4)
-            serverCode == "38585" || lower.contains("flaswish") ->
-                Pair("FlashWish", 5)
-            serverCode == "8309" || lower.contains("streamtape") ->
-                Pair("Streamtape", 6)
-            serverCode == "1233" || lower.contains("uqload") ->
-                Pair("Uqload", 7)
-            serverCode == "1234" || lower.contains("mp4upload") ->
-                Pair("Mp4Upload", 8)
-            serverCode == "1239" || lower.contains("sbembed") || lower.contains("watchsb") || lower.contains("streamsb") ->
-                Pair("StreamSB", 9)
             serverCode == "958695" || lower.contains("filemoon") || lower.contains("byse") ->
-                Pair("Filemoon", 20)
+                Pair("Filemoon", 3)
+            serverCode == "38585" || lower.contains("flaswish") || lower.contains("streamwish") || lower.contains("wishembed") ->
+                Pair("FlashWish", 4)
+            serverCode == "8309" || lower.contains("streamtape") || lower.contains("strtape") ->
+                Pair("Streamtape", 5)
+            serverCode == "7286" || lower.contains("dood") || lower.contains("playmogo") || lower.contains("do7go") ->
+                Pair("Doodstream", 6)
+            serverCode == "4721" || lower.contains("primeload") ->
+                Pair("Primeload (Oficial HD)", 7)
+            serverCode == "1233" || lower.contains("uqload") ->
+                Pair("Uqload", 8)
+            serverCode == "1234" || lower.contains("mp4upload") ->
+                Pair("Mp4Upload", 9)
+            serverCode == "1239" || lower.contains("sbembed") || lower.contains("watchsb") || lower.contains("streamsb") ->
+                Pair("StreamSB", 10)
             serverCode == "576857" || lower.contains("callistanise") || lower.contains("vidhide") ->
-                Pair("Vidhide", 21)
+                Pair("Vidhide", 20)
             serverCode == "3889" || lower.contains("mixdrop") || lower.contains("m1xdrop") ->
-                Pair("Mixdrop", 22)
-            else ->
-                Pair("Servidor $serverCode", 25)
+                Pair("Mixdrop", 21)
+            else -> {
+                val brand = extractDomainBrand(url)
+                Pair(if (brand != "Alternativo") brand else "Servidor $serverCode", 25)
+            }
         }
     }
 
@@ -535,6 +559,18 @@ object DoramasflixApiClient {
 
         val rawLinks = mutableListOf<JSONObject>()
 
+        // 1. Query App Doramasflix partition ("doramasflix") FIRST to guarantee Ok.ru priority
+        var flixRes: JSONObject? = null
+        flixRes = postGraphQL(flixGql, variables, "EpisodeLinksOnlineFlix")
+        val flixArr = flixRes?.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
+        if (flixArr != null) {
+            for (i in 0 until flixArr.length()) {
+                flixArr.optJSONObject(i)?.let { rawLinks.add(it) }
+            }
+        }
+
+        // 2. Query Web Doramasflix API (standard Web endpoints, complete catalog)
+        kotlinx.coroutines.delay(300L)
         val webRes = postGraphQL(webGql, variables, "EpisodeLinksOnlineWeb")
         val webArr = webRes?.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
         if (webArr != null) {
@@ -543,23 +579,14 @@ object DoramasflixApiClient {
             }
         }
 
+        // 3. Query App Doramasflix API (doramasgo partition with complementary server links)
         var appRes: JSONObject? = null
-        kotlinx.coroutines.delay(400L)
+        kotlinx.coroutines.delay(300L)
         appRes = postGraphQL(appGql, variables, "EpisodeLinksOnlineApp")
         val appArr = appRes?.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
         if (appArr != null) {
             for (i in 0 until appArr.length()) {
                 appArr.optJSONObject(i)?.let { rawLinks.add(it) }
-            }
-        }
-
-        var flixRes: JSONObject? = null
-        kotlinx.coroutines.delay(400L)
-        flixRes = postGraphQL(flixGql, variables, "EpisodeLinksOnlineFlix")
-        val flixArr = flixRes?.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
-        if (flixArr != null) {
-            for (i in 0 until flixArr.length()) {
-                flixArr.optJSONObject(i)?.let { rawLinks.add(it) }
             }
         }
 
@@ -571,6 +598,14 @@ object DoramasflixApiClient {
                               flixRes.optJSONArray("errors")?.toString()?.contains("ThrottlerException") == true
             if (isThrottled) {
                 kotlinx.coroutines.delay(1200L)
+                val retryFlix = postGraphQL(flixGql, variables, "EpisodeLinksOnlineFlix")
+                val retryFlixArr = retryFlix?.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
+                if (retryFlixArr != null) {
+                    for (i in 0 until retryFlixArr.length()) {
+                        retryFlixArr.optJSONObject(i)?.let { rawLinks.add(it) }
+                    }
+                }
+                kotlinx.coroutines.delay(300L)
                 val retryRes = postGraphQL(webGql, variables, "EpisodeLinksOnlineWeb")
                 val retryArr = retryRes?.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
                 if (retryArr != null) {
@@ -578,7 +613,7 @@ object DoramasflixApiClient {
                         retryArr.optJSONObject(i)?.let { rawLinks.add(it) }
                     }
                 }
-                kotlinx.coroutines.delay(400L)
+                kotlinx.coroutines.delay(300L)
                 val retryApp = postGraphQL(appGql, variables, "EpisodeLinksOnlineApp")
                 val retryAppArr = retryApp?.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
                 if (retryAppArr != null) {
@@ -642,95 +677,41 @@ object DoramasflixApiClient {
 
         val streamItems = mutableListOf<StreamItem>()
         for (candidate in sortedCandidates) {
-            val isOkRu = candidate.serverName.contains("Ok.ru") || candidate.url.contains("ok.ru") || candidate.url.contains("odnoklassniki")
-            val isVoe = candidate.serverName.contains("VOE", ignoreCase = true) || candidate.url.contains("voe.sx", ignoreCase = true) || candidate.url.contains("arianathankspecial", ignoreCase = true)
-            val isVidhide = candidate.serverName.contains("Vidhide", ignoreCase = true) || candidate.url.contains("callistanise", ignoreCase = true) || candidate.url.contains("vidhide", ignoreCase = true)
+            var extractedAny = false
+            val extractor = ExtractorRegistry.findExtractor(candidate.url)
+            if (extractor != null) {
+                try {
+                    val result = extractor.extract(candidate.url)
+                    val extractedList = result.getOrNull()
+                    if (!extractedList.isNullOrEmpty()) {
+                        for (extracted in extractedList) {
+                            extractedAny = true
+                            streamItems.add(
+                                StreamItem(
+                                    url = extracted.url,
+                                    type = if (extracted.format == StreamFormat.HLS) "HLS" else "MP4",
+                                    source = "${extracted.serverName} (${if (extracted.format == StreamFormat.HLS) "HLS" else "Direct Full HD"}) (${candidate.langLabel})",
+                                    foundVia = "Doramasflix ExtractorRegistry (${extracted.serverName})",
+                                    subtitleTracks = extracted.subtitles
+                                )
+                            )
+                        }
+                    }
+                } catch (e: Exception) {
+                    android.util.Log.w("DoramasflixApiClient", "Extractor failed for ${candidate.url}: ${e.message}")
+                }
+            }
 
-            if (isOkRu) {
-                val direct = OkRuExtractor.extract(candidate.url)
-                if (direct != null) {
-                    val directMp4 = direct.hdMp4Url ?: direct.sdMp4Url ?: direct.bestDirectUrl
-                    if (!directMp4.isNullOrBlank()) {
-                        streamItems.add(
-                            StreamItem(
-                                url = directMp4,
-                                type = "MP4",
-                                source = "Ok.ru (Direct Full HD) (${candidate.langLabel})",
-                                foundVia = "Doramasflix Ok.ru Direct"
-                            )
-                        )
-                    }
-                    if (!direct.hlsUrl.isNullOrBlank()) {
-                        streamItems.add(
-                            StreamItem(
-                                url = direct.hlsUrl,
-                                type = "HLS",
-                                source = "Ok.ru (Adaptive HLS) (${candidate.langLabel})",
-                                foundVia = "Doramasflix Ok.ru HLS"
-                            )
-                        )
-                    }
-                }
-                // Keep embed fallback
+            // Exclude dead hosts when direct extraction fails (e.g. 404 VOE or dead 502 Vidhide)
+            val isDeadVoe = candidate.serverName.contains("VOE", ignoreCase = true) && !extractedAny
+            val isDeadVidhide = candidate.serverName.contains("Vidhide", ignoreCase = true) && !extractedAny
+
+            if (!isDeadVoe && !isDeadVidhide) {
                 streamItems.add(
                     StreamItem(
                         url = candidate.url,
                         type = "EMBED",
-                        source = "Ok.ru (Web Player) (${candidate.langLabel})",
-                        foundVia = "Doramasflix Ok.ru Embed"
-                    )
-                )
-            } else if (isVoe) {
-                val direct = VoeExtractor.extract(candidate.url)
-                if (direct != null) {
-                    if (!direct.hlsUrl.isNullOrBlank()) {
-                        streamItems.add(
-                            StreamItem(
-                                url = direct.hlsUrl,
-                                type = "HLS",
-                                source = "VOE (Direct Ultra HD) (${candidate.langLabel})",
-                                foundVia = "Doramasflix VOE Direct HLS"
-                            )
-                        )
-                    }
-                    if (!direct.mp4Url.isNullOrBlank()) {
-                        streamItems.add(
-                            StreamItem(
-                                url = direct.mp4Url,
-                                type = "MP4",
-                                source = "VOE (Direct MP4) (${candidate.langLabel})",
-                                foundVia = "Doramasflix VOE Direct MP4"
-                            )
-                        )
-                    }
-                    // Keep embed fallback only if video was successfully extracted and alive
-                    streamItems.add(
-                        StreamItem(
-                            url = candidate.url,
-                            type = "EMBED",
-                            source = "VOE (Web Player) (${candidate.langLabel})",
-                            foundVia = "Doramasflix VOE Embed"
-                        )
-                    )
-                }
-                // If direct == null, video is 404/deleted: DO NOT add dead VOE embed!
-            } else if (isVidhide) {
-                // Vidhide dramiyos-cdn.com is dead (502) and embed has Cloudflare Turnstile captcha.
-                // Demote to lowest priority embed only.
-                streamItems.add(
-                    StreamItem(
-                        url = candidate.url,
-                        type = "EMBED",
-                        source = "Vidhide (Web Player) (${candidate.langLabel})",
-                        foundVia = "Doramasflix Vidhide Embed"
-                    )
-                )
-            } else {
-                streamItems.add(
-                    StreamItem(
-                        url = candidate.url,
-                        type = "EMBED",
-                        source = "${candidate.serverName} (${candidate.langLabel})",
+                        source = "${candidate.serverName} (Web Player) (${candidate.langLabel})",
                         foundVia = "Doramasflix ${candidate.serverName}"
                     )
                 )
@@ -738,7 +719,14 @@ object DoramasflixApiClient {
         }
 
         // Prioritize DIRECT native streams (MP4/HLS) first for high-performance instant playback in ExoPlayer
-        val prioritizedStreams = streamItems.sortedBy { if (it.type == "MP4" || it.type == "HLS") 0 else 1 }
+        val prioritizedStreams = streamItems.sortedWith(
+            compareBy(
+                { if (it.type == "MP4" || it.type == "HLS") 0 else 1 },
+                { if (it.source?.contains("Ok.ru", ignoreCase = true) == true) 0 else 1 },
+                { if (it.source?.contains("VOE", ignoreCase = true) == true) 0 else 1 },
+                { if (it.source?.contains("Latino", ignoreCase = true) == true) 0 else 1 }
+            )
+        )
 
         // Assign clean progressive server numbering: Servidor 1, Servidor 2, etc.
         val finalStreams = prioritizedStreams.mapIndexed { index, item ->

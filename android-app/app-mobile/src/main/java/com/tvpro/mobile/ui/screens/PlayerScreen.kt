@@ -693,12 +693,69 @@ fun MobilePlayerScreen(
         exoPlayer.play()
     }
 
-    // Embed Video position and state sync ticker
-    LaunchedEffect(isEmbedStream, webViewRef) {
+    // Embed Video position and state sync ticker with dead-host detector & auto-failover
+    LaunchedEffect(isEmbedStream, webViewRef, selectedStreamIndex) {
         if (!isEmbedStream) return@LaunchedEffect
+        var lastMobilePos = -1.0
+        var mobileStallTicks = 0
+        var mobileNoDurTicks = 0
         while (isActive) {
             val syncJs = """
                 (function() {
+                    var bodyText = (document.body ? (document.body.innerText || document.body.textContent || '') : '').toLowerCase();
+                    var errorPhrases = [
+                        '232001',
+                        'not found',
+                        'video you are looking for is not found',
+                        'file not found',
+                        'file was deleted',
+                        'video deleted',
+                        'video has been removed',
+                        'no se puede reproducir',
+                        'archivo de video no se puede reproducir',
+                        'video file cannot be played',
+                        'error loading media',
+                        'the media playback was aborted',
+                        'expired or has been deleted',
+                        'no longer available',
+                        'contenido no disponible',
+                        'error 404',
+                        '404 not found',
+                        'access denied',
+                        'blocked',
+                        'forbidden'
+                    ];
+                    var isDead = false;
+                    var deadReason = '';
+                    for (var ep = 0; ep < errorPhrases.length; ep++) {
+                        if (bodyText.includes(errorPhrases[ep])) {
+                            isDead = true;
+                            deadReason = errorPhrases[ep];
+                            break;
+                        }
+                    }
+                    if (!isDead) {
+                        var iframes = document.querySelectorAll('iframe');
+                        for (var i = 0; i < iframes.length; i++) {
+                            try {
+                                var idoc = iframes[i].contentDocument;
+                                if (idoc && idoc.body) {
+                                    var itxt = (idoc.body.innerText || idoc.body.textContent || '').toLowerCase();
+                                    for (var ep = 0; ep < errorPhrases.length; ep++) {
+                                        if (itxt.includes(errorPhrases[ep])) {
+                                            isDead = true;
+                                            deadReason = 'iframe: ' + errorPhrases[ep];
+                                            break;
+                                        }
+                                    }
+                                    if (isDead) break;
+                                }
+                            } catch(e) {}
+                        }
+                    }
+                    if (isDead) {
+                        return JSON.stringify({ dead: true, reason: deadReason });
+                    }
                     var v = document.querySelector('video');
                     if (v && v.duration && !isNaN(v.duration)) {
                         return JSON.stringify({ cur: v.currentTime, dur: v.duration, paused: v.paused });
@@ -720,14 +777,47 @@ fun MobilePlayerScreen(
                     if (!cleaned.isNullOrBlank() && cleaned != "null" && cleaned.startsWith("{")) {
                         val unescaped = cleaned.replace("\\\"", "\"")
                         val json = org.json.JSONObject(unescaped)
+                        if (json.optBoolean("dead", false)) {
+                            if (streamList.size > 1 && selectedStreamIndex < streamList.size - 1) {
+                                selectedStreamIndex++
+                                resolvedStreamUrl = streamList[selectedStreamIndex].url
+                            }
+                            return@evaluateJavascript
+                        }
                         val curSec = json.optDouble("cur", 0.0)
                         val durSec = json.optDouble("dur", 0.0)
                         val isP = !json.optBoolean("paused", false)
                         if (durSec > 0) {
+                            mobileNoDurTicks = 0
                             totalDurationMs = (durSec * 1000).toLong()
                             currentPositionMs = (curSec * 1000).toLong()
                             isPlaying = isP
                             isBuffering = false
+                            if (curSec != lastMobilePos) {
+                                lastMobilePos = curSec
+                                mobileStallTicks = 0
+                            } else if (isPlaying) {
+                                mobileStallTicks++
+                                if (mobileStallTicks >= 10 && streamList.size > 1 && selectedStreamIndex < streamList.size - 1) {
+                                    mobileStallTicks = 0
+                                    selectedStreamIndex++
+                                    resolvedStreamUrl = streamList[selectedStreamIndex].url
+                                }
+                            }
+                        } else {
+                            mobileNoDurTicks++
+                            if (mobileNoDurTicks >= 10 && streamList.size > 1 && selectedStreamIndex < streamList.size - 1) {
+                                mobileNoDurTicks = 0
+                                selectedStreamIndex++
+                                resolvedStreamUrl = streamList[selectedStreamIndex].url
+                            }
+                        }
+                    } else {
+                        mobileNoDurTicks++
+                        if (mobileNoDurTicks >= 10 && streamList.size > 1 && selectedStreamIndex < streamList.size - 1) {
+                            mobileNoDurTicks = 0
+                            selectedStreamIndex++
+                            resolvedStreamUrl = streamList[selectedStreamIndex].url
                         }
                     }
                 } catch (_: Exception) {}

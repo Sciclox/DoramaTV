@@ -1441,7 +1441,9 @@ fun PlayerScreen(
 
     // Real-time synchronization with Embedded Native Web Player (<video> / JWPlayer) + Hide Web Chrome & Grey Poster
     LaunchedEffect(isEmbedStream, webViewRef, activeStreamUrl, subtitlesEnabled, isPlaying) {
-        var zeroProgressTicks = 0
+        var lastObservedPos = -1L
+        var webStallTicks = 0
+        var noDurationTicks = 0
         while (isActive && isEmbedStream) {
             delay(350)
             val wv = webViewRef
@@ -1761,17 +1763,38 @@ fun PlayerScreen(
                             }
                         }
                         var bodyText = (document.body ? (document.body.innerText || document.body.textContent || '') : '').toLowerCase();
-                        var isDead = bodyText.includes('232001') ||
-                            bodyText.includes('no se puede reproducir') ||
-                            bodyText.includes('archivo de video no se puede reproducir') ||
-                            bodyText.includes('video file cannot be played') ||
-                            bodyText.includes('error loading media') ||
-                            bodyText.includes('the media playback was aborted') ||
-                            bodyText.includes('expired or has been deleted') ||
-                            bodyText.includes('no longer available') ||
-                            bodyText.includes('file was deleted') ||
-                            bodyText.includes('video deleted') ||
-                            bodyText.includes('contenido no disponible');
+                        var errorPhrases = [
+                            '232001',
+                            'not found',
+                            'video you are looking for is not found',
+                            'file not found',
+                            'file was deleted',
+                            'video deleted',
+                            'video has been removed',
+                            'no se puede reproducir',
+                            'archivo de video no se puede reproducir',
+                            'video file cannot be played',
+                            'error loading media',
+                            'the media playback was aborted',
+                            'expired or has been deleted',
+                            'no longer available',
+                            'contenido no disponible',
+                            'error 404',
+                            '404 not found',
+                            'access denied',
+                            'blocked',
+                            'forbidden',
+                            'media could not be loaded'
+                        ];
+                        var isDead = false;
+                        var deadReason = '';
+                        for (var ep = 0; ep < errorPhrases.length; ep++) {
+                            if (bodyText.includes(errorPhrases[ep])) {
+                                isDead = true;
+                                deadReason = errorPhrases[ep];
+                                break;
+                            }
+                        }
 
                         if (!isDead) {
                             var iframes = document.querySelectorAll('iframe');
@@ -1780,10 +1803,14 @@ fun PlayerScreen(
                                     var idoc = iframes[i].contentDocument;
                                     if (idoc && idoc.body) {
                                         var itxt = (idoc.body.innerText || idoc.body.textContent || '').toLowerCase();
-                                        if (itxt.includes('232001') || itxt.includes('no se puede reproducir') || itxt.includes('video file cannot be played')) {
-                                            isDead = true;
-                                            break;
+                                        for (var ep = 0; ep < errorPhrases.length; ep++) {
+                                            if (itxt.includes(errorPhrases[ep])) {
+                                                isDead = true;
+                                                deadReason = 'iframe: ' + errorPhrases[ep];
+                                                break;
+                                            }
                                         }
+                                        if (isDead) break;
                                     }
                                 } catch(e) {}
                             }
@@ -1793,15 +1820,17 @@ fun PlayerScreen(
                             try {
                                 if (typeof p.getState === 'function' && p.getState() === 'error') {
                                     isDead = true;
+                                    deadReason = 'jwplayer error';
                                 }
                             } catch(e) {}
                         }
                         if (!isDead && v && v.error && v.error.code === 4 && v.src && !v.src.startsWith('blob:') && document.readyState === 'complete') {
                             isDead = true;
+                            deadReason = 'video error 4';
                         }
 
                         if (isDead) {
-                            return JSON.stringify({ dead: true, reason: 'Error 232001' });
+                            return JSON.stringify({ dead: true, reason: deadReason });
                         }
 
                         if (v) {
@@ -1914,21 +1943,34 @@ fun PlayerScreen(
                                     seekToMs(target)
                                 }
                             }
-                            if ((pos > 300L || playingState) && dur > 0L) {
-                                isVideoReady = true
-                                isBuffering = false
-                                isEpisodeChanging = false
-                                loadingSubtitle = "Preparando reproducción en alta definición"
-                                zeroProgressTicks = 0
-                            } else if (pos <= 0L && !isEpisodeChanging && !showServerDialog && isPlaying) {
-                                zeroProgressTicks++
-                                if (zeroProgressTicks >= 20) {
-                                    zeroProgressTicks = 0
-                                    triggerStreamFailover(activeStreamUrl, "Reproductor web sin avance en 00:00:00")
+                            if (dur > 0L) {
+                                noDurationTicks = 0
+                                if (pos != lastObservedPos) {
+                                    lastObservedPos = pos
+                                    webStallTicks = 0
+                                    isVideoReady = true
+                                    isBuffering = false
+                                    isEpisodeChanging = false
+                                    loadingSubtitle = "Preparando reproducción en alta definición"
+                                } else if (!isEpisodeChanging && !showServerDialog && isPlaying) {
+                                    val isRecentlySeeking = (System.currentTimeMillis() - lastUserSeekTimeMs) < 2000L
+                                    val isRecentlyToggled = (System.currentTimeMillis() - lastUserPlayPauseTimeMs) < 2000L
+                                    if (!isRecentlySeeking && !isRecentlyToggled) {
+                                        webStallTicks++
+                                        if (webStallTicks >= 20) { // ~7 seconds stuck without time advancement
+                                            webStallTicks = 0
+                                            triggerStreamFailover(activeStreamUrl, "Reproductor web congelado en ${formatTimeSec(pos / 1000)}")
+                                            return@evaluateJavascript
+                                        }
+                                    }
+                                }
+                            } else if (!isEpisodeChanging && !showServerDialog && isPlaying) {
+                                noDurationTicks++
+                                if (noDurationTicks >= 22) { // ~7.7 seconds without video signal
+                                    noDurationTicks = 0
+                                    triggerStreamFailover(activeStreamUrl, "Reproductor web sin señal de video o no disponible")
                                     return@evaluateJavascript
                                 }
-                            } else if (pos > 0L) {
-                                zeroProgressTicks = 0
                             }
                         }
                     } catch (_: Exception) {}
