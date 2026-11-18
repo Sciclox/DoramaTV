@@ -6,7 +6,7 @@ import kotlinx.coroutines.withContext
 
 object VidhideVideoExtractor : VideoExtractor {
     override val name: String = "Vidhide"
-    override val priority: Int = 4
+    override val priority: Int = 7
 
     override fun canHandle(url: String): Boolean {
         val u = url.lowercase()

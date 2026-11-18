@@ -95,3 +95,20 @@
   - Se anotaron todos los modelos de dominio (`MovieItem`, `EpisodeItem`, `StreamItem`, `WatchHistoryItem`, etc.) con `@Immutable` para habilitar el smart skipping del compilador de Compose.
 - [x] **Verificación Total de Suites:**
   - `.\gradlew.bat :core:testDebugUnitTest :app:testDebugUnitTest :app-mobile:testDebugUnitTest` -> `BUILD SUCCESSFUL`.
+
+---
+
+### Fase 7: Extractores Nativos en `:core` y Modularización de TV PlayerScreen (Completada)
+- [x] **Extractores Nativos en `:core`:**
+  - [`StreamtapeVideoExtractor.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/data/extractor/StreamtapeVideoExtractor.kt) (Prioridad 5, MP4 directo con token).
+  - [`FilemoonVideoExtractor.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/data/extractor/FilemoonVideoExtractor.kt) (Prioridad 3, HLS m3u8 con desofuscación P.A.C.K.E.R.).
+  - [`StreamwishVideoExtractor.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/data/extractor/StreamwishVideoExtractor.kt) (Prioridad 4, HLS m3u8 con desofuscación P.A.C.K.E.R.).
+  - Integración en [`ExtractorRegistry.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/data/extractor/ExtractorRegistry.kt) con escala de prioridades calibrada (1 a 7).
+  - Suite de 30 tests unitarios en [`ExtractorRegistryTest.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/test/java/com/tvpro/core/data/extractor/ExtractorRegistryTest.kt) (`:core:testDebugUnitTest` -> `BUILD SUCCESSFUL`).
+- [x] **Modularización de TV `PlayerScreen.kt`:**
+  - [`TvPlayerAudioSubtitleModal.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app/src/main/java/com/tvpro/app/ui/components/player/TvPlayerAudioSubtitleModal.kt) (Modal cinema de pistas de audio y subtítulos).
+  - [`TvPlayerEpisodesModal.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app/src/main/java/com/tvpro/app/ui/components/player/TvPlayerEpisodesModal.kt) (Modal cinema de capítulos y escenas con navegación D-Pad).
+  - Reducción de más de 1,720 líneas de `PlayerScreen.kt`.
+- [x] **Validación de Paridad y Binarios:**
+  - `.\gradlew.bat :core:testDebugUnitTest :app:testDebugUnitTest :app-mobile:compileDebugKotlin` -> `BUILD SUCCESSFUL`.
+  - Binarios exportados en `apks/` (`DoramaTV-AndroidTV-v1.0.0.apk` y `DoramaTV-Mobile-v1.0.0.apk`).

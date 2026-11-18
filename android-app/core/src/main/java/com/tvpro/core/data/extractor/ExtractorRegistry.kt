@@ -11,6 +11,9 @@ object ExtractorRegistry {
     private val registeredExtractors: List<VideoExtractor> = listOf(
         VoeVideoExtractor,
         OkRuVideoExtractor,
+        FilemoonVideoExtractor,
+        StreamwishVideoExtractor,
+        StreamtapeVideoExtractor,
         DoodVideoExtractor,
         VidhideVideoExtractor
     ).sortedBy { it.priority }

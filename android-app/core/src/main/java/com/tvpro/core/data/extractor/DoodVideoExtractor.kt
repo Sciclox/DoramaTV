@@ -7,7 +7,7 @@ import okhttp3.Request
 
 object DoodVideoExtractor : VideoExtractor {
     override val name: String = "Doodstream"
-    override val priority: Int = 3
+    override val priority: Int = 6
 
     override fun canHandle(url: String): Boolean {
         val u = url.lowercase()
