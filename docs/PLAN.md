@@ -1,21 +1,38 @@
 # Plan Activo de Desarrollo (APK-DoramaTV)
 
-## Estado Actual: Infraestructura Agéntica Híbrida Lista
-* **Arquitecto Técnico (Web):** 4 Argon (Especializado en *Código y análisis*)
-* **Ejecutor y QA Autónomo (Local):** Antigravity 2.0 (Kotlin + Gradle Self-Healing)
-* **Módulos del Sistema:** `:core`, `:app` (Android TV), `:app-mobile` (Mobile)
+## Hoja de Ruta de Refactorización y Mejoras (Diseñada por 4 Argon)
+
+### Fase 1: Higiene de Contexto y Reglas de Oro (Completada)
+- [x] Mover los 49 scripts `.js` y fixtures `.json` de la raíz a `tools/extractors-lab/` para no saturar las búsquedas y contexto de Antigravity.
+- [x] Configurar las Tres Reglas de Oro en `AGENTS.md` y `GEMINI.md`:
+  - Límite estricto a God Files (`PlayerScreen.kt` y `MovieRepository.kt`).
+  - Validación modular por comando específico (`:core:testDebugUnitTest`, `:app:testDebugUnitTest`, `:app-mobile:compileDebugKotlin`).
+  - Paridad obligatoria TV/Mobile al modificar `:core`.
 
 ---
 
-## Tareas Completadas
-* [x] **Configurar reglas de ingeniería en AGENTS.md y GEMINI.md** (Corregido stack a Android Kotlin multi-módulo).
-* [x] **Configurar bucle Self-Healing** (Gradle `compileDebugKotlin` y `testDebugUnitTest` obligatorios antes de entrega).
-* [x] **Designar a 4 Argon como Arquitecto de Software** en [docs/PLAN_TEMPLATE.md](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/docs/PLAN_TEMPLATE.md).
-* [x] **Verificación del entorno Gradle en local** (`.\gradlew.bat` validado con Gradle 9.6.0).
+### Fase 2: Estandarización de VideoExtractor en `:core` (Completada)
+- [x] Definir interfaz común `VideoExtractor`:
+  - [`VideoExtractor.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/data/extractor/VideoExtractor.kt)
+  - [`ExtractedStream.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/data/extractor/ExtractedStream.kt)
+- [x] Implementar extractores desacoplados con prioridades:
+  - [`VoeVideoExtractor.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/data/extractor/VoeVideoExtractor.kt) (Prioridad 1)
+  - [`OkRuVideoExtractor.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/data/extractor/OkRuVideoExtractor.kt) (Prioridad 2)
+  - [`DoodVideoExtractor.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/data/extractor/DoodVideoExtractor.kt) (Prioridad 3)
+  - [`VidhideVideoExtractor.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/data/extractor/VidhideVideoExtractor.kt) (Prioridad 4)
+- [x] Implementar [`ExtractorRegistry.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/data/extractor/ExtractorRegistry.kt) con Fallback automático en cascada (`extractFirstAvailable`) y puente `toStreamItem()`.
+- [x] Suite de pruebas unitarias implementada y validada en verde:
+  - [`ExtractorRegistryTest.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/test/java/com/tvpro/core/data/extractor/ExtractorRegistryTest.kt) (`:core:testDebugUnitTest` -> `BUILD SUCCESSFUL`).
+- [x] Validación de paridad TV / Mobile (`:app:compileDebugKotlin` y `:app-mobile:compileDebugKotlin` -> `BUILD SUCCESSFUL`).
 
 ---
 
-## Flujo Operativo para la Próxima Tarea
-1. Plantea el requerimiento a **4 Argon** en la pestaña de Gemini Web.
-2. Copia la especificación técnica devuelta por Argon dentro de este archivo (`docs/PLAN.md`).
-3. Dile a Antigravity: *"Ejecuta el plan de docs/PLAN.md y valida con Gradle"*.
+### Fase 3: Desduplicación de Recursos y Fuentes (Siguiente Paso)
+- [ ] Eliminar fuentes duplicadas entre `:app` y `:app-mobile` (`res/font/`).
+
+---
+
+### Fase 4: Modularización de ViewModels y PlayerScreen
+- [ ] Extraer lógica común del reproductor a `PlayerViewModel` en `:core`.
+- [ ] Fragmentar `PlayerScreen.kt` en sub-componentes.
+- [ ] Crear suite de pruebas unitarias en `:app-mobile/src/test/`.

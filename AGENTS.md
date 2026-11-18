@@ -11,6 +11,7 @@ El código nativo reside dentro del directorio `android-app/`. Nunca ejecutes co
 * `:core` — Lógica de negocio compartida, modelos de datos, clientes HTTP, parsers y repositorios comunes.
 * `:app` — Interfaz y navegación para **Android TV** (soporte estricto de D-Pad / control remoto, Compose for TV / Leanback, foco visual claro).
 * `:app-mobile` — Interfaz táctil para **móviles y tablets** (Jetpack Compose Mobile, orientación adaptable).
+* `tools/extractors-lab/` — Laboratorio aislado de scripts experimentales en JavaScript (ignorado en búsquedas de código Kotlin).
 
 ---
 
@@ -23,27 +24,30 @@ El código nativo reside dentro del directorio `android-app/`. Nunca ejecutes co
 
 ---
 
-## 3. Bucle Obligatorio de Autocorrección (*Self-Healing Build Loop*)
+## 3. Las Tres Reglas de Oro Arquitectónicas (Anti-God Files)
+
+1. **Límite estricto de archivos monolíticos:**  
+   Prohibido agregar nueva lógica de negocio dentro de `PlayerScreen.kt` (TV/Mobile) o `MovieRepository.kt`. Toda nueva funcionalidad debe extraerse a componentes visuales dedicados o UseCases en `:core`.
+2. **Validación granular por módulo:**
+   - Si el cambio es en extractores, red o datos: `.\gradlew.bat :core:testDebugUnitTest`
+   - Si el cambio es en Android TV: `.\gradlew.bat :app:testDebugUnitTest`
+   - Si el cambio es en Mobile: `.\gradlew.bat :app-mobile:compileDebugKotlin`
+3. **Paridad TV / Mobile:**  
+   Cualquier cambio en contratos, modelos o repositorios de `:core` debe compilar ambos targets antes de entregar:
+   ```powershell
+   .\gradlew.bat :app:compileDebugKotlin :app-mobile:compileDebugKotlin
+   ```
+
+---
+
+## 4. Bucle Obligatorio de Autocorrección (*Self-Healing Build Loop*)
 
 > [!IMPORTANT]
 > **Prohibido pedir al usuario que actúe como QA manual de compilación o sintaxis.**
 > Como agente, tienes acceso a la terminal y debes validar tus propios cambios antes de dar una tarea por finalizada.
 
-### Comandos de Validación (ejecutados en `android-app/`):
-
-```powershell
-# 1. Comprobación rápida de tipos y compilación Kotlin:
-.\gradlew.bat compileDebugKotlin
-
-# 2. Ejecución de suite de tests unitarios:
-.\gradlew.bat testDebugUnitTest
-
-# 3. Compilación de APK debug (si se requiere validar ensamble completo):
-.\gradlew.bat assembleDebug
-```
-
 ### Reglas del Ciclo de Vida:
-1. **Verificar antes de entregar:** Ejecuta siempre `.\gradlew.bat compileDebugKotlin` o `.\gradlew.bat testDebugUnitTest` tras modificar archivos en `android-app/`.
+1. **Verificar antes de entregar:** Ejecuta siempre los comandos de compilación o test unitario pertinentes tras modificar archivos en `android-app/`.
 2. **Auto-remediación:** Si la salida devuelve `BUILD FAILED` o un error de compilación:
    - Lee el log de error o la traza completa.
    - Corrige el código en un bucle autónomo.
@@ -53,13 +57,12 @@ El código nativo reside dentro del directorio `android-app/`. Nunca ejecutes co
    ```powershell
    adb logcat -d *:E
    ```
-   No solicites que el usuario copie y pegue el logcat si puedes leerlo directamente por ADB.
 
 ---
 
-## 4. Flujo de Trabajo Basado en Especificaciones (Spec-Driven)
+## 5. Flujo de Trabajo Basado en Especificaciones (Spec-Driven)
 
-1. Para tareas de arquitectura o refactorizaciones complejas, consulta o crea primero `docs/PLAN.md`.
+1. Para tareas de arquitectura o refactorizaciones complejas, consulta o actualiza siempre `docs/PLAN.md`.
 2. Mantén la separación estricta de responsabilidades:
    - La lógica de red, parsing y datos pertenece a `:core`.
    - La UI de televisión nunca debe mezclar componentes táctiles diseñados para móvil.
