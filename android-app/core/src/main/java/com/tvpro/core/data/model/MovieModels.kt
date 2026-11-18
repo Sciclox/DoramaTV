@@ -1,7 +1,9 @@
 package com.tvpro.core.data.model
 
+import androidx.compose.runtime.Immutable
 import com.google.gson.annotations.SerializedName
 
+@Immutable
 data class MovieListResponse(
     @SerializedName("status") val status: String? = null,
     @SerializedName("currentPage") val currentPage: Int = 1,
@@ -16,6 +18,7 @@ data class MovieListResponse(
     @SerializedName("movies") val movies: List<MovieItem> = emptyList()
 )
 
+@Immutable
 data class MovieItem(
     @SerializedName("title") val title: String,
     @SerializedName("url") val url: String,
@@ -35,6 +38,7 @@ data class MovieItem(
     @SerializedName("slug") val slug: String? = null
 )
 
+@Immutable
 data class MovieSearchResponse(
     @SerializedName("status") val status: String? = null,
     @SerializedName("query") val query: String? = null,
@@ -42,6 +46,7 @@ data class MovieSearchResponse(
     @SerializedName("movies") val movies: List<MovieItem> = emptyList()
 )
 
+@Immutable
 data class MovieDetailResponse(
     @SerializedName("status") val status: String? = null,
     @SerializedName("post_id") val postId: String? = null,
@@ -67,6 +72,7 @@ data class MovieDetailResponse(
     val similarMovies: List<MovieItem> = emptyList()
 )
 
+@Immutable
 data class EpisodeItem(
     val id: Int,
     val episodeNumber: Int,
@@ -78,6 +84,7 @@ data class EpisodeItem(
     val slug: String = ""
 )
 
+@Immutable
 data class SubtitleTrackData(
     @SerializedName("url") val url: String,
     @SerializedName("label") val label: String,
@@ -85,6 +92,7 @@ data class SubtitleTrackData(
     @SerializedName("isDefault") val isDefault: Boolean = false
 )
 
+@Immutable
 data class StreamItem(
     @SerializedName("type") val type: String? = null,
     @SerializedName("url") val url: String,
@@ -96,6 +104,7 @@ data class StreamItem(
     val safeSubtitles: List<SubtitleTrackData> get() = subtitleTracks ?: emptyList()
 }
 
+@Immutable
 data class WatchHistoryItem(
     val movieUrl: String,
     val title: String,

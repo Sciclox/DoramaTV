@@ -45,6 +45,7 @@ android {
 dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
+    compileOnly("androidx.compose.runtime:runtime:1.7.6")
 
     // Retrofit + OkHttp
     api("com.squareup.retrofit2:retrofit:2.11.0")

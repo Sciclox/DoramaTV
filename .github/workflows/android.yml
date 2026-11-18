@@ -1,0 +1,53 @@
+name: Android CI / CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Test & Build APKs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x android-app/gradlew
+
+      - name: Run Unit Tests (:core, :app, :app-mobile)
+        run: |
+          cd android-app
+          ./gradlew :core:testDebugUnitTest :app:testDebugUnitTest :app-mobile:testDebugUnitTest
+
+      - name: Assemble Debug APKs
+        run: |
+          cd android-app
+          ./gradlew :app:assembleDebug :app-mobile:assembleDebug
+
+      - name: Upload Android TV APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: DoramaTV-AndroidTV-APK
+          path: android-app/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+
+      - name: Upload Mobile APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: DoramaTV-Mobile-APK
+          path: android-app/app-mobile/build/outputs/apk/debug/app-mobile-debug.apk
+          if-no-files-found: error

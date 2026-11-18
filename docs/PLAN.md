@@ -63,3 +63,35 @@
 - [x] Validación total de suites de pruebas en simultáneo:
   - `.\gradlew.bat :core:testDebugUnitTest :app:testDebugUnitTest :app-mobile:testDebugUnitTest` -> `BUILD SUCCESSFUL`.
 - [x] Validación de paridad TV / Mobile (`:app:compileDebugKotlin :app-mobile:compileDebugKotlin` -> `BUILD SUCCESSFUL`).
+
+---
+
+### Fase 6: Reorganización Limpia, Pipeline Automatizado y Modularización de DetailScreen (Completada)
+- [x] **Higiene Total de Workspace:**
+  - Se movieron 32 capturas de pantalla sueltas a `screenshots/`.
+  - Se movieron los APKs y se creó la carpeta dedicada `apks/`.
+  - Se movieron los volcados y scrapers a `tools/extractors-lab/`.
+  - La raíz del proyecto quedó impecable con solo 5 archivos esenciales y 5 carpetas organizadas.
+- [x] **Pipeline de Compilación y Exportación Automatizada:**
+  - Script [`scripts/build_apks.ps1`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/scripts/build_apks.ps1) y lanzador [`build_apks.bat`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/build_apks.bat).
+  - Compilación paralela y exportación automática a `apks/` con nombrado versionado.
+- [x] **CI/CD con GitHub Actions:**
+  - Creado [`.github/workflows/android.yml`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/.github/workflows/android.yml) para ejecutar tests y ensamblaje automáticamente en cada push a `main`.
+- [x] **Desacoplamiento de `MovieRepository.kt`:**
+  - Extraído [`JsUnpacker.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/data/extractor/JsUnpacker.kt) (algoritmos de desofuscación P.A.C.K.E.R., ROT13, Base64).
+  - Extraído [`MovieDetailCacheManager.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/data/repository/MovieDetailCacheManager.kt) (gestión de cachés en memoria LRU).
+- [x] **Fragmentación de TV `DetailScreen.kt` (Reducción de 1,901 líneas a ~450 líneas):**
+  - [`DetailTopBar.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app/src/main/java/com/tvpro/app/ui/components/detail/DetailTopBar.kt) (Barra superior de navegación y sincronización).
+  - [`DetailHeroContent.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app/src/main/java/com/tvpro/app/ui/components/detail/DetailHeroContent.kt) (Metadatos, insignias, sinopsis y barra de progreso).
+  - [`DetailActionButtons.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app/src/main/java/com/tvpro/app/ui/components/detail/DetailActionButtons.kt) (Botones de acción, foco D-Pad y estados de disponibilidad).
+  - [`DetailTabsHeader.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app/src/main/java/com/tvpro/app/ui/components/detail/DetailTabsHeader.kt) (Pestañas de navegación inferior e indicadores).
+  - [`DetailEpisodesRail.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app/src/main/java/com/tvpro/app/ui/components/detail/DetailEpisodesRail.kt) (Selector de temporadas y carrusel de episodios con restauración de foco).
+  - [`DetailSimilarRail.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app/src/main/java/com/tvpro/app/ui/components/detail/DetailSimilarRail.kt) (Carrusel de películas similares).
+  - [`DetailExtrasContent.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app/src/main/java/com/tvpro/app/ui/components/detail/DetailExtrasContent.kt) (Galería de escenas y ficha técnica).
+  - [`DetailLightboxOverlay.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app/src/main/java/com/tvpro/app/ui/components/detail/DetailLightboxOverlay.kt) (Modal a pantalla completa de vista previa).
+  - [`DetailFormatters.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app/src/main/java/com/tvpro/app/ui/components/detail/DetailFormatters.kt) (Formateadores y enums).
+- [x] **Estabilidad de Compose y 60 FPS en Android TV:**
+  - Se agregó `compileOnly("androidx.compose.runtime:runtime:1.7.6")` a `:core`.
+  - Se anotaron todos los modelos de dominio (`MovieItem`, `EpisodeItem`, `StreamItem`, `WatchHistoryItem`, etc.) con `@Immutable` para habilitar el smart skipping del compilador de Compose.
+- [x] **Verificación Total de Suites:**
+  - `.\gradlew.bat :core:testDebugUnitTest :app:testDebugUnitTest :app-mobile:testDebugUnitTest` -> `BUILD SUCCESSFUL`.
