@@ -7,6 +7,7 @@
 *.aab
 *.dex
 *.class
+apks/
 
 # Android Studio and IDE
 .idea/
@@ -21,6 +22,7 @@ local.properties
 *.pem
 
 # Screenshots and scratch dumps
+screenshots/
 *.png
 *.jpg
 *.jpeg
