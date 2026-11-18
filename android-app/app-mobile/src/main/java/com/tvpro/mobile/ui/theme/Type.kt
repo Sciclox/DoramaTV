@@ -6,7 +6,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.tvpro.mobile.R
+import com.tvpro.core.R
 
 val BebasNeue = FontFamily(
     Font(R.font.bebas_neue, FontWeight.Normal)
