@@ -31,6 +31,10 @@ screenshots/
 *.txt
 *.log
 !android-app/**/src/**/*.xml
+!android-app/**/src/**/*.png
+!android-app/**/src/**/*.jpg
+!android-app/**/src/**/*.jpeg
+!android-app/**/src/**/*.webp
 
 # OS generated files
 .DS_Store
