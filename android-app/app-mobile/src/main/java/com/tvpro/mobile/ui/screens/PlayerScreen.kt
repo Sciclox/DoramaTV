@@ -1658,28 +1658,6 @@ fun MobilePlayerScreen(
                             overflow = TextOverflow.Ellipsis
                         )
 
-                        // Server selection pill (if multiple streams available)
-                        if (streamList.size > 1) {
-                            Box(
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(16.dp))
-                                    .background(PillSurface)
-                                    .border(1.dp, SubtleBorder, RoundedCornerShape(16.dp))
-                                    .clickable { showServerModal = true }
-                                    .padding(horizontal = 10.dp, vertical = 5.dp)
-                            ) {
-                                Text(
-                                    text = "Servidor ${selectedStreamIndex + 1} â–¾",
-                                    color = WarmIvory,
-                                    fontSize = 11.sp,
-                                    fontFamily = Inter,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            }
-                            Spacer(modifier = Modifier.width(8.dp))
-                        }
-
-
                         // Playback Speed Pill
                         Box(
                             modifier = Modifier

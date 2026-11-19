@@ -785,7 +785,7 @@ fun PlayerScreen(
             val postIdStr = detailResponse?.postId ?: movie.postId?.toString() ?: ""
             if (!isResolvingFailover && isSeriesContent && (postIdStr.isNotBlank() || movie.url.isNotBlank())) {
                 isResolvingFailover = true
-                seekToastText = "Reconectando con el servidor en segundo plano... (Buscando enlace fresco)"
+                isBuffering = true
                 scope.launch {
                     try {
                         // Clear session cookies in WebView to bypass transient rate limits or corrupted sessions
@@ -834,16 +834,10 @@ fun PlayerScreen(
                             dynamicStreams = newCandidates
                             switchServer(0, resetPosition = false, streamList = newCandidates)
                         } else {
-                            seekToastText = "Servidores temporalmente en mantenimiento. Reintentando..."
-                            showServerDialog = true
-                            isBuffering = false
-                            isVideoReady = true
+                            isBuffering = true
                         }
                     } catch (_: Exception) {
-                        seekToastText = "Error de reproducción. Inténtalo de nuevo más tarde."
-                        showServerDialog = true
-                        isBuffering = false
-                        isVideoReady = true
+                        isBuffering = true
                     } finally {
                         isResolvingFailover = false
                         delay(2000)
@@ -851,10 +845,7 @@ fun PlayerScreen(
                     }
                 }
             } else {
-                seekToastText = "No se pudo reproducir este video. Intenta con otro episodio."
-                showServerDialog = true
-                isBuffering = false
-                isVideoReady = true
+                isBuffering = true
                 scope.launch {
                     delay(2000)
                     isFailoverInFlight = false
@@ -1193,7 +1184,6 @@ fun PlayerScreen(
                     dynamicStreams = newStreams
                     switchServer(0, resetPosition = true, streamList = newStreams)
                 } else {
-                    seekToastText = "Episodio ${ep.episodeNumber} no disponible temporalmente"
                     // Do NOT rewind the current video to 0L! Keep current playback position intact.
                     setPlaybackPlaying(true)
                     isBuffering = false
@@ -4221,15 +4211,7 @@ fun PlayerScreen(
                                 if (keyEvent.type == KeyEventType.KeyDown) {
                                     when (keyEvent.key) {
                                         Key.DirectionDown -> {
-                                            try {
-                                                if (availableStreams.size > 1) {
-                                                    activeServerFocusRequester.requestFocus()
-                                                } else {
-                                                    timelineFocusRequester.requestFocus()
-                                                }
-                                            } catch (_: Exception) {
-                                                try { timelineFocusRequester.requestFocus() } catch (_: Exception) {}
-                                            }
+                                            try { timelineFocusRequester.requestFocus() } catch (_: Exception) {}
                                             true
                                         }
                                         Key.DirectionRight -> {
@@ -4303,122 +4285,6 @@ fun PlayerScreen(
                         .align(Alignment.BottomCenter),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    // 0. CHIPS DE SERVIDORES INTERACTIVOS (Inspirado en la Web de Doramasflix: [★ MEJOR Primeload] [Dood] [Ok.ru] ...)
-                    if (availableStreams.size > 1) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 6.dp),
-                            horizontalArrangement = Arrangement.spacedBy(10.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "SERVIDORES",
-                                fontFamily = Inter,
-                                fontWeight = FontWeight.ExtraBold,
-                                fontSize = 10.5.sp,
-                                letterSpacing = 1.2.sp,
-                                color = warmIvory.copy(alpha = 0.5f)
-                            )
-
-                            Row(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .horizontalScroll(rememberScrollState()),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                availableStreams.take(6).forEachIndexed { sIndex, streamItem ->
-                                    val isCurrent = (sIndex == currentStreamIndex)
-                                    var isChipFocused by remember { mutableStateOf(false) }
-                                    val cleanName = remember(streamItem) {
-                                        getCleanServerDisplayName(streamItem)
-                                    }
-
-                                    Box(
-                                        modifier = Modifier
-                                            .height(30.dp)
-                                            .clip(RoundedCornerShape(8.dp))
-                                            .background(
-                                                when {
-                                                    isChipFocused -> warmIvory
-                                                    isCurrent -> Color(0xFF2B2015)
-                                                    else -> Color(0x66181E2B)
-                                                }
-                                            )
-                                            .border(
-                                                width = if (isChipFocused) 2.dp else if (isCurrent) 1.5.dp else 1.dp,
-                                                color = when {
-                                                    isChipFocused -> warmIvory
-                                                    isCurrent -> Color(0xFFFFB800)
-                                                    else -> Color.White.copy(alpha = 0.12f)
-                                                },
-                                                shape = RoundedCornerShape(8.dp)
-                                            )
-                                            .then(
-                                                if (isCurrent) Modifier.focusRequester(activeServerFocusRequester) else Modifier
-                                            )
-                                            .focusable()
-                                            .onFocusChanged { isChipFocused = it.isFocused }
-                                            .onKeyEvent { keyEvent ->
-                                                if (keyEvent.type == KeyEventType.KeyDown) {
-                                                    when (keyEvent.key) {
-                                                        Key.DirectionCenter, Key.Enter, Key.NumPadEnter -> {
-                                                            if (!isCurrent) {
-                                                                switchServer(sIndex, resetPosition = false)
-                                                            }
-                                                            true
-                                                        }
-                                                        Key.DirectionDown -> {
-                                                            try { timelineFocusRequester.requestFocus() } catch (_: Exception) {}
-                                                            true
-                                                        }
-                                                        Key.DirectionUp -> {
-                                                            try { backButtonFocusRequester.requestFocus() } catch (_: Exception) {}
-                                                            true
-                                                        }
-                                                        else -> false
-                                                    }
-                                                } else false
-                                            }
-                                            .clickable {
-                                                if (!isCurrent) {
-                                                    switchServer(sIndex, resetPosition = false)
-                                                }
-                                            }
-                                            .padding(horizontal = 12.dp, vertical = 5.dp),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        Row(
-                                            verticalAlignment = Alignment.CenterVertically,
-                                            horizontalArrangement = Arrangement.spacedBy(5.dp)
-                                        ) {
-                                            if (isCurrent) {
-                                                Box(
-                                                    modifier = Modifier
-                                                        .size(6.dp)
-                                                        .clip(CircleShape)
-                                                        .background(if (isChipFocused) Color(0xFF0A0D13) else Color(0xFFFFB800))
-                                                )
-                                            }
-                                            Text(
-                                                text = cleanName,
-                                                fontFamily = Inter,
-                                                fontWeight = if (isCurrent || isChipFocused) FontWeight.Bold else FontWeight.Medium,
-                                                fontSize = 11.5.sp,
-                                                color = when {
-                                                    isChipFocused -> Color(0xFF0A0D13)
-                                                    isCurrent -> Color(0xFFFFD54F)
-                                                    else -> warmIvory.copy(alpha = 0.85f)
-                                                }
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
                     // A. BARRA DE PROGRESO EN UNA SOLA LÍNEA CON EL TIEMPO
                     Row(
                         modifier = Modifier
@@ -4455,15 +4321,7 @@ fun PlayerScreen(
                                                 true
                                             }
                                             Key.DirectionUp -> {
-                                                try {
-                                                    if (availableStreams.size > 1) {
-                                                        activeServerFocusRequester.requestFocus()
-                                                    } else {
-                                                        backButtonFocusRequester.requestFocus()
-                                                    }
-                                                } catch (_: Exception) {
-                                                    try { backButtonFocusRequester.requestFocus() } catch (_: Exception) {}
-                                                }
+                                                try { backButtonFocusRequester.requestFocus() } catch (_: Exception) {}
                                                 true
                                             }
                                             Key.DirectionDown -> {
