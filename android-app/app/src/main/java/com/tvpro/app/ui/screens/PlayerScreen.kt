@@ -778,6 +778,10 @@ fun PlayerScreen(
                 isFailoverInFlight = false
             }
         } else {
+            try {
+                webViewRef?.stopLoading()
+                webViewRef?.loadUrl("about:blank")
+            } catch (_: Exception) {}
             val postIdStr = detailResponse?.postId ?: movie.postId?.toString() ?: ""
             if (!isResolvingFailover && isSeriesContent && (postIdStr.isNotBlank() || movie.url.isNotBlank())) {
                 isResolvingFailover = true

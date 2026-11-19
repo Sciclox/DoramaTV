@@ -518,10 +518,11 @@ object DoramasflixApiClient {
             put("episode_id", episodeId)
         }
 
-        // Prioritized partitions: com.asiapp.doramasgo provides native app servers (Ok.ru, VOE, Filemoon, Vidhide).
-        // null (Web) provides web embeds. We stop immediately as soon as ANY top-tier server is discovered,
-        // reducing API calls by 80% and preventing ThrottlerException (429 / Too Many Requests).
-        val prioritizedPartitions = listOf("com.asiapp.doramasgo", null, "doramasflix", "playdoramas", "doramasyt")
+        // Prioritized partitions: doramasflix and playdoramas provide native Ok.ru / VOE / Vidhide streams.
+        // com.asiapp.doramasgo provides Filemoon / Byse streams.
+        // We early-exit immediately as soon as Ok.ru (1113) or 3+ alternative servers are discovered,
+        // minimizing latency, preventing dead hosts, and avoiding ThrottlerException (429).
+        val prioritizedPartitions = listOf("doramasflix", "playdoramas", "com.asiapp.doramasgo", "doramasyt", null)
         val rawLinks = mutableListOf<JSONObject>()
         val seenLinkIds = mutableSetOf<String>()
 
@@ -592,17 +593,15 @@ object DoramasflixApiClient {
             }
 
             // SMART EARLY EXIT:
-            // Top-tier servers: 1113 (Ok.ru), 1230 (VOE), 576857 (Vidhide), 958695 (Filemoon), 7286 (Doodstream)
-            val hasTopTier = rawLinks.any {
-                val s = it.optString("server", "")
-                s == "1113" || s == "1230" || s == "576857" || s == "958695" || s == "7286"
-            }
+            // Ok.ru (1113) is the absolute highest quality provider (Full HD direct MP4).
+            // If Ok.ru is found, or if 3+ distinct non-primeload alternatives are collected, exit immediately.
+            val hasOkRu = rawLinks.any { it.optString("server", "") == "1113" }
             val nonPrimeloadCount = rawLinks.count { it.optString("server", "") != "4721" }
 
-            if (hasTopTier || nonPrimeloadCount >= 2) {
+            if (hasOkRu || nonPrimeloadCount >= 3) {
                 break
             }
-            kotlinx.coroutines.delay(150)
+            kotlinx.coroutines.delay(120)
         }
 
         if (rawLinks.isEmpty()) {
@@ -658,6 +657,7 @@ object DoramasflixApiClient {
         val streamItems = mutableListOf<StreamItem>()
         for (candidate in sortedCandidates) {
             var extractedAny = false
+            var extractionFailedWithDeadHost = false
             val extractor = ExtractorRegistry.findExtractor(candidate.url)
             if (extractor != null) {
                 try {
@@ -676,17 +676,42 @@ object DoramasflixApiClient {
                                 )
                             )
                         }
+                    } else {
+                        val errMsg = result.exceptionOrNull()?.message ?: ""
+                        if (errMsg.contains("404", ignoreCase = true) ||
+                            errMsg.contains("410", ignoreCase = true) ||
+                            errMsg.contains("not found", ignoreCase = true) ||
+                            errMsg.contains("deleted", ignoreCase = true) ||
+                            errMsg.contains("502", ignoreCase = true) ||
+                            errMsg.contains("refused", ignoreCase = true)
+                        ) {
+                            extractionFailedWithDeadHost = true
+                        }
                     }
                 } catch (e: Exception) {
                     android.util.Log.w("DoramasflixApiClient", "Extractor failed for ${candidate.url}: ${e.message}")
+                    val msg = e.message ?: ""
+                    if (msg.contains("404", ignoreCase = true) ||
+                        msg.contains("410", ignoreCase = true) ||
+                        msg.contains("not found", ignoreCase = true) ||
+                        msg.contains("deleted", ignoreCase = true)
+                    ) {
+                        extractionFailedWithDeadHost = true
+                    }
                 }
             }
 
-            // Exclude dead hosts when direct extraction fails (e.g. 404 VOE or dead 502 Vidhide)
+            // Exclude dead hosts when direct extraction fails:
+            // 1) Any host whose extractor returned HTTP 404 / 410 / deleted / not found
+            // 2) VOE when direct extraction failed (VOE dead links)
+            // 3) Vidhide when direct extraction failed (Vidhide dead links)
+            // 4) Streamtape when direct extraction failed (Streamtape "Video not found! Maybe it got deleted by the creator!")
             val isDeadVoe = candidate.serverName.contains("VOE", ignoreCase = true) && !extractedAny
             val isDeadVidhide = candidate.serverName.contains("Vidhide", ignoreCase = true) && !extractedAny
+            val isDeadStreamtape = candidate.serverName.contains("Streamtape", ignoreCase = true) && !extractedAny
+            val isDeadHost = extractionFailedWithDeadHost || isDeadVoe || isDeadVidhide || isDeadStreamtape
 
-            if (!isDeadVoe && !isDeadVidhide) {
+            if (!isDeadHost) {
                 streamItems.add(
                     StreamItem(
                         url = candidate.url,
