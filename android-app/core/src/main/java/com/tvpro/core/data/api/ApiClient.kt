@@ -36,7 +36,7 @@ object ApiClient {
             val referer = when {
                 host.contains("tudorama") || host.contains("minochinos") -> "https://tudorama.com/"
                 host.contains("doramasflix") || host.contains("seriesapi") -> "https://doramasflix.in/"
-                host.contains("ok.ru") || host.contains("okcdn.ru") || host.contains("odnoklassniki") -> "https://ok.ru/"
+                host.contains("ok.ru") || host.contains("okcdn.ru") || host.contains("odnoklassniki") || host.contains("vkuser.net") || host.contains("mycdn.me") -> "https://ok.ru/"
                 host.contains("voe") || host.contains("megankid") || host.contains("cloudwindow") || host.contains("delivery") || host.contains("goofy-banana") || host.contains("susanexpectcare") || host.contains("arianathankspecial") -> "https://voe.sx/"
                 host.contains("filemoon") || host.contains("bysesukior") || host.contains("bysefujedu") -> "https://filemoon.sx/"
                 host.contains("abyss") -> "https://abyssplayer.com/"
@@ -52,7 +52,7 @@ object ApiClient {
             val origin = when {
                 host.contains("tudorama") || host.contains("minochinos") -> "https://tudorama.com"
                 host.contains("doramasflix") || host.contains("seriesapi") -> "https://doramasflix.in"
-                host.contains("ok.ru") || host.contains("okcdn.ru") || host.contains("odnoklassniki") -> "https://ok.ru"
+                host.contains("ok.ru") || host.contains("okcdn.ru") || host.contains("odnoklassniki") || host.contains("vkuser.net") || host.contains("mycdn.me") -> "https://ok.ru"
                 host.contains("voe") || host.contains("megankid") || host.contains("cloudwindow") || host.contains("delivery") || host.contains("goofy-banana") || host.contains("susanexpectcare") || host.contains("arianathankspecial") -> "https://voe.sx"
                 host.contains("filemoon") || host.contains("bysesukior") || host.contains("bysefujedu") -> "https://filemoon.sx"
                 host.contains("abyss") -> "https://abyssplayer.com"

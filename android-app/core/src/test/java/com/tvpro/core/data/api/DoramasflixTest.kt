@@ -129,4 +129,24 @@ class DoramasflixTest {
             println("Ep ${ep.episodeNumber}: Total ${streams.size} streams. Servidor 1: ${first?.source} (Type: ${first?.type})")
         }
     }
+
+    @Test
+    fun testEpisode16Streams(): Unit = runBlocking {
+        DoramasflixApiClient.episodeStreamsCache.clear()
+        val detail = DoramasflixApiClient.getDoramaDetail("kill-me-love-me")
+        println("Detail: ${detail?.title}, episodes: ${detail?.episodes?.size}")
+        val ep16 = detail?.episodes?.find { it.episodeNumber == 16 }
+        println("Ep 16 found: $ep16")
+        if (ep16 != null) {
+            val dfEpId = DoramasflixApiClient.episodeIdCache[ep16.slug]
+            println("Ep 16 dfEpId: $dfEpId")
+            if (dfEpId != null) {
+                val streams = DoramasflixApiClient.getEpisodeStreams(dfEpId)
+                println("EPISODE 16 STREAMS (${streams.size}):")
+                streams.forEachIndexed { i, s ->
+                    println("  [$i] source='${s.source}', type='${s.type}', url='${s.url}'")
+                }
+            }
+        }
+    }
 }

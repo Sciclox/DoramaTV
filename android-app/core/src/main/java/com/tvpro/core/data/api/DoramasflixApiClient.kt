@@ -672,11 +672,11 @@ object DoramasflixApiClient {
             }
         }
 
-        // Prioritize DIRECT native streams (MP4/HLS) first for high-performance instant playback in ExoPlayer,
-        // followed by Ok.ru and Primeload (Official Doramasflix HD CDN)
+        // Prioritize DIRECT native streams: Direct MP4 (HD) is instantaneous and robust, followed by HLS,
+        // then Primeload (Official Doramasflix HD CDN), Ok.ru Web, and VOE
         val prioritizedStreams = streamItems.sortedWith(
             compareBy(
-                { if (it.type == "MP4" || it.type == "HLS") 0 else 1 },
+                { if (it.type == "MP4") 0 else if (it.type == "HLS") 1 else 2 },
                 { if (it.source?.contains("Ok.ru", ignoreCase = true) == true) 0 else 1 },
                 { if (it.source?.contains("Primeload", ignoreCase = true) == true) 0 else 1 },
                 { if (it.source?.contains("VOE", ignoreCase = true) == true) 0 else 1 },

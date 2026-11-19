@@ -2301,26 +2301,27 @@ fun PlayerScreen(
     }
 
 
-    // Universal Playback Watchdog (ExoPlayer & Web Embed):
-    // If the stream fails to reach STATE_READY or start video within timeout, failover!
+    // Playback Advancement Watchdog for ExoPlayer:
+    // Ensures ExoPlayer actually advances past initial frame 0 and doesn't freeze on intro cards
     LaunchedEffect(activeStreamUrl, isEmbedStream) {
-        if (activeStreamUrl.isNotBlank()) {
+        if (activeStreamUrl.isNotBlank() && !isEmbedStream) {
             val targetUrl = activeStreamUrl
             val startTime = System.currentTimeMillis()
-            val maxWaitMs = if (isEmbedStream) 4_500L else 9_000L
-            while (isActive && activeStreamUrl == targetUrl) {
-                delay(300)
-                if (!isEmbedStream && isVideoReady) {
-                    // Video playback or readiness confirmed by ExoPlayer
-                    break
-                }
-                if (isEmbedStream && (isVideoReady || currentPositionMs > 1_000L) && durationMs > 0L) {
-                    // Video playback actually confirmed by embed web player
+            val maxWaitMs = 9_000L
+            while (isActive && activeStreamUrl == targetUrl && !isEmbedStream) {
+                delay(400)
+                val pos = exoPlayer.currentPosition
+                val dur = exoPlayer.duration
+                if (pos > 1_000L || (dur > 0L && pos > 500L && isPlaying)) {
+                    // Playback is confirmed active and advancing
                     break
                 }
                 val elapsed = System.currentTimeMillis() - startTime
                 if (elapsed >= maxWaitMs) {
-                    triggerStreamFailover(targetUrl, "Tiempo de espera agotado")
+                    val currentPos = exoPlayer.currentPosition
+                    if (currentPos <= 500L) {
+                        triggerStreamFailover(targetUrl, "Tiempo de espera agotado (reproducción estancada)")
+                    }
                     break
                 }
             }
