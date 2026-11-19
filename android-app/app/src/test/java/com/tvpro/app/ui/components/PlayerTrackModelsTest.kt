@@ -49,7 +49,7 @@ class PlayerTrackModelsTest {
         assertEquals("Ok.ru [720p HD]", getCleanServerDisplayName(okruHdMp4))
         assertEquals("Ok.ru [480p SD]", getCleanServerDisplayName(okruSdMp4))
         assertEquals("Ok.ru [Web]", getCleanServerDisplayName(okruWeb))
-        assertEquals("★ Primeload [MEJOR]", getCleanServerDisplayName(primeload))
+        assertEquals("Primeload [Web]", getCleanServerDisplayName(primeload))
         assertEquals("VOE [Auto HLS]", getCleanServerDisplayName(voeHls))
         assertEquals("Streamtape", getCleanServerDisplayName(streamtape))
     }

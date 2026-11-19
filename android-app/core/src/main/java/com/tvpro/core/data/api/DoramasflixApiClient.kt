@@ -465,28 +465,28 @@ object DoramasflixApiClient {
         return when {
             serverCode == "1113" || lower.contains("ok.ru") || lower.contains("odnoklassniki") ->
                 Pair("Ok.ru (Full HD)", 1)
-            serverCode == "4721" || lower.contains("primeload") ->
-                Pair("Primeload (Oficial HD)", 2)
             serverCode == "1230" || lower.contains("voe.sx") || lower.contains("voe-network") || lower.contains("arianathankspecial") || lower.contains("delivery") ->
-                Pair("VOE", 3)
-            serverCode == "7286" || lower.contains("dood") || lower.contains("playmogo") || lower.contains("do7go") ->
-                Pair("Doodstream", 4)
-            serverCode == "38585" || lower.contains("flaswish") || lower.contains("streamwish") || lower.contains("wishembed") ->
-                Pair("FlashWish", 5)
+                Pair("VOE", 2)
             serverCode == "576857" || lower.contains("callistanise") || lower.contains("vidhide") ->
-                Pair("Vidhide", 6)
-            serverCode == "8309" || lower.contains("streamtape") || lower.contains("strtape") ->
-                Pair("Streamtape", 7)
+                Pair("Vidhide", 3)
             serverCode == "958695" || lower.contains("filemoon") || lower.contains("byse") ->
-                Pair("Filemoon", 8)
-            serverCode == "1233" || lower.contains("uqload") ->
-                Pair("Uqload", 9)
-            serverCode == "1234" || lower.contains("mp4upload") ->
-                Pair("Mp4Upload", 10)
-            serverCode == "1239" || lower.contains("sbembed") || lower.contains("watchsb") || lower.contains("streamsb") ->
-                Pair("StreamSB", 11)
+                Pair("Filemoon", 4)
+            serverCode == "7286" || lower.contains("dood") || lower.contains("playmogo") || lower.contains("do7go") ->
+                Pair("Doodstream", 5)
+            serverCode == "8309" || lower.contains("streamtape") || lower.contains("strtape") ->
+                Pair("Streamtape", 6)
+            serverCode == "38585" || lower.contains("flaswish") || lower.contains("streamwish") || lower.contains("wishembed") ->
+                Pair("FlashWish", 15)
             serverCode == "3889" || lower.contains("mixdrop") || lower.contains("m1xdrop") ->
-                Pair("Mixdrop", 12)
+                Pair("Mixdrop", 16)
+            serverCode == "4721" || lower.contains("primeload") ->
+                Pair("Primeload", 20)
+            serverCode == "1233" || lower.contains("uqload") ->
+                Pair("Uqload", 21)
+            serverCode == "1234" || lower.contains("mp4upload") ->
+                Pair("Mp4Upload", 22)
+            serverCode == "1239" || lower.contains("sbembed") || lower.contains("watchsb") || lower.contains("streamsb") ->
+                Pair("StreamSB", 23)
             else -> {
                 val brand = extractDomainBrand(url)
                 Pair(if (brand != "Alternativo") brand else "Servidor $serverCode", 25)
@@ -518,12 +518,12 @@ object DoramasflixApiClient {
             put("episode_id", episodeId)
         }
 
-        // Doramasflix shards servers across partitions:
-        // Priority tier: null (Web default: Primeload, VOE) and "playdoramas" (Ok.ru [1113], Primeload, Filemoon)
-        // Secondary tier: "doramasyt" (Streamtape), "doramasflix", "com.asiapp.doramasgo" (Doodstream)
-        val primaryPartitions = listOf(null, "playdoramas")
-        val secondaryPartitions = listOf("doramasyt", "doramasflix", "com.asiapp.doramasgo")
+        // Doramasflix shards servers across 5 distinct partitions.
+        // We query sequentially and stop early ONLY if we found top-tier Ok.ru (server 1113)
+        // AND have at least 5 candidates. Otherwise, we exhaust all partitions so that NO servers are lost!
+        val allPartitions = listOf(null, "playdoramas", "doramasflix", "doramasyt", "com.asiapp.doramasgo")
         val rawLinks = mutableListOf<JSONObject>()
+        val seenLinkIds = mutableSetOf<String>()
 
         fun queryPartition(appPart: String?) {
             val gql = if (appPart == null) {
@@ -560,22 +560,24 @@ object DoramasflixApiClient {
             val arr = res?.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
             if (arr != null) {
                 for (i in 0 until arr.length()) {
-                    arr.optJSONObject(i)?.let { rawLinks.add(it) }
+                    arr.optJSONObject(i)?.let { obj ->
+                        val linkStr = obj.optString("link", "")
+                        if (linkStr.isNotBlank() && seenLinkIds.add(linkStr)) {
+                            rawLinks.add(obj)
+                        }
+                    }
                 }
             }
         }
 
-        // Query primary partitions first (covers Ok.ru and Primeload)
-        for (appPart in primaryPartitions) {
+        // Query partitions with smart early-exit
+        for (appPart in allPartitions) {
             queryPartition(appPart)
-        }
-
-        // Only query secondary partitions if primary didn't yield enough working options (< 2 servers)
-        if (rawLinks.size < 2) {
-            for (appPart in secondaryPartitions) {
-                queryPartition(appPart)
-                if (rawLinks.size >= 3) break
+            val hasOkRu = rawLinks.any { it.optString("server") == "1113" }
+            if (hasOkRu && rawLinks.size >= 5) {
+                break
             }
+            kotlinx.coroutines.delay(120)
         }
 
         if (rawLinks.isEmpty()) {
@@ -617,13 +619,12 @@ object DoramasflixApiClient {
             )
         }
 
-        // Sort candidates: Recommended (★ MEJOR e.g. Primeload) first, then cleanest priority (Ok.ru -> Primeload -> VOE -> ...),
-        // then audio latino
+        // Sort candidates: Cleanest priority (Ok.ru -> VOE -> Vidhide -> Filemoon -> Doodstream -> Streamtape -> ...),
+        // then audio latino. We DO NOT sort by isRecommended to avoid prioritizing bot-protected Primeload embeds.
         val sortedCandidates = candidates
             .distinctBy { it.url }
             .sortedWith(
                 compareBy(
-                    { if (it.isRecommended) 0 else 1 },
                     { it.priority },
                     { if (it.langLabel.contains("Latino")) 0 else 1 }
                 )
@@ -673,13 +674,17 @@ object DoramasflixApiClient {
         }
 
         // Prioritize DIRECT native streams: Direct MP4 (HD) is instantaneous and robust, followed by HLS,
-        // then Primeload (Official Doramasflix HD CDN), Ok.ru Web, and VOE
+        // then Ok.ru Web, and other native extractors. Deprioritize ad-heavy embeds like Primeload to the very bottom.
         val prioritizedStreams = streamItems.sortedWith(
             compareBy(
                 { if (it.type == "MP4") 0 else if (it.type == "HLS") 1 else 2 },
                 { if (it.source?.contains("Ok.ru", ignoreCase = true) == true) 0 else 1 },
-                { if (it.source?.contains("Primeload", ignoreCase = true) == true) 0 else 1 },
                 { if (it.source?.contains("VOE", ignoreCase = true) == true) 0 else 1 },
+                { if (it.source?.contains("Vidhide", ignoreCase = true) == true) 0 else 1 },
+                { if (it.source?.contains("Filemoon", ignoreCase = true) == true) 0 else 1 },
+                { if (it.source?.contains("Dood", ignoreCase = true) == true) 0 else 1 },
+                { if (it.source?.contains("Streamtape", ignoreCase = true) == true) 0 else 1 },
+                { if (it.source?.contains("Primeload", ignoreCase = true) == true) 10 else 2 },
                 { if (it.source?.contains("Latino", ignoreCase = true) == true) 0 else 1 }
             )
         )

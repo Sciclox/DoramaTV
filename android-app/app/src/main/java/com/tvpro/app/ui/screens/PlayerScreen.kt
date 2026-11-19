@@ -2301,25 +2301,36 @@ fun PlayerScreen(
     }
 
 
-    // Playback Advancement Watchdog for ExoPlayer:
-    // Ensures ExoPlayer actually advances past initial frame 0 and doesn't freeze on intro cards
+    // Universal Playback Advancement Watchdog (ExoPlayer & Web Embeds):
+    // Ensures playback actually starts and advances, preventing eternal freezing on loading spinners
     LaunchedEffect(activeStreamUrl, isEmbedStream) {
-        if (activeStreamUrl.isNotBlank() && !isEmbedStream) {
+        if (activeStreamUrl.isNotBlank()) {
             val targetUrl = activeStreamUrl
             val startTime = System.currentTimeMillis()
             val maxWaitMs = 9_000L
-            while (isActive && activeStreamUrl == targetUrl && !isEmbedStream) {
+            while (isActive && activeStreamUrl == targetUrl) {
                 delay(400)
-                val pos = exoPlayer.currentPosition
-                val dur = exoPlayer.duration
-                if (pos > 1_000L || (dur > 0L && pos > 500L && isPlaying)) {
-                    // Playback is confirmed active and advancing
-                    break
+                if (!isEmbedStream) {
+                    val pos = exoPlayer.currentPosition
+                    val dur = exoPlayer.duration
+                    if (pos > 1_000L || (dur > 0L && pos > 500L && isPlaying)) {
+                        // Playback is confirmed active and advancing
+                        break
+                    }
+                } else {
+                    // For Web Embeds, playback is confirmed when video is ready with duration or position advancing
+                    if ((isVideoReady || currentPositionMs > 1_000L) && durationMs > 0L) {
+                        break
+                    }
                 }
                 val elapsed = System.currentTimeMillis() - startTime
                 if (elapsed >= maxWaitMs) {
-                    val currentPos = exoPlayer.currentPosition
-                    if (currentPos <= 500L) {
+                    val stalled = if (!isEmbedStream) {
+                        exoPlayer.currentPosition <= 500L
+                    } else {
+                        !isVideoReady || durationMs <= 0L
+                    }
+                    if (stalled) {
                         triggerStreamFailover(targetUrl, "Tiempo de espera agotado (reproducción estancada)")
                     }
                     break

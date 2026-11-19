@@ -39,7 +39,7 @@ fun getCleanServerDisplayName(stream: StreamItem): String {
     val isDirectMp4 = type == "MP4" || src.contains("direct") || u.contains(".mp4")
 
     return when {
-        src.contains("primeload") || u.contains("primeload") -> "★ Primeload [MEJOR]"
+        src.contains("primeload") || u.contains("primeload") -> "Primeload [Web]"
         src.contains("ok.ru") || u.contains("ok.ru") || src.contains("odnoklassniki") -> {
             when {
                 src.contains("(hd)") -> "Ok.ru [720p HD]"
