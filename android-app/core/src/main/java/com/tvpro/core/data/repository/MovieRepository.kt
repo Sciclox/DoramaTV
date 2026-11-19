@@ -1234,7 +1234,8 @@ object MovieRepository {
         seriesPostId: Int? = null,
         serieUrl: String = "",
         episodeSlug: String = "",
-        seriesPostIdStr: String? = null
+        seriesPostIdStr: String? = null,
+        forceRefresh: Boolean = false
     ): List<StreamItem> = withContext(Dispatchers.IO) {
         val effectivePostId = seriesPostIdStr?.ifBlank { null } ?: seriesPostId?.toString()
 
@@ -1266,7 +1267,7 @@ object MovieRepository {
             ?: (if (episodeSlug.isNotBlank()) DoramasflixApiClient.episodeIdCache[episodeSlug] else null)
 
         if (!directDfEpId.isNullOrBlank()) {
-            val dfStreams = DoramasflixApiClient.getEpisodeStreams(directDfEpId)
+            val dfStreams = DoramasflixApiClient.getEpisodeStreams(directDfEpId, forceRefresh = forceRefresh)
             if (dfStreams.isNotEmpty()) {
                 return@withContext dfStreams
             }
@@ -1325,7 +1326,7 @@ object MovieRepository {
             }
 
             if (!dfEpId.isNullOrBlank()) {
-                val dfStreams = DoramasflixApiClient.getEpisodeStreams(dfEpId)
+                val dfStreams = DoramasflixApiClient.getEpisodeStreams(dfEpId, forceRefresh = forceRefresh)
                 if (dfStreams.isNotEmpty()) {
                     return@withContext dfStreams
                 }
@@ -1355,7 +1356,7 @@ object MovieRepository {
                         DoramasflixApiClient.episodeIdCache[found.slug]
                     } else null
                     if (!dfEpId.isNullOrBlank()) {
-                        val dfStreams = DoramasflixApiClient.getEpisodeStreams(dfEpId)
+                        val dfStreams = DoramasflixApiClient.getEpisodeStreams(dfEpId, forceRefresh = forceRefresh)
                         if (dfStreams.isNotEmpty()) {
                             return@withContext dfStreams
                         }

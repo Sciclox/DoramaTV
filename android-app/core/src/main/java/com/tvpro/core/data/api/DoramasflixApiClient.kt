@@ -37,6 +37,8 @@ object DoramasflixApiClient {
             .header("Origin", "https://doramasflix.in")
             .header("Referer", "https://doramasflix.in/")
             .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
+            .header("Cache-Control", "no-cache")
+            .header("Pragma", "no-cache")
             .post(requestBody)
             .build()
 
@@ -463,28 +465,28 @@ object DoramasflixApiClient {
         return when {
             serverCode == "1113" || lower.contains("ok.ru") || lower.contains("odnoklassniki") ->
                 Pair("Ok.ru (Full HD)", 1)
-            serverCode == "1230" || lower.contains("voe.sx") || lower.contains("voe-network") || lower.contains("arianathankspecial") || lower.contains("delivery") ->
-                Pair("VOE", 2)
-            serverCode == "958695" || lower.contains("filemoon") || lower.contains("byse") ->
-                Pair("Filemoon", 3)
-            serverCode == "38585" || lower.contains("flaswish") || lower.contains("streamwish") || lower.contains("wishembed") ->
-                Pair("FlashWish", 4)
-            serverCode == "8309" || lower.contains("streamtape") || lower.contains("strtape") ->
-                Pair("Streamtape", 5)
-            serverCode == "7286" || lower.contains("dood") || lower.contains("playmogo") || lower.contains("do7go") ->
-                Pair("Doodstream", 6)
             serverCode == "4721" || lower.contains("primeload") ->
-                Pair("Primeload (Oficial HD)", 7)
-            serverCode == "1233" || lower.contains("uqload") ->
-                Pair("Uqload", 8)
-            serverCode == "1234" || lower.contains("mp4upload") ->
-                Pair("Mp4Upload", 9)
-            serverCode == "1239" || lower.contains("sbembed") || lower.contains("watchsb") || lower.contains("streamsb") ->
-                Pair("StreamSB", 10)
+                Pair("Primeload (Oficial HD)", 2)
+            serverCode == "1230" || lower.contains("voe.sx") || lower.contains("voe-network") || lower.contains("arianathankspecial") || lower.contains("delivery") ->
+                Pair("VOE", 3)
+            serverCode == "7286" || lower.contains("dood") || lower.contains("playmogo") || lower.contains("do7go") ->
+                Pair("Doodstream", 4)
+            serverCode == "38585" || lower.contains("flaswish") || lower.contains("streamwish") || lower.contains("wishembed") ->
+                Pair("FlashWish", 5)
             serverCode == "576857" || lower.contains("callistanise") || lower.contains("vidhide") ->
-                Pair("Vidhide", 20)
+                Pair("Vidhide", 6)
+            serverCode == "8309" || lower.contains("streamtape") || lower.contains("strtape") ->
+                Pair("Streamtape", 7)
+            serverCode == "958695" || lower.contains("filemoon") || lower.contains("byse") ->
+                Pair("Filemoon", 8)
+            serverCode == "1233" || lower.contains("uqload") ->
+                Pair("Uqload", 9)
+            serverCode == "1234" || lower.contains("mp4upload") ->
+                Pair("Mp4Upload", 10)
+            serverCode == "1239" || lower.contains("sbembed") || lower.contains("watchsb") || lower.contains("streamsb") ->
+                Pair("StreamSB", 11)
             serverCode == "3889" || lower.contains("mixdrop") || lower.contains("m1xdrop") ->
-                Pair("Mixdrop", 21)
+                Pair("Mixdrop", 12)
             else -> {
                 val brand = extractDomainBrand(url)
                 Pair(if (brand != "Alternativo") brand else "Servidor $serverCode", 25)
@@ -500,125 +502,110 @@ object DoramasflixApiClient {
         val isRecommended: Boolean
     )
 
-    suspend fun getEpisodeStreams(episodeId: String): List<StreamItem> = withContext(Dispatchers.IO) {
-        android.util.Log.e("TVPRO_PLAY", "getEpisodeStreams CALLED for episodeId=$episodeId")
-        val cached = episodeStreamsCache[episodeId]
-        if (cached != null && cached.isNotEmpty()) {
-            android.util.Log.e("TVPRO_PLAY", "getEpisodeStreams CACHE HIT for episodeId=$episodeId, count=${cached.size}")
-            return@withContext cached
+    suspend fun getEpisodeStreams(episodeId: String, forceRefresh: Boolean = false): List<StreamItem> = withContext(Dispatchers.IO) {
+        android.util.Log.e("TVPRO_PLAY", "getEpisodeStreams CALLED for episodeId=$episodeId, forceRefresh=$forceRefresh")
+        if (forceRefresh) {
+            episodeStreamsCache.remove(episodeId)
+        } else {
+            val cached = episodeStreamsCache[episodeId]
+            if (cached != null && cached.isNotEmpty()) {
+                android.util.Log.e("TVPRO_PLAY", "getEpisodeStreams CACHE HIT for episodeId=$episodeId, count=${cached.size}")
+                return@withContext cached
+            }
         }
 
         val variables = JSONObject().apply {
             put("episode_id", episodeId)
         }
 
-        // 1. Query Web Doramasflix API (standard Web endpoints, complete 1-32 catalog)
-        val webGql = """
-            query EpisodeLinksOnlineWeb(${"$"}episode_id: ID!) {
-              getEpisodeLinks(id: ${"$"}episode_id) {
-                links_online {
-                  server
-                  lang
-                  link
-                  _id
-                  is_recommended
-                }
-              }
-            }
-        """.trimIndent()
-
-        // 2. Query App Doramasflix API (doramasgo partition with complementary server links)
-        val appGql = """
-            query EpisodeLinksOnlineApp(${"$"}episode_id: ID!) {
-              getEpisodeLinks(id: ${"$"}episode_id, app: "com.asiapp.doramasgo") {
-                links_online {
-                  server
-                  lang
-                  link
-                  _id
-                  is_recommended
-                }
-              }
-            }
-        """.trimIndent()
-
-        // 3. Query App Doramasflix partition ("doramasflix")
-        val flixGql = """
-            query EpisodeLinksOnlineFlix(${"$"}episode_id: ID!) {
-              getEpisodeLinks(id: ${"$"}episode_id, app: "doramasflix") {
-                links_online {
-                  server
-                  lang
-                  link
-                  _id
-                  is_recommended
-                }
-              }
-            }
-        """.trimIndent()
-
+        // Doramasflix shards servers across 5 query partitions:
+        // 1. null (Web default: Primeload, VOE, Mixdrop)
+        // 2. "playdoramas" (Crucial: provides Ok.ru [1113], Primeload, Filemoon)
+        // 3. "doramasyt" (Provides Streamtape [8309], VOE, FlashWish)
+        // 4. "doramasflix" (Provides Primeload, Vidhide, FlashWish)
+        // 5. "com.asiapp.doramasgo" (Provides Doodstream, Vidhide)
+        val partitions = listOf(null, "playdoramas", "doramasyt", "doramasflix", "com.asiapp.doramasgo")
         val rawLinks = mutableListOf<JSONObject>()
 
-        // 1. Query App Doramasflix partition ("doramasflix") FIRST to guarantee Ok.ru priority
-        var flixRes: JSONObject? = null
-        flixRes = postGraphQL(flixGql, variables, "EpisodeLinksOnlineFlix")
-        val flixArr = flixRes?.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
-        if (flixArr != null) {
-            for (i in 0 until flixArr.length()) {
-                flixArr.optJSONObject(i)?.let { rawLinks.add(it) }
+        for (appPart in partitions) {
+            val gql = if (appPart == null) {
+                """
+                    query EpisodeLinksOnlineWeb(${"$"}episode_id: ID!) {
+                      getEpisodeLinks(id: ${"$"}episode_id) {
+                        links_online {
+                          server
+                          lang
+                          link
+                          _id
+                          is_recommended
+                        }
+                      }
+                    }
+                """.trimIndent()
+            } else {
+                """
+                    query EpisodeLinksOnlineApp(${"$"}episode_id: ID!) {
+                      getEpisodeLinks(id: ${"$"}episode_id, app: "$appPart") {
+                        links_online {
+                          server
+                          lang
+                          link
+                          _id
+                          is_recommended
+                        }
+                      }
+                    }
+                """.trimIndent()
             }
-        }
-
-        // 2. Query Web Doramasflix API (standard Web endpoints, complete catalog)
-        kotlinx.coroutines.delay(300L)
-        val webRes = postGraphQL(webGql, variables, "EpisodeLinksOnlineWeb")
-        val webArr = webRes?.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
-        if (webArr != null) {
-            for (i in 0 until webArr.length()) {
-                webArr.optJSONObject(i)?.let { rawLinks.add(it) }
-            }
-        }
-
-        // 3. Query App Doramasflix API (doramasgo partition with complementary server links)
-        var appRes: JSONObject? = null
-        kotlinx.coroutines.delay(300L)
-        appRes = postGraphQL(appGql, variables, "EpisodeLinksOnlineApp")
-        val appArr = appRes?.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
-        if (appArr != null) {
-            for (i in 0 until appArr.length()) {
-                appArr.optJSONObject(i)?.let { rawLinks.add(it) }
+            val opName = if (appPart == null) "EpisodeLinksOnlineWeb" else "EpisodeLinksOnlineApp"
+            val res = postGraphQL(gql, variables, opName)
+            val arr = res?.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
+            if (arr != null) {
+                for (i in 0 until arr.length()) {
+                    arr.optJSONObject(i)?.let { rawLinks.add(it) }
+                }
             }
         }
 
         // Retry if throttled or temporary network hiccup
         if (rawLinks.isEmpty()) {
-            val isThrottled = webRes == null || appRes == null || flixRes == null ||
-                              webRes.optJSONArray("errors")?.toString()?.contains("ThrottlerException") == true ||
-                              appRes.optJSONArray("errors")?.toString()?.contains("ThrottlerException") == true ||
-                              flixRes.optJSONArray("errors")?.toString()?.contains("ThrottlerException") == true
-            if (isThrottled) {
-                kotlinx.coroutines.delay(1200L)
-                val retryFlix = postGraphQL(flixGql, variables, "EpisodeLinksOnlineFlix")
-                val retryFlixArr = retryFlix?.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
-                if (retryFlixArr != null) {
-                    for (i in 0 until retryFlixArr.length()) {
-                        retryFlixArr.optJSONObject(i)?.let { rawLinks.add(it) }
-                    }
+            kotlinx.coroutines.delay(1000L)
+            for (appPart in partitions) {
+                val gql = if (appPart == null) {
+                    """
+                        query EpisodeLinksOnlineWeb(${"$"}episode_id: ID!) {
+                          getEpisodeLinks(id: ${"$"}episode_id) {
+                            links_online {
+                              server
+                              lang
+                              link
+                              _id
+                              is_recommended
+                            }
+                          }
+                        }
+                    """.trimIndent()
+                } else {
+                    """
+                        query EpisodeLinksOnlineApp(${"$"}episode_id: ID!) {
+                          getEpisodeLinks(id: ${"$"}episode_id, app: "$appPart") {
+                            links_online {
+                              server
+                              lang
+                              link
+                              _id
+                              is_recommended
+                            }
+                          }
+                        }
+                    """.trimIndent()
                 }
-                kotlinx.coroutines.delay(300L)
-                val retryRes = postGraphQL(webGql, variables, "EpisodeLinksOnlineWeb")
-                val retryArr = retryRes?.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
-                if (retryArr != null) {
-                    for (i in 0 until retryArr.length()) {
-                        retryArr.optJSONObject(i)?.let { rawLinks.add(it) }
-                    }
-                }
-                kotlinx.coroutines.delay(300L)
-                val retryApp = postGraphQL(appGql, variables, "EpisodeLinksOnlineApp")
-                val retryAppArr = retryApp?.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
-                if (retryAppArr != null) {
-                    for (i in 0 until retryAppArr.length()) {
-                        retryAppArr.optJSONObject(i)?.let { rawLinks.add(it) }
+                val opName = if (appPart == null) "EpisodeLinksOnlineWeb" else "EpisodeLinksOnlineApp"
+                val res = postGraphQL(gql, variables, opName)
+                val arr = res?.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
+                if (arr != null) {
+                    for (i in 0 until arr.length()) {
+                        arr.optJSONObject(i)?.let { rawLinks.add(it) }
                     }
                 }
             }
@@ -663,14 +650,14 @@ object DoramasflixApiClient {
             )
         }
 
-        // Sort candidates: Cleanest servers first (Ok.ru -> VOE -> Primeload -> Doodstream -> ...),
-        // then recommended, then audio latino
+        // Sort candidates: Recommended (★ MEJOR e.g. Primeload) first, then cleanest priority (Ok.ru -> Primeload -> VOE -> ...),
+        // then audio latino
         val sortedCandidates = candidates
             .distinctBy { it.url }
             .sortedWith(
                 compareBy(
-                    { it.priority },
                     { if (it.isRecommended) 0 else 1 },
+                    { it.priority },
                     { if (it.langLabel.contains("Latino")) 0 else 1 }
                 )
             )
@@ -718,11 +705,13 @@ object DoramasflixApiClient {
             }
         }
 
-        // Prioritize DIRECT native streams (MP4/HLS) first for high-performance instant playback in ExoPlayer
+        // Prioritize DIRECT native streams (MP4/HLS) first for high-performance instant playback in ExoPlayer,
+        // followed by Ok.ru and Primeload (Official Doramasflix HD CDN)
         val prioritizedStreams = streamItems.sortedWith(
             compareBy(
                 { if (it.type == "MP4" || it.type == "HLS") 0 else 1 },
                 { if (it.source?.contains("Ok.ru", ignoreCase = true) == true) 0 else 1 },
+                { if (it.source?.contains("Primeload", ignoreCase = true) == true) 0 else 1 },
                 { if (it.source?.contains("VOE", ignoreCase = true) == true) 0 else 1 },
                 { if (it.source?.contains("Latino", ignoreCase = true) == true) 0 else 1 }
             )

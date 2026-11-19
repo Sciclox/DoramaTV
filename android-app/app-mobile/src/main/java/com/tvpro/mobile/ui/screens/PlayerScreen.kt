@@ -353,7 +353,8 @@ fun MobilePlayerScreen(
                     episodeNumber = ep.episodeNumber,
                     seriesPostId = seriesPostId,
                     serieUrl = movie.url,
-                    episodeSlug = ep.slug
+                    episodeSlug = ep.slug,
+                    forceRefresh = force
                 )
                 streamList = streams
                 val working = streams.firstOrNull { it.url.isNotBlank() }
@@ -702,15 +703,20 @@ fun MobilePlayerScreen(
         while (isActive) {
             val syncJs = """
                 (function() {
-                    var bodyText = (document.body ? (document.body.innerText || document.body.textContent || '') : '').toLowerCase();
+                    var rc = document.getElementById('realcontent');
+                    var bodyText = ((document.body ? (document.body.textContent || document.body.innerText || '') : '') + ' ' + (rc ? (rc.textContent || '') : '')).toLowerCase();
                     var errorPhrases = [
                         '232001',
                         'not found',
+                        'video not found',
                         'video you are looking for is not found',
+                        'deleted by the creator',
                         'file not found',
                         'file was deleted',
                         'video deleted',
                         'video has been removed',
+                        'video unavailable',
+                        'this video is unavailable',
                         'no se puede reproducir',
                         'archivo de video no se puede reproducir',
                         'video file cannot be played',
@@ -781,6 +787,15 @@ fun MobilePlayerScreen(
                             if (streamList.size > 1 && selectedStreamIndex < streamList.size - 1) {
                                 selectedStreamIndex++
                                 resolvedStreamUrl = streamList[selectedStreamIndex].url
+                            } else if (resolveRetryCount < 3) {
+                                resolveRetryCount++
+                                scope.launch {
+                                    try {
+                                        android.webkit.CookieManager.getInstance().removeSessionCookies(null)
+                                    } catch (_: Exception) {}
+                                    delay(1200)
+                                    resolveRetryTrigger++
+                                }
                             }
                             return@evaluateJavascript
                         }
@@ -798,26 +813,59 @@ fun MobilePlayerScreen(
                                 mobileStallTicks = 0
                             } else if (isPlaying) {
                                 mobileStallTicks++
-                                if (mobileStallTicks >= 10 && streamList.size > 1 && selectedStreamIndex < streamList.size - 1) {
+                                if (mobileStallTicks >= 10) {
                                     mobileStallTicks = 0
-                                    selectedStreamIndex++
-                                    resolvedStreamUrl = streamList[selectedStreamIndex].url
+                                    if (streamList.size > 1 && selectedStreamIndex < streamList.size - 1) {
+                                        selectedStreamIndex++
+                                        resolvedStreamUrl = streamList[selectedStreamIndex].url
+                                    } else if (resolveRetryCount < 3) {
+                                        resolveRetryCount++
+                                        scope.launch {
+                                            try {
+                                                android.webkit.CookieManager.getInstance().removeSessionCookies(null)
+                                            } catch (_: Exception) {}
+                                            delay(1200)
+                                            resolveRetryTrigger++
+                                        }
+                                    }
                                 }
                             }
                         } else {
                             mobileNoDurTicks++
-                            if (mobileNoDurTicks >= 10 && streamList.size > 1 && selectedStreamIndex < streamList.size - 1) {
+                            if (mobileNoDurTicks >= 10) {
                                 mobileNoDurTicks = 0
-                                selectedStreamIndex++
-                                resolvedStreamUrl = streamList[selectedStreamIndex].url
+                                if (streamList.size > 1 && selectedStreamIndex < streamList.size - 1) {
+                                    selectedStreamIndex++
+                                    resolvedStreamUrl = streamList[selectedStreamIndex].url
+                                } else if (resolveRetryCount < 3) {
+                                    resolveRetryCount++
+                                    scope.launch {
+                                        try {
+                                            android.webkit.CookieManager.getInstance().removeSessionCookies(null)
+                                        } catch (_: Exception) {}
+                                        delay(1200)
+                                        resolveRetryTrigger++
+                                    }
+                                }
                             }
                         }
                     } else {
                         mobileNoDurTicks++
-                        if (mobileNoDurTicks >= 10 && streamList.size > 1 && selectedStreamIndex < streamList.size - 1) {
+                        if (mobileNoDurTicks >= 10) {
                             mobileNoDurTicks = 0
-                            selectedStreamIndex++
-                            resolvedStreamUrl = streamList[selectedStreamIndex].url
+                            if (streamList.size > 1 && selectedStreamIndex < streamList.size - 1) {
+                                selectedStreamIndex++
+                                resolvedStreamUrl = streamList[selectedStreamIndex].url
+                            } else if (resolveRetryCount < 3) {
+                                resolveRetryCount++
+                                scope.launch {
+                                    try {
+                                        android.webkit.CookieManager.getInstance().removeSessionCookies(null)
+                                    } catch (_: Exception) {}
+                                    delay(1200)
+                                    resolveRetryTrigger++
+                                }
+                            }
                         }
                     }
                 } catch (_: Exception) {}
@@ -1030,11 +1078,39 @@ fun MobilePlayerScreen(
                                     isBuffering = false
                                 }
                             }
+
+                            override fun onConsoleMessage(consoleMessage: android.webkit.ConsoleMessage?): Boolean {
+                                val msg = consoleMessage?.message() ?: ""
+                                if (msg.contains("Error 232001", ignoreCase = true) ||
+                                    msg.contains("The media could not be loaded", ignoreCase = true) ||
+                                    msg.contains("No compatible source", ignoreCase = true) ||
+                                    msg.contains("File not found", ignoreCase = true) ||
+                                    msg.contains("Video not found", ignoreCase = true) ||
+                                    msg.contains("not found", ignoreCase = true) ||
+                                    msg.contains("404 Not Found", ignoreCase = true)) {
+                                    scope.launch {
+                                        resolveRetryCount++
+                                        resolveRetryTrigger++
+                                    }
+                                    return true
+                                }
+                                return super.onConsoleMessage(consoleMessage)
+                            }
                         }
 
                         webViewClient = object : WebViewClient() {
                             override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
                                 handler?.proceed()
+                            }
+
+                            override fun onReceivedHttpError(view: WebView?, request: WebResourceRequest?, errorResponse: WebResourceResponse?) {
+                                val status = errorResponse?.statusCode ?: 200
+                                if (request?.isForMainFrame == true && status in listOf(404, 410, 500, 502, 503)) {
+                                    scope.launch {
+                                        resolveRetryCount++
+                                        resolveRetryTrigger++
+                                    }
+                                }
                             }
 
                             override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest?): WebResourceResponse? {

@@ -338,17 +338,17 @@ fun PlayerScreen(
                     when {
                         stream.type == "HLS" || stream.type == "MP4" || u.contains(".m3u8") || u.contains(".mp4") -> 0
                         u.contains("ok.ru") || src.contains("ok.ru") -> 1
-                        u.contains("voe") || u.contains("megankid") || u.contains("arianathankspecial") || src.contains("voe") -> 2
-                        u.contains("primeload") || src.contains("primeload") -> 3
+                        u.contains("primeload") || src.contains("primeload") -> 2
+                        u.contains("voe") || u.contains("megankid") || u.contains("arianathankspecial") || src.contains("voe") -> 3
                         u.contains("dood") || u.contains("do7go") || u.contains("playmogo") || src.contains("dood") -> 4
                         u.contains("flaswish") || src.contains("flashwish") -> 5
-                        u.contains("streamtape") || src.contains("streamtape") -> 6
-                        u.contains("uqload") || src.contains("uqload") -> 7
-                        u.contains("mp4upload") || src.contains("mp4upload") -> 8
-                        u.contains("vimeos") -> 9
-                        u.contains("filemoon") || u.contains("byse") || src.contains("filemoon") -> 20
-                        u.contains("callistanise") || u.contains("vidhide") || src.contains("vidhide") -> 21
-                        u.contains("mixdrop") || src.contains("mixdrop") -> 22
+                        u.contains("callistanise") || u.contains("vidhide") || src.contains("vidhide") -> 6
+                        u.contains("streamtape") || src.contains("streamtape") -> 7
+                        u.contains("filemoon") || u.contains("byse") || src.contains("filemoon") -> 8
+                        u.contains("uqload") || src.contains("uqload") -> 9
+                        u.contains("mp4upload") || src.contains("mp4upload") -> 10
+                        u.contains("mixdrop") || src.contains("mixdrop") -> 11
+                        u.contains("vimeos") -> 12
                         else -> 25
                     }
                 }
@@ -781,8 +781,17 @@ fun PlayerScreen(
             val postIdStr = detailResponse?.postId ?: movie.postId?.toString() ?: ""
             if (!isResolvingFailover && isSeriesContent && (postIdStr.isNotBlank() || movie.url.isNotBlank())) {
                 isResolvingFailover = true
+                seekToastText = "Reconectando con el servidor en segundo plano... (Buscando enlace fresco)"
                 scope.launch {
                     try {
+                        // Clear session cookies in WebView to bypass transient rate limits or corrupted sessions
+                        try {
+                            android.webkit.CookieManager.getInstance().removeSessionCookies(null)
+                        } catch (_: Exception) {}
+
+                        // Smart Backoff: wait 1.2s before live query
+                        delay(1200)
+
                         val fresh = withContext(Dispatchers.IO) {
                             MovieRepository.resolveEpisodeStreams(
                                 episodeId = 0,
@@ -792,15 +801,36 @@ fun PlayerScreen(
                                 episodeNumber = activeEpisodeInt,
                                 seriesPostId = postIdStr.toIntOrNull(),
                                 serieUrl = movie.url,
-                                seriesPostIdStr = postIdStr
+                                seriesPostIdStr = postIdStr,
+                                forceRefresh = true
                             )
                         }
-                        val newCandidates = fresh.filter { it.url !in failedStreamUrls && it.url.isNotBlank() }
+
+                        // Also attempt retry if initial fresh was empty (give CDN 2.5s window)
+                        val finalFresh = if (fresh.isEmpty()) {
+                            delay(2500)
+                            withContext(Dispatchers.IO) {
+                                MovieRepository.resolveEpisodeStreams(
+                                    episodeId = 0,
+                                    seriesTitle = cleanMainTitle,
+                                    fallbackStreams = emptyList(),
+                                    seasonNumber = activeSeasonInt,
+                                    episodeNumber = activeEpisodeInt,
+                                    seriesPostId = postIdStr.toIntOrNull(),
+                                    serieUrl = movie.url,
+                                    seriesPostIdStr = postIdStr,
+                                    forceRefresh = true
+                                )
+                            }
+                        } else fresh
+
+                        val newCandidates = finalFresh.filter { it.url.isNotBlank() }
                         if (newCandidates.isNotEmpty()) {
-                            dynamicStreams = (dynamicStreams + newCandidates).distinctBy { it.url }
+                            failedStreamUrls.clear() // Reset failed URLs with fresh server tokens
+                            dynamicStreams = newCandidates
                             switchServer(0, resetPosition = false, streamList = newCandidates)
                         } else {
-                            seekToastText = "No se pudo reproducir este video. Intenta con otro episodio."
+                            seekToastText = "Servidores temporalmente en mantenimiento. Reintentando..."
                             showServerDialog = true
                             isBuffering = false
                             isVideoReady = true
@@ -1762,15 +1792,22 @@ fun PlayerScreen(
                                 }
                             }
                         }
-                        var bodyText = (document.body ? (document.body.innerText || document.body.textContent || '') : '').toLowerCase();
+                        var bodyText = (document.body ? (document.body.textContent || document.body.innerText || '') : '').toLowerCase();
+                        var rc = document.getElementById('realcontent');
+                        var realText = rc ? (rc.textContent || '').toLowerCase() : '';
+                        var fullDomText = bodyText + ' ' + realText;
                         var errorPhrases = [
                             '232001',
                             'not found',
+                            'video not found',
                             'video you are looking for is not found',
+                            'deleted by the creator',
                             'file not found',
                             'file was deleted',
                             'video deleted',
                             'video has been removed',
+                            'video unavailable',
+                            'this video is unavailable',
                             'no se puede reproducir',
                             'archivo de video no se puede reproducir',
                             'video file cannot be played',
@@ -1789,7 +1826,7 @@ fun PlayerScreen(
                         var isDead = false;
                         var deadReason = '';
                         for (var ep = 0; ep < errorPhrases.length; ep++) {
-                            if (bodyText.includes(errorPhrases[ep])) {
+                            if (fullDomText.includes(errorPhrases[ep])) {
                                 isDead = true;
                                 deadReason = errorPhrases[ep];
                                 break;
@@ -3007,6 +3044,7 @@ fun PlayerScreen(
                                     msg.contains("No compatible source", ignoreCase = true) ||
                                     msg.contains("File not found", ignoreCase = true) ||
                                     msg.contains("Video not found", ignoreCase = true) ||
+                                    msg.contains("not found", ignoreCase = true) ||
                                     msg.contains("404 Not Found", ignoreCase = true)) {
                                     triggerStreamFailover(activeStreamUrl, "Embed Console: $msg")
                                     return true
@@ -3316,8 +3354,9 @@ fun PlayerScreen(
                                 val adBlockAndDeadCheckJs = """
                                 (function() {
                                     // 1. Check dead stream or hijacked fake-captcha page
-                                    var t = document.body ? (document.body.innerText || document.body.textContent || '').toLowerCase() : '';
-                                    if (t.includes('232001') || t.includes('no se puede reproducir') || t.includes('archivo de video no se puede reproducir') || t.includes('video file cannot be played') || t.includes('error loading media') || t.includes('the media playback was aborted') || t.includes('no longer available') || t.includes('expired or has been deleted') || t.includes('file was deleted') || t.includes('file has been deleted') || t.includes('video deleted') || t.includes('video not found') || t.includes('deleted by the creator') || t.includes('contenido no disponible') || t.includes('404 not found') || t.includes('page not found') || t.includes('file not found') || t.includes('video unavailable') || t.includes('video is unavailable') || t.includes('not found') || t.includes('does not exist') || t.includes('this video cannot be played') || t.includes('no video with supported format')) {
+                                    var rcEl = document.getElementById('realcontent');
+                                    var t = ((document.body ? (document.body.textContent || document.body.innerText || '') : '') + ' ' + (rcEl ? (rcEl.textContent || '') : '')).toLowerCase();
+                                    if (t.includes('232001') || t.includes('not found') || t.includes('video you are looking for is not found') || t.includes('video not found') || t.includes('deleted by the creator') || t.includes('file not found') || t.includes('no se puede reproducir') || t.includes('archivo de video no se puede reproducir') || t.includes('video file cannot be played') || t.includes('error loading media') || t.includes('the media playback was aborted') || t.includes('no longer available') || t.includes('expired or has been deleted') || t.includes('file was deleted') || t.includes('file has been deleted') || t.includes('video deleted') || t.includes('contenido no disponible') || t.includes('404 not found') || t.includes('page not found') || t.includes('video unavailable') || t.includes('video is unavailable') || t.includes('does not exist') || t.includes('this video cannot be played') || t.includes('no video with supported format')) {
                                         return 'DEAD';
                                     }
                                     
@@ -3671,8 +3710,9 @@ fun PlayerScreen(
                                     if (!window._tvproContinuousPurge) {
                                         window._tvproContinuousPurge = setInterval(function() {
                                             purgeScamAndAds();
-                                            var deadTxt = (document.body ? (document.body.innerText || document.body.textContent || '') : '').toLowerCase();
-                                            if (deadTxt.includes('404 not found') || deadTxt.includes('file not found') || deadTxt.includes('video not found') || deadTxt.includes('video deleted') || deadTxt.includes('file was deleted') || deadTxt.includes('deleted by the creator') || deadTxt.includes('no longer available') || deadTxt.includes('expired or has been deleted') || deadTxt.includes('video unavailable') || deadTxt.includes('video is unavailable') || deadTxt.includes('does not exist') || deadTxt.includes('contenido no disponible') || deadTxt.includes('232001') || deadTxt.includes('no se puede reproducir') || deadTxt.includes('archivo de video no se puede reproducir')) {
+                                            var rcEl2 = document.getElementById('realcontent');
+                                            var deadTxt = ((document.body ? (document.body.textContent || document.body.innerText || '') : '') + ' ' + (rcEl2 ? (rcEl2.textContent || '') : '')).toLowerCase();
+                                            if (deadTxt.includes('not found') || deadTxt.includes('video you are looking for is not found') || deadTxt.includes('video not found') || deadTxt.includes('deleted by the creator') || deadTxt.includes('404 not found') || deadTxt.includes('file not found') || deadTxt.includes('video deleted') || deadTxt.includes('file was deleted') || deadTxt.includes('no longer available') || deadTxt.includes('expired or has been deleted') || deadTxt.includes('video unavailable') || deadTxt.includes('video is unavailable') || deadTxt.includes('does not exist') || deadTxt.includes('contenido no disponible') || deadTxt.includes('232001') || deadTxt.includes('no se puede reproducir') || deadTxt.includes('archivo de video no se puede reproducir')) {
                                                 if (window.TVProBridge && typeof window.TVProBridge.onPlayerDead === 'function') {
                                                     window.TVProBridge.onPlayerDead('Client 404 detected');
                                                 }
