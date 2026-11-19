@@ -119,8 +119,8 @@ import org.json.JSONObject
 @Composable
 fun PlayerScreen(
     movie: MovieItem,
-    streamUrl: String? = null,
-    streams: List<StreamItem> = emptyList(),
+    streamUrl: String?,
+    streams: List<StreamItem>,
     onBackClick: () -> Unit
 ) {
     val context = LocalContext.current
@@ -880,16 +880,22 @@ fun PlayerScreen(
                     seasonEpisodes = extracted.episodes
                 }
                 if (streams.isEmpty()) {
-                    if (isSeriesContent && (activeEpisodeInt > 1 || activeSeasonInt > 1)) {
+                    val epToPlay = if (isSeriesContent) {
+                        extracted.episodes.firstOrNull { it.seasonNumber == activeSeasonInt && it.episodeNumber == activeEpisodeInt }
+                            ?: extracted.episodes.firstOrNull()
+                    } else null
+
+                    if (isSeriesContent) {
                         val epStreams = withContext(Dispatchers.IO) {
                             MovieRepository.resolveEpisodeStreams(
-                                episodeId = 0,
+                                episodeId = epToPlay?.id ?: 0,
                                 seriesTitle = cleanMainTitle,
                                 fallbackStreams = extracted.streams,
                                 seasonNumber = activeSeasonInt,
                                 episodeNumber = activeEpisodeInt,
                                 seriesPostId = extracted.postId?.toIntOrNull(),
                                 serieUrl = movie.url,
+                                episodeSlug = epToPlay?.slug ?: "",
                                 seriesPostIdStr = extracted.postId
                             )
                         }

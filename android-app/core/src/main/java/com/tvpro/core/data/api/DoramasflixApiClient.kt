@@ -518,16 +518,14 @@ object DoramasflixApiClient {
             put("episode_id", episodeId)
         }
 
-        // Doramasflix shards servers across 5 query partitions:
-        // 1. null (Web default: Primeload, VOE, Mixdrop)
-        // 2. "playdoramas" (Crucial: provides Ok.ru [1113], Primeload, Filemoon)
-        // 3. "doramasyt" (Provides Streamtape [8309], VOE, FlashWish)
-        // 4. "doramasflix" (Provides Primeload, Vidhide, FlashWish)
-        // 5. "com.asiapp.doramasgo" (Provides Doodstream, Vidhide)
-        val partitions = listOf(null, "playdoramas", "doramasyt", "doramasflix", "com.asiapp.doramasgo")
+        // Doramasflix shards servers across partitions:
+        // Priority tier: null (Web default: Primeload, VOE) and "playdoramas" (Ok.ru [1113], Primeload, Filemoon)
+        // Secondary tier: "doramasyt" (Streamtape), "doramasflix", "com.asiapp.doramasgo" (Doodstream)
+        val primaryPartitions = listOf(null, "playdoramas")
+        val secondaryPartitions = listOf("doramasyt", "doramasflix", "com.asiapp.doramasgo")
         val rawLinks = mutableListOf<JSONObject>()
 
-        for (appPart in partitions) {
+        fun queryPartition(appPart: String?) {
             val gql = if (appPart == null) {
                 """
                     query EpisodeLinksOnlineWeb(${"$"}episode_id: ID!) {
@@ -567,47 +565,16 @@ object DoramasflixApiClient {
             }
         }
 
-        // Retry if throttled or temporary network hiccup
-        if (rawLinks.isEmpty()) {
-            kotlinx.coroutines.delay(1000L)
-            for (appPart in partitions) {
-                val gql = if (appPart == null) {
-                    """
-                        query EpisodeLinksOnlineWeb(${"$"}episode_id: ID!) {
-                          getEpisodeLinks(id: ${"$"}episode_id) {
-                            links_online {
-                              server
-                              lang
-                              link
-                              _id
-                              is_recommended
-                            }
-                          }
-                        }
-                    """.trimIndent()
-                } else {
-                    """
-                        query EpisodeLinksOnlineApp(${"$"}episode_id: ID!) {
-                          getEpisodeLinks(id: ${"$"}episode_id, app: "$appPart") {
-                            links_online {
-                              server
-                              lang
-                              link
-                              _id
-                              is_recommended
-                            }
-                          }
-                        }
-                    """.trimIndent()
-                }
-                val opName = if (appPart == null) "EpisodeLinksOnlineWeb" else "EpisodeLinksOnlineApp"
-                val res = postGraphQL(gql, variables, opName)
-                val arr = res?.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
-                if (arr != null) {
-                    for (i in 0 until arr.length()) {
-                        arr.optJSONObject(i)?.let { rawLinks.add(it) }
-                    }
-                }
+        // Query primary partitions first (covers Ok.ru and Primeload)
+        for (appPart in primaryPartitions) {
+            queryPartition(appPart)
+        }
+
+        // Only query secondary partitions if primary didn't yield enough working options (< 2 servers)
+        if (rawLinks.size < 2) {
+            for (appPart in secondaryPartitions) {
+                queryPartition(appPart)
+                if (rawLinks.size >= 3) break
             }
         }
 
