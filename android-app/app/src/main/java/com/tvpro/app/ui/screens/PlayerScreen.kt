@@ -1166,7 +1166,7 @@ fun PlayerScreen(
                 loadingSubtitle = "Obteniendo enlaces del Episodio ${ep.episodeNumber}..."
                 val newStreams = withContext(Dispatchers.IO) {
                     try {
-                        kotlinx.coroutines.withTimeoutOrNull(9000L) {
+                        kotlinx.coroutines.withTimeoutOrNull(20000L) {
                             MovieRepository.resolveEpisodeStreams(
                                 episodeId = ep.id,
                                 seriesTitle = cleanMainTitle,
@@ -1190,7 +1190,7 @@ fun PlayerScreen(
                     switchServer(0, resetPosition = true, streamList = newStreams)
                 } else {
                     seekToastText = "Episodio ${ep.episodeNumber} no disponible temporalmente"
-                    seekToMs(0L)
+                    // Do NOT rewind the current video to 0L! Keep current playback position intact.
                     setPlaybackPlaying(true)
                     isBuffering = false
                     isVideoReady = true

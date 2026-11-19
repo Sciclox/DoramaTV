@@ -1262,13 +1262,21 @@ object MovieRepository {
         val targetSlug = matchedEp?.slug ?: episodeSlug
         val seriesSlug = extractSlug(if (serieUrl.isNotBlank()) serieUrl else episodeSlug, seriesTitle)
 
-        // 2. Direct check in Doramasflix episodeIdCache (instant resolution for any Doramasflix episode)
+        // 2. Direct check in Doramasflix caches (instant resolution for any Doramasflix episode)
+        val directCachedStreams = (if (targetSlug.isNotBlank()) DoramasflixApiClient.episodeStreamsCache[targetSlug] else null)
+            ?: (if (episodeSlug.isNotBlank()) DoramasflixApiClient.episodeStreamsCache[episodeSlug] else null)
+        if (!forceRefresh && !directCachedStreams.isNullOrEmpty()) {
+            return@withContext directCachedStreams
+        }
+
         val directDfEpId = (if (targetSlug.isNotBlank()) DoramasflixApiClient.episodeIdCache[targetSlug] else null)
             ?: (if (episodeSlug.isNotBlank()) DoramasflixApiClient.episodeIdCache[episodeSlug] else null)
 
         if (!directDfEpId.isNullOrBlank()) {
             val dfStreams = DoramasflixApiClient.getEpisodeStreams(directDfEpId, forceRefresh = forceRefresh)
             if (dfStreams.isNotEmpty()) {
+                if (targetSlug.isNotBlank()) DoramasflixApiClient.episodeStreamsCache[targetSlug] = dfStreams
+                if (episodeSlug.isNotBlank()) DoramasflixApiClient.episodeStreamsCache[episodeSlug] = dfStreams
                 return@withContext dfStreams
             }
         }
@@ -1328,6 +1336,8 @@ object MovieRepository {
             if (!dfEpId.isNullOrBlank()) {
                 val dfStreams = DoramasflixApiClient.getEpisodeStreams(dfEpId, forceRefresh = forceRefresh)
                 if (dfStreams.isNotEmpty()) {
+                    if (targetSlug.isNotBlank()) DoramasflixApiClient.episodeStreamsCache[targetSlug] = dfStreams
+                    if (episodeSlug.isNotBlank()) DoramasflixApiClient.episodeStreamsCache[episodeSlug] = dfStreams
                     return@withContext dfStreams
                 }
             }
@@ -1358,6 +1368,8 @@ object MovieRepository {
                     if (!dfEpId.isNullOrBlank()) {
                         val dfStreams = DoramasflixApiClient.getEpisodeStreams(dfEpId, forceRefresh = forceRefresh)
                         if (dfStreams.isNotEmpty()) {
+                            if (targetSlug.isNotBlank()) DoramasflixApiClient.episodeStreamsCache[targetSlug] = dfStreams
+                            if (episodeSlug.isNotBlank()) DoramasflixApiClient.episodeStreamsCache[episodeSlug] = dfStreams
                             return@withContext dfStreams
                         }
                     }

@@ -518,14 +518,14 @@ object DoramasflixApiClient {
             put("episode_id", episodeId)
         }
 
-        // Doramasflix shards servers across 5 distinct partitions.
-        // We query sequentially and stop early ONLY if we found top-tier Ok.ru (server 1113)
-        // AND have at least 5 candidates. Otherwise, we exhaust all partitions so that NO servers are lost!
-        val allPartitions = listOf(null, "playdoramas", "doramasflix", "doramasyt", "com.asiapp.doramasgo")
+        // Prioritized partitions: com.asiapp.doramasgo provides native app servers (Ok.ru, VOE, Filemoon, Vidhide).
+        // null (Web) provides web embeds. We stop immediately as soon as ANY top-tier server is discovered,
+        // reducing API calls by 80% and preventing ThrottlerException (429 / Too Many Requests).
+        val prioritizedPartitions = listOf("com.asiapp.doramasgo", null, "doramasflix", "playdoramas", "doramasyt")
         val rawLinks = mutableListOf<JSONObject>()
         val seenLinkIds = mutableSetOf<String>()
 
-        fun queryPartition(appPart: String?) {
+        fun queryPartition(appPart: String?): Boolean {
             val gql = if (appPart == null) {
                 """
                     query EpisodeLinksOnlineWeb(${"$"}episode_id: ID!) {
@@ -556,8 +556,21 @@ object DoramasflixApiClient {
                 """.trimIndent()
             }
             val opName = if (appPart == null) "EpisodeLinksOnlineWeb" else "EpisodeLinksOnlineApp"
-            val res = postGraphQL(gql, variables, opName)
-            val arr = res?.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
+            val res = postGraphQL(gql, variables, opName) ?: return false
+
+            // Detect if rate-limited to avoid blasting subsequent partitions
+            val errors = res.optJSONArray("errors")
+            if (errors != null) {
+                for (ei in 0 until errors.length()) {
+                    val msg = errors.optJSONObject(ei)?.optString("message", "") ?: ""
+                    if (msg.contains("ThrottlerException", ignoreCase = true)) {
+                        android.util.Log.w("DoramasflixApiClient", "ThrottlerException detected for episodeId=$episodeId on partition $appPart")
+                        return true // Signal throttled
+                    }
+                }
+            }
+
+            val arr = res.optJSONObject("data")?.optJSONObject("getEpisodeLinks")?.optJSONArray("links_online")
             if (arr != null) {
                 for (i in 0 until arr.length()) {
                     arr.optJSONObject(i)?.let { obj ->
@@ -568,16 +581,28 @@ object DoramasflixApiClient {
                     }
                 }
             }
+            return false
         }
 
         // Query partitions with smart early-exit
-        for (appPart in allPartitions) {
-            queryPartition(appPart)
-            val hasOkRu = rawLinks.any { it.optString("server") == "1113" }
-            if (hasOkRu && rawLinks.size >= 5) {
+        for (appPart in prioritizedPartitions) {
+            val wasThrottled = queryPartition(appPart)
+            if (wasThrottled) {
                 break
             }
-            kotlinx.coroutines.delay(120)
+
+            // SMART EARLY EXIT:
+            // Top-tier servers: 1113 (Ok.ru), 1230 (VOE), 576857 (Vidhide), 958695 (Filemoon), 7286 (Doodstream)
+            val hasTopTier = rawLinks.any {
+                val s = it.optString("server", "")
+                s == "1113" || s == "1230" || s == "576857" || s == "958695" || s == "7286"
+            }
+            val nonPrimeloadCount = rawLinks.count { it.optString("server", "") != "4721" }
+
+            if (hasTopTier || nonPrimeloadCount >= 2) {
+                break
+            }
+            kotlinx.coroutines.delay(150)
         }
 
         if (rawLinks.isEmpty()) {

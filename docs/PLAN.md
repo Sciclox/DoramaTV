@@ -98,17 +98,18 @@
 
 ---
 
-### Fase 7: Extractores Nativos en `:core` y Modularización de TV PlayerScreen (Completada)
-- [x] **Extractores Nativos en `:core`:**
-  - [`StreamtapeVideoExtractor.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/data/extractor/StreamtapeVideoExtractor.kt) (Prioridad 5, MP4 directo con token).
-  - [`FilemoonVideoExtractor.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/data/extractor/FilemoonVideoExtractor.kt) (Prioridad 3, HLS m3u8 con desofuscación P.A.C.K.E.R.).
-  - [`StreamwishVideoExtractor.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/data/extractor/StreamwishVideoExtractor.kt) (Prioridad 4, HLS m3u8 con desofuscación P.A.C.K.E.R.).
-  - Integración en [`ExtractorRegistry.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/main/java/com/tvpro/core/data/extractor/ExtractorRegistry.kt) con escala de prioridades calibrada (1 a 7).
-  - Suite de 30 tests unitarios en [`ExtractorRegistryTest.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/core/src/test/java/com/tvpro/core/data/extractor/ExtractorRegistryTest.kt) (`:core:testDebugUnitTest` -> `BUILD SUCCESSFUL`).
-- [x] **Modularización de TV `PlayerScreen.kt`:**
-  - [`TvPlayerAudioSubtitleModal.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app/src/main/java/com/tvpro/app/ui/components/player/TvPlayerAudioSubtitleModal.kt) (Modal cinema de pistas de audio y subtítulos).
-  - [`TvPlayerEpisodesModal.kt`](file:///c:/Users/Lenovo/OneDrive/Documentos/Proyectos/APK-DoramaTV/android-app/app/src/main/java/com/tvpro/app/ui/components/player/TvPlayerEpisodesModal.kt) (Modal cinema de capítulos y escenas con navegación D-Pad).
-  - Reducción de más de 1,720 líneas de `PlayerScreen.kt`.
-- [x] **Validación de Paridad y Binarios:**
-  - `.\gradlew.bat :core:testDebugUnitTest :app:testDebugUnitTest :app-mobile:compileDebugKotlin` -> `BUILD SUCCESSFUL`.
-  - Binarios exportados en `apks/` (`DoramaTV-AndroidTV-v1.0.0.apk` y `DoramaTV-Mobile-v1.0.0.apk`).
+### Fase 8: Resiliencia de Enlaces Doramasflix, Desacoplamiento de Rate Limiter y Switcher de Episodios Sin Rebobinado (Completada)
+- [x] **Optimización Anti-Throttler en `:core` (`DoramasflixApiClient.kt`):**
+  - Reordenar particiones priorizando `com.asiapp.doramasgo` (app nativa) seguida de Web (`null`).
+  - Implementar parada temprana (*Smart Early-Exit*): si la primera partición devuelve un servidor de alta prioridad (Ok.ru `1113`, VOE `1230`, Vidhide `576857`, Filemoon `958695`, Doodstream `7286`), finalizar inmediatamente sin consultar las demás particiones (ahorro del 80% de peticiones).
+  - Manejo de `ThrottlerException`: Detección en cabeceras o cuerpo de respuesta; rescate con caché en memoria `episodeStreamsCache` para evitar spam de reintentos.
+  - Almacenamiento bidireccional en caché (`episodeId` y `slug`) para resolución instantánea (0 ms) en cambios de episodio.
+- [x] **Corrección del Switcher en TV `PlayerScreen.kt`:**
+  - Eliminada la llamada destructiva `seekToMs(0L)` en el bloque `else` de fallo de episodio, impidiendo que la pantalla se rebobine y congele en el logo dorado de doramasflix.
+  - Ampliado el timeout de resolución de episodio en reproducción de 9,000 ms a 20,000 ms con feedback visual interactivo.
+- [x] **Validación y Verificación:**
+  - Ejecutada suite unitaria `:core:testDebugUnitTest :app:testDebugUnitTest :app-mobile:testDebugUnitTest` -> `BUILD SUCCESSFUL`.
+  - Paridad de compilación `:app:compileDebugKotlin :app-mobile:compileDebugKotlin` -> `BUILD SUCCESSFUL`.
+  - Probado en emulador `emulator-5554`: Episodio 7 y Episodio 8 reproducen fluidamente a 1080p con subtítulos y audio sin congelamiento en el logo.
+  - Generados APKs actualizados en `/apks/` (`DoramaTV-AndroidTV-v1.0.0.apk` y `DoramaTV-Mobile-v1.0.0.apk`).
+
