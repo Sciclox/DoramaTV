@@ -42,7 +42,6 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     onMovieClick: (MovieItem) -> Unit,
     onPlayMovie: (MovieItem) -> Unit,
-    onSearchClick: () -> Unit,
     viewModel: MobileHomeViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
@@ -146,8 +145,7 @@ fun HomeScreen(
                                 selectedGenre = selectedGenre,
                                 onGenreSelected = { selectedGenre = it },
                                 selectedSort = selectedSort,
-                                onSortSelected = { selectedSort = it },
-                                onSearchClick = onSearchClick
+                                onSortSelected = { selectedSort = it }
                             )
                         }
                     }

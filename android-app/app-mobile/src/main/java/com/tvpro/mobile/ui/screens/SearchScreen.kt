@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tvpro.core.data.model.MovieItem
@@ -52,22 +53,33 @@ fun SearchScreen(
     val coroutineScope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
 
-    fun performSearch(text: String, saveToHistory: Boolean = false) {
+    fun performSearch(text: String, saveToHistory: Boolean = false, immediate: Boolean = false) {
         searchJob?.cancel()
-        if (text.isBlank()) {
+        val trimmed = text.trim()
+        if (trimmed.isEmpty()) {
             results = emptyList()
             isSearching = false
             return
         }
         if (saveToHistory) {
-            SearchHistoryManager.addQuery(localContext, text)
+            SearchHistoryManager.addQuery(localContext, trimmed)
             recentQueries = SearchHistoryManager.getRecentQueries(localContext)
         }
+        if (trimmed.length == 1) {
+            // Local catalog filter for single char to protect SeriesAPI rate limits
+            results = MovieRepository.localCatalog.filter {
+                it.title.contains(trimmed, ignoreCase = true)
+            }
+            isSearching = false
+            return
+        }
         searchJob = coroutineScope.launch {
-            delay(280)
+            if (!immediate) {
+                delay(450)
+            }
             isSearching = true
             try {
-                results = MovieRepository.searchMovies(text)
+                results = MovieRepository.searchMovies(trimmed)
             } catch (e: Exception) {
                 results = emptyList()
             } finally {
@@ -96,10 +108,12 @@ fun SearchScreen(
             shape = SEARCH_BAR_SHAPE,
             placeholder = {
                 Text(
-                    text = "Buscar doramas, películas, actores, géneros...",
+                    text = "Buscar doramas, películas...",
                     color = MutedSlate,
                     fontSize = 13.5.sp,
-                    fontFamily = Inter
+                    fontFamily = Inter,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
             },
             leadingIcon = {
@@ -126,10 +140,11 @@ fun SearchScreen(
                 }
             },
             singleLine = true,
+            maxLines = 1,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(onSearch = {
                 focusManager.clearFocus()
-                performSearch(query, saveToHistory = true)
+                performSearch(query, saveToHistory = true, immediate = true)
             }),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = PillSurface,
@@ -187,7 +202,7 @@ fun SearchScreen(
                                 .border(1.dp, SubtleBorder, RoundedCornerShape(16.dp))
                                 .clickable {
                                     query = recentTag
-                                    performSearch(recentTag, saveToHistory = true)
+                                    performSearch(recentTag, saveToHistory = true, immediate = true)
                                 }
                                 .padding(start = 12.dp, end = 6.dp, top = 4.dp, bottom = 4.dp)
                         ) {

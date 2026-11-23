@@ -64,23 +64,24 @@ object JsUnpacker {
 
     fun unpackPackedJs(htmlOrJs: String): String? {
         val pattern = Regex(
-            """eval\(function\(p,a,c,k,e,d\)\{.*?\}\s*\(\s*'(.*?)'\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*'(.*?)'\.split\('\|'\)""",
+            """eval\(function\(p,a,c,k,e,[a-zA-Z0-9_]*\)\{.*?\}\s*\(\s*'(.*?)'\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*'(.*?)'\.split\('\|'\)""",
             RegexOption.DOT_MATCHES_ALL
         )
         val match = pattern.find(htmlOrJs) ?: return null
         return try {
-            var p = match.groupValues[1].replace("\\'", "'").replace("\\\\", "\\")
+            val p = match.groupValues[1].replace("\\'", "'").replace("\\\\", "\\")
             val a = match.groupValues[2].toInt()
-            var c = match.groupValues[3].toInt()
+            val c = match.groupValues[3].toInt()
             val k = match.groupValues[4].split("|")
-            while (c > 0) {
-                c--
-                val token = if (c < k.size && k[c].isNotBlank()) k[c] else encodeBase(c, a)
-                val baseStr = encodeBase(c, a)
-                val wordRegex = Regex("\\b$baseStr\\b")
-                p = p.replace(wordRegex, token)
+            val lookup = HashMap<String, String>(c)
+            for (i in 0 until c) {
+                val baseStr = encodeBase(i, a)
+                val token = if (i < k.size && k[i].isNotBlank()) k[i] else baseStr
+                lookup[baseStr] = token
             }
-            p
+            Regex("""\b\w+\b""").replace(p) { matchResult ->
+                lookup[matchResult.value] ?: matchResult.value
+            }
         } catch (_: Exception) {
             null
         }

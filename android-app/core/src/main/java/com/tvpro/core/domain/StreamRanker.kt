@@ -19,7 +19,14 @@ object StreamRanker {
         "not a robot",
         "click allow",
         "e-captcha",
-        "verify you are human"
+        "verify you are human",
+        "verify you're a human",
+        "verify you are a human",
+        "verify that you are human",
+        "in order to verify",
+        "click play button in order",
+        "click play button to verify",
+        "click play button"
     )
 
     /**
@@ -44,15 +51,17 @@ object StreamRanker {
             u.contains("ok.ru") || src.contains("ok.ru") -> 1
             u.contains("primeload") || src.contains("primeload") -> 2
             u.contains("flaswish") || src.contains("flashwish") -> 3
-            u.contains("filemoon") || u.contains("byse") || src.contains("filemoon") -> 4
-            u.contains("voe") || u.contains("megankid") || u.contains("arianathankspecial") || src.contains("voe") -> 5
-            u.contains("uqload") || src.contains("uqload") -> 6
-            u.contains("mp4upload") || src.contains("mp4upload") -> 7
-            u.contains("mixdrop") || src.contains("mixdrop") -> 8
+            u.contains("voe") || u.contains("megankid") || u.contains("arianathankspecial") || src.contains("voe") -> 4
+            u.contains("abyss") || src.contains("abyss") -> 5
+            u.contains("minochinos") || u.contains("earnvids") || src.contains("earnvids") -> 6
+            u.contains("uqload") || src.contains("uqload") -> 7
+            u.contains("mp4upload") || src.contains("mp4upload") -> 8
+            u.contains("mixdrop") || src.contains("mixdrop") -> 9
             u.contains("streamtape") || src.contains("streamtape") -> 14
             u.contains("dood") || u.contains("do7go") || u.contains("playmogo") || src.contains("dood") -> 15
             u.contains("callistanise") || u.contains("vidhide") || src.contains("vidhide") -> 16
             u.contains("vimeos") -> 17
+            u.contains("filemoon") || u.contains("byse") || u.contains("bysesukior") || src.contains("filemoon") || src.contains("byse") -> 90
             else -> 10
         }
     }

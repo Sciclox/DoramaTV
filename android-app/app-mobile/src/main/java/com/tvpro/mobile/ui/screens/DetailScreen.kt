@@ -79,6 +79,11 @@ fun DetailScreen(
     var selectedSeason by remember { mutableIntStateOf(1) }
     var isOverviewExpanded by remember { mutableStateOf(false) }
     var activeTab by remember { mutableStateOf("episodes") } // "episodes" or "similar"
+    var seasonEpisodes by remember(movie.url) {
+        mutableStateOf<List<EpisodeItem>>(initialCached?.episodes?.filter { it.seasonNumber == 1 } ?: initialCached?.episodes ?: emptyList())
+    }
+    var isSeasonLoading by remember { mutableStateOf(false) }
+    var showSeasonBottomSheet by remember { mutableStateOf(false) }
 
     val cleanTitle = remember(movie.title) { movie.title.cleanTitle() }
 
@@ -88,12 +93,18 @@ fun DetailScreen(
             movieDetail = cached
             isLoading = false
             hasNetworkError = false
+            if (seasonEpisodes.isEmpty() && cached.episodes.isNotEmpty() && selectedSeason == 1) {
+                seasonEpisodes = cached.episodes.filter { it.seasonNumber == 1 }.ifEmpty { cached.episodes }
+            }
         } else {
             isLoading = true
         }
         try {
             val detail = MovieRepository.extractMovie(movie, forceRefresh = (reloadTrigger > 0))
             movieDetail = detail
+            if (seasonEpisodes.isEmpty() && detail.episodes.isNotEmpty() && selectedSeason == 1) {
+                seasonEpisodes = detail.episodes.filter { it.seasonNumber == 1 }.ifEmpty { detail.episodes }
+            }
             hasNetworkError = false
         } catch (_: Exception) {
             if (movieDetail == null) {
@@ -104,12 +115,41 @@ fun DetailScreen(
         }
     }
 
-    val episodesForSeason = remember(movieDetail, selectedSeason) {
-        movieDetail?.episodes?.filter { it.seasonNumber == selectedSeason } ?: emptyList()
-    }
-
     val isSeries = remember(movieDetail, movie) {
         movieDetail?.isSeries == true || movie.type == "series" || movie.url.contains("/series/") || movie.url.contains("/animes/")
+    }
+
+    LaunchedEffect(selectedSeason, movieDetail?.postId) {
+        val detail = movieDetail ?: return@LaunchedEffect
+        if (!isSeries) return@LaunchedEffect
+
+        val localMatches = detail.episodes.filter { it.seasonNumber == selectedSeason }
+        if (selectedSeason == 1 && localMatches.isNotEmpty() && seasonEpisodes.isNotEmpty()) {
+            seasonEpisodes = localMatches
+            return@LaunchedEffect
+        }
+
+        isSeasonLoading = true
+        try {
+            val postIdInt = detail.postId?.toIntOrNull() ?: 0
+            val eps = MovieRepository.fetchEpisodesForSeason(
+                postId = postIdInt,
+                season = selectedSeason,
+                fallbackTitle = detail.title ?: movie.title,
+                fallbackBackdrop = detail.backdrop ?: movie.backdrop ?: movie.image,
+                fallbackGallery = detail.gallery ?: emptyList(),
+                serieUrl = movie.url,
+                postIdStr = detail.postId
+            )
+            if (eps.isNotEmpty()) {
+                seasonEpisodes = eps
+            } else if (localMatches.isNotEmpty()) {
+                seasonEpisodes = localMatches
+            }
+        } catch (_: Exception) {
+        } finally {
+            isSeasonLoading = false
+        }
     }
 
     val backdropUrl = remember(movieDetail, movie) {
@@ -411,9 +451,9 @@ fun DetailScreen(
 
                     Spacer(modifier = Modifier.height(14.dp))
 
-                    val hasStreams = remember(movieDetail, isSeries, episodesForSeason, movie.postId) {
+                    val hasStreams = remember(movieDetail, isSeries, seasonEpisodes, movie.postId) {
                         if (movieDetail == null) true
-                        else if (isSeries) episodesForSeason.isNotEmpty() || movieDetail?.episodes?.isNotEmpty() == true || (movie.postId ?: 0) > 0
+                        else if (isSeries) seasonEpisodes.isNotEmpty() || movieDetail?.episodes?.isNotEmpty() == true || (movie.postId ?: 0) > 0
                         else movieDetail?.streams?.isNotEmpty() == true || (movie.postId ?: 0) > 0 || (movieDetail?.postId?.toIntOrNull() ?: 0) > 0
                     }
 
@@ -484,7 +524,9 @@ fun DetailScreen(
                         ) {
                             Button(
                                 onClick = {
-                                    val firstEpisode = episodesForSeason.firstOrNull()
+                                    val firstEpisode = seasonEpisodes.firstOrNull()
+                                        ?: movieDetail?.episodes?.firstOrNull { it.seasonNumber == selectedSeason }
+                                        ?: movieDetail?.episodes?.firstOrNull()
                                     onPlay(movie, firstEpisode, null)
                                 },
                                 colors = ButtonDefaults.buttonColors(
@@ -502,8 +544,9 @@ fun DetailScreen(
                                     modifier = Modifier.size(24.dp)
                                 )
                                 Spacer(modifier = Modifier.width(6.dp))
+                                val targetEpNum = seasonEpisodes.firstOrNull()?.episodeNumber ?: 1
                                 Text(
-                                    text = if (isSeries) "Reproducir T$selectedSeason:E1" else "Reproducir",
+                                    text = if (isSeries) "Reproducir T$selectedSeason:E$targetEpNum" else "Reproducir",
                                     color = Color.White,
                                     fontWeight = FontWeight.Bold,
                                     fontFamily = PlusJakartaSans,
@@ -742,16 +785,20 @@ fun DetailScreen(
                                 color = WarmIvory
                             )
 
-                            // Seasons Dropdown / Selector
-                            val totalSeasons = (movieDetail?.seasonsCount ?: 1).coerceAtLeast(1)
+                            // Seasons Selector Button (opens BottomSheet with Mochi theme)
+                            val totalSeasons = maxOf(
+                                movieDetail?.seasonsCount ?: 1,
+                                movieDetail?.episodes?.maxOfOrNull { it.seasonNumber } ?: 1
+                            ).coerceAtLeast(1)
                             if (totalSeasons > 1) {
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
                                     modifier = Modifier
-                                        .clip(RoundedCornerShape(4.dp))
+                                        .clip(RoundedCornerShape(8.dp))
                                         .background(PillSurface)
-                                        .border(1.dp, SubtleBorder, RoundedCornerShape(4.dp))
-                                        .padding(horizontal = 8.dp, vertical = 4.dp)
+                                        .border(1.dp, SubtleBorder, RoundedCornerShape(8.dp))
+                                        .clickable { showSeasonBottomSheet = true }
+                                        .padding(horizontal = 12.dp, vertical = 6.dp)
                                 ) {
                                     Text(
                                         text = "Temporada $selectedSeason ▾",
@@ -766,45 +813,35 @@ fun DetailScreen(
                     }
                 }
 
-                // Season Selector Pills (if more than 1)
-                val totalSeasons = (movieDetail?.seasonsCount ?: 1).coerceAtLeast(1)
-                if (totalSeasons > 1) {
+                // Episodes list items or skeletons
+                if (isSeasonLoading) {
+                    items(4) {
+                        MobileEpisodeSkeletonCard()
+                    }
+                } else if (seasonEpisodes.isEmpty()) {
                     item {
-                        LazyRow(
-                            contentPadding = PaddingValues(horizontal = 16.dp),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            modifier = Modifier.padding(bottom = 12.dp)
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 32.dp),
+                            contentAlignment = Alignment.Center
                         ) {
-                            items((1..totalSeasons).toList()) { sNum ->
-                                val isSelected = sNum == selectedSeason
-                                Box(
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(16.dp))
-                                        .background(if (isSelected) WarmIvory else PillSurface)
-                                        .border(1.dp, if (isSelected) WarmIvory else SubtleBorder, RoundedCornerShape(16.dp))
-                                        .clickable { selectedSeason = sNum }
-                                        .padding(horizontal = 14.dp, vertical = 6.dp)
-                                ) {
-                                    Text(
-                                        text = "T$sNum",
-                                        color = if (isSelected) Color.Black else SoftSilver,
-                                        fontSize = 12.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        fontFamily = Inter
-                                    )
-                                }
-                            }
+                            Text(
+                                text = "No se encontraron episodios para la Temporada $selectedSeason",
+                                color = MutedSlate,
+                                fontSize = 13.sp,
+                                fontFamily = Inter
+                            )
                         }
                     }
-                }
-
-                // Episodes list items
-                items(episodesForSeason) { episode ->
-                    MobileEpisodeCard(
-                        episode = episode,
-                        seriesTitle = cleanTitle,
-                        onClick = { onPlay(movie, episode, null) }
-                    )
+                } else {
+                    items(seasonEpisodes) { episode ->
+                        MobileEpisodeCard(
+                            episode = episode,
+                            seriesTitle = cleanTitle,
+                            onClick = { onPlay(movie, episode, null) }
+                        )
+                    }
                 }
             }
 
@@ -847,6 +884,139 @@ fun DetailScreen(
             item {
                 Spacer(modifier = Modifier.navigationBarsPadding())
                 Spacer(modifier = Modifier.height(56.dp))
+            }
+        }
+
+        // Season Selector BottomSheet (Matches official Mochi theme)
+        if (showSeasonBottomSheet) {
+            val totalSeasons = maxOf(
+                movieDetail?.seasonsCount ?: 1,
+                movieDetail?.episodes?.maxOfOrNull { it.seasonNumber } ?: 1
+            ).coerceAtLeast(1)
+
+            ModalBottomSheet(
+                onDismissRequest = { showSeasonBottomSheet = false },
+                sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+                containerColor = MochiPlumSurface,
+                scrimColor = Color.Black.copy(alpha = 0.65f),
+                dragHandle = {
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 12.dp, bottom = 8.dp)
+                            .width(36.dp)
+                            .height(4.dp)
+                            .clip(CircleShape)
+                            .background(MutedSlate.copy(alpha = 0.4f))
+                    )
+                },
+                shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding()
+                        .padding(bottom = 20.dp)
+                ) {
+                    Text(
+                        text = "Temporadas",
+                        color = WarmIvory,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = PlusJakartaSans,
+                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 10.dp)
+                    )
+
+                    (1..totalSeasons).forEach { sNum ->
+                        val isSelected = sNum == selectedSeason
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    selectedSeason = sNum
+                                    showSeasonBottomSheet = false
+                                }
+                                .background(if (isSelected) MochiStrawberryPink.copy(alpha = 0.12f) else Color.Transparent)
+                                .padding(horizontal = 24.dp, vertical = 16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Temporada $sNum",
+                                color = if (isSelected) MochiStrawberryPink else WarmIvory,
+                                fontSize = 15.sp,
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                                fontFamily = Inter
+                            )
+                            if (isSelected) {
+                                Icon(
+                                    imageVector = Icons.Default.Check,
+                                    contentDescription = "Seleccionado",
+                                    tint = MochiStrawberryPink,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun MobileEpisodeSkeletonCard(modifier: Modifier = Modifier) {
+    val transition = rememberInfiniteTransition(label = "epSkeleton")
+    val translateAnim by transition.animateFloat(
+        initialValue = -300f,
+        targetValue = 600f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 1300, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "epShimmer"
+    )
+    val shimmerBrush = Brush.linearGradient(
+        colors = listOf(
+            MochiPlumSurface,
+            MochiPlumCard,
+            MochiPlumSurface
+        ),
+        start = Offset(translateAnim - 150f, translateAnim - 150f),
+        end = Offset(translateAnim + 150f, translateAnim + 150f)
+    )
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 10.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .width(135.dp)
+                    .height(80.dp)
+                    .clip(RoundedCornerShape(6.dp))
+                    .background(shimmerBrush)
+            )
+            Spacer(modifier = Modifier.width(12.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.65f)
+                        .height(14.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(shimmerBrush)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.35f)
+                        .height(11.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(shimmerBrush)
+                )
             }
         }
     }

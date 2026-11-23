@@ -5,6 +5,7 @@ import com.tvpro.core.data.api.ApiClient
 import com.tvpro.core.data.api.DoramasflixApiClient
 import com.tvpro.core.data.extractor.JsUnpacker
 import com.tvpro.core.data.model.*
+import com.tvpro.core.domain.StreamRanker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -625,7 +626,11 @@ object MovieRepository {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        streams
+        StreamRanker.rankStreams(streams).mapIndexed { idx, item ->
+            val rawLabel = item.source ?: "Servidor HD"
+            val cleanLabel = rawLabel.replace(Regex("^Servidor\\s*\\d+\\s*:\\s*", RegexOption.IGNORE_CASE), "")
+            item.copy(source = "Servidor ${idx + 1}: $cleanLabel")
+        }
     }
 
     suspend fun fetchEpisodesForSerie(serieUrl: String): List<EpisodeItem> = withContext(Dispatchers.IO) {
@@ -1129,19 +1134,22 @@ object MovieRepository {
     }
 
     suspend fun fetchEpisodesForSeason(
-        postId: Int,
+        postId: Int = 0,
         season: Int,
         fallbackTitle: String,
         fallbackBackdrop: String,
         fallbackGallery: List<String> = emptyList(),
-        serieUrl: String = ""
+        serieUrl: String = "",
+        postIdStr: String? = null
     ): List<EpisodeItem> = withContext(Dispatchers.IO) {
+        val effectivePostId = postIdStr?.ifBlank { null } ?: if (postId > 0) postId.toString() else null
+
         // 1. Try finding episodes from cache specifically associated with this series
         val cachedEpisodes = (if (serieUrl.isNotBlank()) episodesCache[serieUrl] else null)
             ?: (if (fallbackTitle.isNotBlank()) detailCache[fallbackTitle]?.episodes else null)
             ?: (if (serieUrl.isNotBlank()) detailCache[serieUrl]?.episodes else null)
             ?: detailCache.values.firstOrNull {
-                (postId > 0 && it.postId == postId.toString()) ||
+                (effectivePostId != null && it.postId == effectivePostId) ||
                 (fallbackTitle.isNotBlank() && it.title?.equals(fallbackTitle, ignoreCase = true) == true)
             }?.episodes
             ?: episodesCache.entries.firstOrNull { (k, _) ->
@@ -1166,12 +1174,12 @@ object MovieRepository {
         val isDoramasflix = !isTuDorama && (
             serieUrl.contains("doramasflix", ignoreCase = true) ||
             serieUrl.contains("/doramas-online/") ||
-            (postId > 0 && postId.toString().length > 10) ||
+            (effectivePostId != null && effectivePostId.length > 10) ||
             (detailCache[fallbackTitle]?.postId?.length ?: 0) > 10
         )
 
         if (isDoramasflix && slug.isNotBlank()) {
-            var serieId = (if (postId > 0 && postId.toString().length > 10) postId.toString() else null)
+            var serieId = (if (effectivePostId != null && effectivePostId.length > 10) effectivePostId else null)
                 ?: DoramasflixApiClient.serieIdCache[slug]
                 ?: (detailCache[fallbackTitle]?.postId?.takeIf { it.length > 10 })
                 ?: ""
@@ -1186,8 +1194,12 @@ object MovieRepository {
             if (serieId.isNotBlank()) {
                 val eps = DoramasflixApiClient.getEpisodes(serieId, season)
                 if (eps.isNotEmpty()) {
-                    if (serieUrl.isNotBlank()) episodesCache[serieUrl] = eps
-                    episodesCache[slug] = eps
+                    val existing = episodesCache[serieUrl] ?: emptyList()
+                    val merged = (existing.filter { it.seasonNumber != season } + eps).sortedWith(
+                        compareBy({ it.seasonNumber }, { it.episodeNumber })
+                    )
+                    if (serieUrl.isNotBlank()) episodesCache[serieUrl] = merged
+                    episodesCache[slug] = merged
                     return@withContext eps
                 }
             }
@@ -1215,7 +1227,11 @@ object MovieRepository {
                 if (dfDetail != null && !dfDetail.postId.isNullOrBlank()) {
                     val eps = DoramasflixApiClient.getEpisodes(dfDetail.postId, season)
                     if (eps.isNotEmpty()) {
-                        if (serieUrl.isNotBlank()) episodesCache[serieUrl] = eps
+                        val existing = episodesCache[serieUrl] ?: emptyList()
+                        val merged = (existing.filter { it.seasonNumber != season } + eps).sortedWith(
+                            compareBy({ it.seasonNumber }, { it.episodeNumber })
+                        )
+                        if (serieUrl.isNotBlank()) episodesCache[serieUrl] = merged
                         return@withContext eps
                     }
                 }
@@ -1628,10 +1644,16 @@ object MovieRepository {
         extractMovie(dummy, forceRefresh)
     }
 
+    val searchMoviesCache = ConcurrentHashMap<String, List<MovieItem>>()
+
     suspend fun searchMovies(query: String): List<MovieItem> = withContext(Dispatchers.IO) {
-        if (query.isBlank()) return@withContext emptyList()
+        val trimmed = query.trim()
+        if (trimmed.length < 2) return@withContext emptyList()
+        val cacheKey = trimmed.lowercase()
+        searchMoviesCache[cacheKey]?.let { return@withContext it }
+
         val results = mutableListOf<MovieItem>()
-        val encoded = URLEncoder.encode(query.trim(), "UTF-8").replace("+", "%20")
+        val encoded = URLEncoder.encode(trimmed, "UTF-8").replace("+", "%20")
 
         coroutineScope {
             val tudoramaJob = async {
@@ -1684,20 +1706,20 @@ object MovieRepository {
                         }
                     }
                 } catch (e: Exception) {
-                    e.printStackTrace()
+                    // Ignore search exceptions from external TuDorama mirrors
                 }
                 tuList
             }
 
             val doramasflixJob = async {
                 try {
-                    DoramasflixApiClient.searchDoramas(query, 20)
+                    DoramasflixApiClient.searchDoramas(trimmed, 20)
                 } catch (e: Exception) {
                     emptyList()
                 }
             }
 
-            val tuResults = tudoramaJob.await()
+            val tuResults = withTimeoutOrNull(2500L) { tudoramaJob.await() } ?: emptyList()
             val dfResults = doramasflixJob.await()
 
             results.addAll(tuResults)
@@ -1709,7 +1731,7 @@ object MovieRepository {
 
             // Include any matches from localCatalog
             val localMatches = localCatalog.filter {
-                it.title.contains(query, ignoreCase = true) || it.overview?.contains(query, ignoreCase = true) == true
+                it.title.contains(trimmed, ignoreCase = true) || it.overview?.contains(trimmed, ignoreCase = true) == true
             }
             for (lm in localMatches) {
                 if (results.none { it.url == lm.url || it.title.equals(lm.title, ignoreCase = true) }) {
@@ -1719,71 +1741,63 @@ object MovieRepository {
 
             // Fallback to WP REST search if live HTML returned nothing
             if (results.isEmpty()) {
-                try {
-                    val searchUrl = "https://tudorama.com/wp-json/wp/v2/serie?search=$encoded&_embed=1&per_page=15"
-                    val req = okhttp3.Request.Builder()
-                        .url(searchUrl)
-                        .header("User-Agent", "Mozilla/5.0")
-                        .header("Referer", "https://tudorama.com/")
-                        .build()
-                    val resp = ApiClient.okHttpClient.newCall(req).execute()
-                    if (resp.isSuccessful) {
-                        val body = resp.body?.string() ?: ""
-                        val arr = JSONArray(body)
-                        for (i in 0 until arr.length()) {
-                            val p = arr.getJSONObject(i)
-                            val rawTitle = p.optJSONObject("title")?.optString("rendered", "") ?: ""
-                            val title = unescapeHtml(rawTitle)
-                            val link = p.optString("link", "")
-                            val embedded = p.optJSONObject("_embedded")
-                            val mediaArr = embedded?.optJSONArray("wp:featuredmedia")
-                            var poster = seriePosterCache[link]?.takeIf { !isBackdropUrl(it) } ?: ""
-                            var backdrop = ""
-                            val yoast = p.optJSONObject("yoast_head_json")
-                            val ogImages = yoast?.optJSONArray("og_image")
-                            if (ogImages != null && ogImages.length() > 0) {
-                                backdrop = ogImages.getJSONObject(0).optString("url", "")
-                            }
-                            if (mediaArr != null && mediaArr.length() > 0) {
-                                val wpImg = mediaArr.getJSONObject(0).optString("source_url", "")
-                                if (backdrop.isBlank()) backdrop = wpImg
-                                if (poster.isBlank() && !isBackdropUrl(wpImg)) {
-                                    poster = wpImg
+                withTimeoutOrNull(2000L) {
+                    try {
+                        val searchUrl = "https://tudorama.com/wp-json/wp/v2/serie?search=$encoded&_embed=1&per_page=15"
+                        val req = okhttp3.Request.Builder()
+                            .url(searchUrl)
+                            .header("User-Agent", "Mozilla/5.0")
+                            .header("Referer", "https://tudorama.com/")
+                            .build()
+                        val resp = ApiClient.okHttpClient.newCall(req).execute()
+                        if (resp.isSuccessful) {
+                            val body = resp.body?.string() ?: ""
+                            val arr = JSONArray(body)
+                            for (i in 0 until arr.length()) {
+                                val p = arr.getJSONObject(i)
+                                val rawTitle = p.optJSONObject("title")?.optString("rendered", "") ?: ""
+                                val title = unescapeHtml(rawTitle)
+                                val link = p.optString("link", "")
+                                val embedded = p.optJSONObject("_embedded")
+                                val mediaArr = embedded?.optJSONArray("wp:featuredmedia")
+                                var poster = seriePosterCache[link]?.takeIf { !isBackdropUrl(it) } ?: ""
+                                var backdrop = ""
+                                val yoast = p.optJSONObject("yoast_head_json")
+                                val ogImages = yoast?.optJSONArray("og_image")
+                                if (ogImages != null && ogImages.length() > 0) {
+                                    backdrop = ogImages.getJSONObject(0).optString("url", "")
+                                }
+                                if (mediaArr != null && mediaArr.length() > 0) {
+                                    val wpImg = mediaArr.getJSONObject(0).optString("source_url", "")
+                                    if (backdrop.isBlank()) backdrop = wpImg
+                                    if (poster.isBlank() && !isBackdropUrl(wpImg)) {
+                                        poster = wpImg
+                                    }
+                                }
+                                if (poster.isBlank() && backdrop.isNotBlank()) poster = backdrop
+
+                                if (title.isNotBlank() && link.isNotBlank()) {
+                                    results.add(
+                                        MovieItem(
+                                            title = title,
+                                            url = link,
+                                            image = sanitizeThumbnailUrl(poster),
+                                            backdrop = backdrop.ifBlank { null },
+                                            type = "series",
+                                            rating = "8.8",
+                                            year = "2026",
+                                            quality = "Full HD",
+                                            languages = listOf("Sub Español"),
+                                            overview = yoast?.optString("description"),
+                                            genres = listOf("Dorama")
+                                        )
+                                    )
                                 }
                             }
-                            if (poster.isBlank()) {
-                                try {
-                                    val dfMatches = DoramasflixApiClient.searchDoramas(title, 1)
-                                    val dfPoster = dfMatches.firstOrNull()?.image
-                                    if (!dfPoster.isNullOrBlank() && !isBackdropUrl(dfPoster)) {
-                                        poster = dfPoster
-                                        seriePosterCache[link] = poster
-                                    }
-                                } catch (_: Exception) {}
-                            }
-                            if (poster.isBlank() && backdrop.isNotBlank()) poster = backdrop
-
-                            if (title.isNotBlank() && link.isNotBlank()) {
-                                results.add(
-                                    MovieItem(
-                                        title = title,
-                                        url = link,
-                                        image = sanitizeThumbnailUrl(poster),
-                                        backdrop = backdrop.ifBlank { null },
-                                        type = "series",
-                                        rating = "8.8",
-                                        year = "2026",
-                                        quality = "Full HD",
-                                        languages = listOf("Sub Español"),
-                                        overview = yoast?.optString("description"),
-                                        genres = listOf("Dorama")
-                                    )
-                                )
-                            }
                         }
+                    } catch (_: Exception) {
+                        // ignore fallback errors
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
                 }
             }
 
@@ -1793,6 +1807,9 @@ object MovieRepository {
                     results.add(df)
                 }
             }
+        }
+        if (results.isNotEmpty()) {
+            searchMoviesCache[cacheKey] = results
         }
         results
     }

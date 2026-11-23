@@ -3,6 +3,7 @@ package com.tvpro.app.ui.screens
 import android.app.Activity
 import android.net.Uri
 import com.tvpro.app.PlayerKeyDispatcher
+import com.tvpro.core.domain.WebEmbedPlayerBridge
 import androidx.activity.compose.BackHandler
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -397,12 +398,22 @@ fun PlayerScreen(
     }
 
 
-    // Clean up WebView and avoid memory leaks when leaving Player
+    // Clean up WebView and avoid memory & audio leaks when leaving Player
     DisposableEffect(Unit) {
         onDispose {
             try {
                 webViewRef?.apply {
                     stopLoading()
+                    evaluateJavascript("""
+                        (function() {
+                            try {
+                                document.querySelectorAll('video, audio').forEach(function(m) {
+                                    try { m.pause(); m.muted = true; m.removeAttribute('src'); m.load(); } catch(e){}
+                                });
+                            } catch(e){}
+                        })();
+                    """.trimIndent(), null)
+                    pauseTimers()
                     loadUrl("about:blank")
                     onPause()
                     removeAllViews()
@@ -436,8 +447,13 @@ fun PlayerScreen(
 
     // Watch History & Auto-Resume State (Netflix-style auto-resume)
     val savedHistory = remember(movie.url) { WatchHistoryManager.getMovieHistory(context, movie.url) }
-    val initialResumePositionMs = remember(savedHistory) {
-        if (savedHistory != null &&
+    val initialResumePositionMs = remember(savedHistory, activeSeasonInt, activeEpisodeInt, isSeriesContent) {
+        val isSameEpisode = !isSeriesContent || (
+            savedHistory != null &&
+            savedHistory.seasonNumber == activeSeasonInt &&
+            savedHistory.episodeNumber == activeEpisodeInt
+        )
+        if (isSameEpisode && savedHistory != null &&
             savedHistory.playbackPositionMs > 15_000L &&
             (savedHistory.durationMs <= 0L || savedHistory.playbackPositionMs < savedHistory.durationMs - 30_000L)
         ) {
@@ -929,113 +945,12 @@ fun PlayerScreen(
 
         val wv = webViewRef
         if (wv != null && (isEmbedStream || !play)) {
-            val js = """
-                (function() {
-                    window._tvproUserPaused = !$play;
-                    
-                    function pauseJw(jp) {
-                        if (!jp) return;
-                        try { if (typeof jp.pause === 'function') jp.pause(); } catch(e){}
-                        try { if (typeof jp.play === 'function') jp.play(false); } catch(e){}
-                        try { if (typeof jp.setControls === 'function') jp.setControls(false); } catch(e){}
-                    }
-
-                    function playJw(jp) {
-                        if (!jp) return;
-                        try { if (typeof jp.play === 'function') jp.play(true); } catch(e){}
-                        try { if (typeof jp.setControls === 'function') jp.setControls(false); } catch(e){}
-                    }
-
-                    function controlDocAndWin(win, doc) {
-                        if (!doc) return;
-                        try { if (win) win._tvproUserPaused = !$play; } catch(e){}
-                        
-                        if (win) {
-                            if (win.jwplayer && typeof win.jwplayer === 'function') {
-                                try {
-                                    if ($play) {
-                                        playJw(win.jwplayer());
-                                        playJw(win.jwplayer(0));
-                                        playJw(win.jwplayer("a"));
-                                    } else {
-                                        pauseJw(win.jwplayer());
-                                        pauseJw(win.jwplayer(0));
-                                        pauseJw(win.jwplayer("a"));
-                                    }
-                                } catch(e){}
-                            }
-                            if (win.player) {
-                                try {
-                                    if ($play && typeof win.player.play === 'function') win.player.play();
-                                    else if (!$play && typeof win.player.pause === 'function') win.player.pause();
-                                } catch(e){}
-                            }
-                            if (win.art) {
-                                try {
-                                    if ($play && typeof win.art.play === 'function') win.art.play();
-                                    else if (!$play && typeof win.art.pause === 'function') win.art.pause();
-                                } catch(e){}
-                            }
-                            if (win.dp) {
-                                try {
-                                    if ($play && typeof win.dp.play === 'function') win.dp.play();
-                                    else if (!$play && typeof win.dp.pause === 'function') win.dp.pause();
-                                } catch(e){}
-                            }
-                            if (win.dsplayer) {
-                                try {
-                                    if ($play && typeof win.dsplayer.play === 'function') win.dsplayer.play();
-                                    else if (!$play && typeof win.dsplayer.pause === 'function') win.dsplayer.pause();
-                                } catch(e){}
-                            }
-                        }
-
-                        var vids = doc.querySelectorAll('video');
-                        for (var i = 0; i < vids.length; i++) {
-                            try {
-                                vids[i].controls = false;
-                                vids[i].removeAttribute('controls');
-                                if ($play) {
-                                    vids[i].play();
-                                } else {
-                                    vids[i].pause();
-                                }
-                            } catch(e){}
-                        }
-
-                        if ($play) {
-                            var pTargets = doc.querySelectorAll('.vid_play, [tsid="player-component_play"], .vid-card_cnt_w, #embedVideoC, .vid_play-ic, [data-l="t,play"], .jw-display-icon-container, .vjs-big-play-button, button.play, .play-button, .play-btn, #play, #loadIframeButton, .plyr__control--overlaid, button.aegis-launch, .aegis-launch, .aegis-launch-btn, [class*="aegis-launch"], button[aria-label="Play"], button[aria-label*="Play"]');
-                            pTargets.forEach(function(el) {
-                                try { el.click(); } catch(e){}
-                                try {
-                                    var evt = new MouseEvent('click', { bubbles: true, cancelable: true, view: win || window });
-                                    el.dispatchEvent(evt);
-                                } catch(e){}
-                            });
-                        }
-                    }
-
-                    controlDocAndWin(window, document);
-
-                    var iframes = document.querySelectorAll('iframe');
-                    for (var i = 0; i < iframes.length; i++) {
-                        try {
-                            controlDocAndWin(iframes[i].contentWindow, iframes[i].contentDocument);
-                        } catch(e){}
-                        try {
-                            var cw = iframes[i].contentWindow;
-                            if (cw) {
-                                var msg = $play ? 'PLAY' : 'PAUSE';
-                                var act = $play ? 'play' : 'pause';
-                                cw.postMessage({ type: msg, action: act, method: act, command: act }, '*');
-                                cw.postMessage('{"command":"' + act + '"}', '*');
-                                cw.postMessage('{"method":"' + act + '"}', '*');
-                                cw.postMessage('{"action":"' + act + '"}', '*');
-                            }
-                        } catch(e){}
-                    }
-                })();
-            """.trimIndent()
+            if (!play && isEmbedStream) {
+                try { wv.onPause() } catch (_: Exception) {}
+            } else if (play && isEmbedStream) {
+                try { wv.onResume() } catch (_: Exception) {}
+            }
+            val js = WebEmbedPlayerBridge.buildPlayPauseJs(play)
             wv.evaluateJavascript(js, null)
         }
     }
@@ -1056,55 +971,7 @@ fun PlayerScreen(
         lastUserSeekTimeMs = System.currentTimeMillis()
         if (isEmbedStream) {
             val targetSec = clampedMs / 1000.0
-            val js = """
-                (function() {
-                    window._tvproSeeking = true;
-                    setTimeout(function() { window._tvproSeeking = false; }, 1500);
-                    var v = document.querySelector('video');
-                    if (!v) {
-                        var iframes = document.querySelectorAll('iframe');
-                        for (var i = 0; i < iframes.length; i++) {
-                            try {
-                                var iv = iframes[i].contentDocument && iframes[i].contentDocument.querySelector('video');
-                                if (iv) { v = iv; break; }
-                            } catch(e) {}
-                        }
-                    }
-                    if (v) {
-                        v.controls = false;
-                        v.removeAttribute('controls');
-                        try { v.currentTime = $targetSec; } catch(e) {}
-                    }
-                    if ($clampedMs == 0L) {
-                        try { window.localStorage.removeItem('streamfi.resume.v1'); } catch(e){}
-                    }
-                    if (window.jwplayer && typeof window.jwplayer === 'function') {
-                        try {
-                            var p = window.jwplayer();
-                            if (p && typeof p.seek === 'function') p.seek($targetSec);
-                            if (p && typeof p.setControls === 'function') p.setControls(false);
-                        } catch(e) {}
-                    }
-                    if (window.player && typeof window.player.currentTime !== 'undefined') {
-                        try { window.player.currentTime = $targetSec; } catch(e){}
-                    }
-                    try {
-                        var iframes = document.querySelectorAll('iframe');
-                        for (var i = 0; i < iframes.length; i++) {
-                            try {
-                                iframes[i].contentWindow.postMessage({
-                                    type: 'SEEK',
-                                    action: 'seek',
-                                    method: 'seek',
-                                    time: $targetSec,
-                                    currentTime: $targetSec,
-                                    position: $targetSec
-                                }, '*');
-                            } catch(e) {}
-                        }
-                    } catch(e) {}
-                })();
-            """.trimIndent()
+            val js = WebEmbedPlayerBridge.buildSeekJs(targetSec)
             webViewRef?.evaluateJavascript(js, null)
         } else {
             exoPlayer.seekTo(clampedMs)
@@ -1696,7 +1563,7 @@ fun PlayerScreen(
                                         v.textTracks[t].mode = 'disabled';
                                     }
                                 }
-                                if (!window._tvproSeeking && v.paused) {
+                                if (!window._tvproUserPaused && !window._tvproSeeking && v.paused) {
                                     try { v.play(); } catch(e){}
                                 }
                             }
@@ -1705,7 +1572,7 @@ fun PlayerScreen(
                                 if (sf) { sf.remove(); }
                                 var ad = document.getElementById('adbd');
                                 if (ad) { ad.remove(); }
-                                if (!window._tvproSeeking && window.dsplayer && typeof window.dsplayer.play === 'function') {
+                                if (!window._tvproUserPaused && !window._tvproSeeking && window.dsplayer && typeof window.dsplayer.play === 'function') {
                                     if (window.dsplayer.paused && window.dsplayer.paused()) {
                                         window.dsplayer.play();
                                     }
@@ -1821,7 +1688,17 @@ fun PlayerScreen(
                             'access denied',
                             'blocked',
                             'forbidden',
-                            'media could not be loaded'
+                            'media could not be loaded',
+                            'verify you are human',
+                            'verify you\'re a human',
+                            'verify that you are human',
+                            'in order to verify',
+                            'click play button in order',
+                            'click play button to verify',
+                            'click play button',
+                            'human verification',
+                            'order to verify',
+                            'captcha-gate'
                         ];
                         var isDead = false;
                         var deadReason = '';
@@ -1869,6 +1746,22 @@ fun PlayerScreen(
                         if (isDead) {
                             return JSON.stringify({ dead: true, reason: deadReason });
                         }
+
+                        try {
+                            if (!window.__speed_locked) {
+                                Object.defineProperty(HTMLMediaElement.prototype, 'playbackRate', {
+                                    get: function() { return 1.0; },
+                                    set: function() {},
+                                    configurable: true
+                                });
+                                Object.defineProperty(HTMLMediaElement.prototype, 'defaultPlaybackRate', {
+                                    get: function() { return 1.0; },
+                                    set: function() {},
+                                    configurable: true
+                                });
+                                window.__speed_locked = true;
+                            }
+                        } catch(e) {}
 
                         if (v) {
                             if (!v.paused && !v.ended) {
@@ -1966,13 +1859,15 @@ fun PlayerScreen(
                             }
                             if (dur > 0L) {
                                 durationMs = dur
-                                val isRecentlySeeking = (System.currentTimeMillis() - lastUserSeekTimeMs) < 1500L
+                                val isRecentlySeeking = WebEmbedPlayerBridge.isSeekLocked(lastUserSeekTimeMs)
                                 if (!isRecentlySeeking) {
                                     currentPositionMs = pos.coerceIn(0L, dur)
                                 }
-                                val isRecentlyToggled = (System.currentTimeMillis() - lastUserPlayPauseTimeMs) < 1200L
+                                val isRecentlyToggled = WebEmbedPlayerBridge.isPlayPauseLocked(lastUserPlayPauseTimeMs)
                                 if (!isRecentlyToggled) {
-                                    isPlaying = playingState
+                                    if (isPlaying) {
+                                        isPlaying = playingState
+                                    }
                                 }
                                 if (pendingResumePositionMs > 0L) {
                                     val target = pendingResumePositionMs
@@ -1990,8 +1885,8 @@ fun PlayerScreen(
                                     isEpisodeChanging = false
                                     loadingSubtitle = "Preparando reproducción en alta definición"
                                 } else if (!isEpisodeChanging && !showServerDialog && isPlaying) {
-                                    val isRecentlySeeking = (System.currentTimeMillis() - lastUserSeekTimeMs) < 2000L
-                                    val isRecentlyToggled = (System.currentTimeMillis() - lastUserPlayPauseTimeMs) < 2000L
+                                    val isRecentlySeeking = WebEmbedPlayerBridge.isSeekLocked(lastUserSeekTimeMs)
+                                    val isRecentlyToggled = WebEmbedPlayerBridge.isPlayPauseLocked(lastUserPlayPauseTimeMs)
                                     if (!isRecentlySeeking && !isRecentlyToggled) {
                                         webStallTicks++
                                         if (webStallTicks >= 20) { // ~7 seconds stuck without time advancement

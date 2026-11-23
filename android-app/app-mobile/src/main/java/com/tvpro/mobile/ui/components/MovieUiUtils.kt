@@ -2,10 +2,36 @@ package com.tvpro.mobile.ui.components
 
 import com.tvpro.core.data.model.WatchHistoryItem
 
+fun String.fixMojibake(): String {
+    return this
+        .replace("â€¢", "•")
+        .replace("â€“", "–")
+        .replace("â€”", "—")
+        .replace("â€˜", "‘")
+        .replace("â€™", "’")
+        .replace("â€œ", "“")
+        .replace("â€", "”")
+        .replace("Ã¡", "á")
+        .replace("Ã©", "é")
+        .replace("Ã­", "í")
+        .replace("Ã³", "ó")
+        .replace("Ãº", "ú")
+        .replace("Ã±", "ñ")
+        .replace("Ã", "Á")
+        .replace("Ã‰", "É")
+        .replace("Ã", "Í")
+        .replace("Ã“", "Ó")
+        .replace("Ãš", "Ú")
+        .replace("Ã‘", "Ñ")
+}
+
 fun String.cleanHtml(): String {
     return this
+        .fixMojibake()
         .replace("&#8211;", "–")
         .replace("&#8212;", "—")
+        .replace("&bull;", "•")
+        .replace("&#8226;", "•")
         .replace("&amp;", "&")
         .replace("&quot;", "\"")
         .replace("&#039;", "'")

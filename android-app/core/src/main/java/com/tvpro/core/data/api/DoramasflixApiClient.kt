@@ -22,6 +22,7 @@ object DoramasflixApiClient {
     val episodeIdCache = ConcurrentHashMap<String, String>()
     val serieIdCache = ConcurrentHashMap<String, String>()
     val episodeStreamsCache = ConcurrentHashMap<String, List<StreamItem>>()
+    val searchCache = ConcurrentHashMap<String, List<MovieItem>>()
 
     private fun postGraphQL(query: String, variables: JSONObject = JSONObject(), operationName: String? = null): JSONObject? {
         val payload = JSONObject().apply {
@@ -48,6 +49,7 @@ object DoramasflixApiClient {
                 val bodyStr = response.body?.string()
                 if (!bodyStr.isNullOrBlank()) JSONObject(bodyStr) else null
             } else {
+                android.util.Log.w("DoramasflixApiClient", "GraphQL HTTP ${response.code} (${response.message})")
                 null
             }
         } catch (e: Exception) {
@@ -113,7 +115,11 @@ object DoramasflixApiClient {
     }
 
     suspend fun searchDoramas(query: String, limit: Int = 20): List<MovieItem> = withContext(Dispatchers.IO) {
-        if (query.isBlank()) return@withContext emptyList()
+        val trimmed = query.trim()
+        if (trimmed.length < 2) return@withContext emptyList()
+        val cacheKey = trimmed.lowercase()
+        searchCache[cacheKey]?.let { return@withContext it }
+
         val results = mutableListOf<MovieItem>()
 
         val gql = """
@@ -137,12 +143,17 @@ object DoramasflixApiClient {
         """.trimIndent()
 
         val variables = JSONObject().apply {
-            put("input", query.trim())
+            put("input", trimmed)
             put("page", 1)
             put("perPage", limit)
         }
 
         val res = postGraphQL(gql, variables, "SearchFullDoramas") ?: return@withContext emptyList()
+        val errorsArr = res.optJSONArray("errors")
+        if (errorsArr != null && errorsArr.length() > 0) {
+            val errMsg = errorsArr.optJSONObject(0)?.optString("message", "") ?: "GraphQL error"
+            android.util.Log.w("DoramasflixApiClient", "SeriesAPI search notice: $errMsg")
+        }
         val itemsArr = res.optJSONObject("data")?.optJSONObject("searchFullDoramas")?.optJSONArray("items") ?: return@withContext emptyList()
 
         for (i in 0 until itemsArr.length()) {
@@ -196,6 +207,9 @@ object DoramasflixApiClient {
             )
         }
 
+        if (results.isNotEmpty()) {
+            searchCache[cacheKey] = results
+        }
         results
     }
 

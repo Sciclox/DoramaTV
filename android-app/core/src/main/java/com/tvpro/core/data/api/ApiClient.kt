@@ -89,6 +89,7 @@ object ApiClient {
             .connectTimeout(12, TimeUnit.SECONDS)
             .readTimeout(15, TimeUnit.SECONDS)
             .writeTimeout(15, TimeUnit.SECONDS)
+            .sslSocketFactory(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)
             .build()
     }
 

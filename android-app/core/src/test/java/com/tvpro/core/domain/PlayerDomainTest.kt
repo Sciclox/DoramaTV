@@ -27,6 +27,7 @@ class PlayerDomainTest {
         assertTrue(StreamRanker.isDeadStream("Este archivo de video no se puede reproducir. (Código de Error: 232001)"))
         assertTrue(StreamRanker.isDeadStream("This video is expired or has been deleted from server"))
         assertTrue(StreamRanker.isDeadStream("Click Allow if you are not a robot"))
+        assertTrue(StreamRanker.isDeadStream("Click play button in order to verify you're a human"))
         assertFalse(StreamRanker.isDeadStream("Reproduciendo Efectos Colaterales Temporada 1"))
     }
 

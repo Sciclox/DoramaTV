@@ -35,12 +35,16 @@ Write-Host "`n[2/3] Locating built APKs..." -ForegroundColor Yellow
 $TvSource = Join-Path $AndroidDir "app\build\outputs\apk\$BuildType\app-$ApkSuffix.apk"
 $MobileSource = Join-Path $AndroidDir "app-mobile\build\outputs\apk\$BuildType\app-mobile-$ApkSuffix.apk"
 
-$TvDest = Join-Path $ApkOutputDir "Mochi-AndroidTV-v1.0.0.apk"
-$MobileDest = Join-Path $ApkOutputDir "Mochi-Mobile-v1.0.0.apk"
+$TvDest = Join-Path $ApkOutputDir "Mochi-AndroidTV-v1.0.2.apk"
+$MobileDest = Join-Path $ApkOutputDir "Mochi-Mobile-v1.0.2.apk"
 
 if (Test-Path $TvSource) {
     Copy-Item -Path $TvSource -Destination $TvDest -Force
+    Copy-Item -Path $TvSource -Destination (Join-Path $ApkOutputDir "Mochi-AndroidTV-v1.0.1.apk") -Force
+    Copy-Item -Path $TvSource -Destination (Join-Path $ApkOutputDir "Mochi-AndroidTV-v1.0.0.apk") -Force
     Copy-Item -Path $TvSource -Destination (Join-Path $ApkOutputDir "Mochi-AndroidTV.apk") -Force
+    Copy-Item -Path $TvSource -Destination (Join-Path $ApkOutputDir "DoramaTV-AndroidTV-v1.0.2.apk") -Force
+    Copy-Item -Path $TvSource -Destination (Join-Path $ApkOutputDir "DoramaTV-AndroidTV-v1.0.1.apk") -Force
     Copy-Item -Path $TvSource -Destination (Join-Path $ApkOutputDir "DoramaTV-AndroidTV-v1.0.0.apk") -Force
     Copy-Item -Path $TvSource -Destination (Join-Path $ApkOutputDir "DoramaTV-AndroidTV.apk") -Force
     $tvSize = [math]::Round((Get-Item $TvDest).Length / 1MB, 2)
@@ -51,7 +55,11 @@ if (Test-Path $TvSource) {
 
 if (Test-Path $MobileSource) {
     Copy-Item -Path $MobileSource -Destination $MobileDest -Force
+    Copy-Item -Path $MobileSource -Destination (Join-Path $ApkOutputDir "Mochi-Mobile-v1.0.1.apk") -Force
+    Copy-Item -Path $MobileSource -Destination (Join-Path $ApkOutputDir "Mochi-Mobile-v1.0.0.apk") -Force
     Copy-Item -Path $MobileSource -Destination (Join-Path $ApkOutputDir "Mochi-Mobile.apk") -Force
+    Copy-Item -Path $MobileSource -Destination (Join-Path $ApkOutputDir "DoramaTV-Mobile-v1.0.2.apk") -Force
+    Copy-Item -Path $MobileSource -Destination (Join-Path $ApkOutputDir "DoramaTV-Mobile-v1.0.1.apk") -Force
     Copy-Item -Path $MobileSource -Destination (Join-Path $ApkOutputDir "DoramaTV-Mobile-v1.0.0.apk") -Force
     Copy-Item -Path $MobileSource -Destination (Join-Path $ApkOutputDir "DoramaTV-Mobile.apk") -Force
     $mobileSize = [math]::Round((Get-Item $MobileDest).Length / 1MB, 2)

@@ -57,13 +57,45 @@ fun TvProMobileAppContent(
             if (uri.host == "play") {
                 val streamUrl = uri.getQueryParameter("url")
                 val title = uri.getQueryParameter("title") ?: "Película"
+                val epSlug = uri.getQueryParameter("epSlug")
+                val season = uri.getQueryParameter("season")?.toIntOrNull() ?: 1
+                val ep = uri.getQueryParameter("ep")?.toIntOrNull() ?: 1
                 if (!streamUrl.isNullOrBlank()) {
                     val movie = MovieItem(
                         title = title,
                         url = streamUrl,
-                        image = ""
+                        image = "",
+                        type = if (epSlug != null) "series" else "normal"
                     )
-                    routeStack = routeStack + MobileRoute.Player(movie = movie, streamUrl = streamUrl)
+                    val episodeItem = if (!epSlug.isNullOrBlank()) {
+                        EpisodeItem(
+                            id = season * 1000 + ep,
+                            episodeNumber = ep,
+                            seasonNumber = season,
+                            title = "$title T$season:E$ep",
+                            overview = "",
+                            image = "",
+                            runtime = "45m",
+                            slug = epSlug
+                        )
+                    } else null
+                    routeStack = routeStack + MobileRoute.Player(
+                        movie = movie,
+                        episode = episodeItem,
+                        streamUrl = if (episodeItem != null) null else streamUrl
+                    )
+                }
+            } else if (uri.host == "detail") {
+                val detailUrl = uri.getQueryParameter("url") ?: ""
+                val title = uri.getQueryParameter("title") ?: "Dorama"
+                if (detailUrl.isNotBlank()) {
+                    val movie = MovieItem(
+                        title = title,
+                        url = detailUrl,
+                        image = "",
+                        type = "series"
+                    )
+                    routeStack = routeStack + MobileRoute.Detail(movie = movie)
                 }
             }
         }
@@ -145,9 +177,6 @@ fun TvProMobileAppContent(
                                     },
                                     onPlayMovie = { movie ->
                                         routeStack = routeStack + MobileRoute.Player(movie)
-                                    },
-                                    onSearchClick = {
-                                        currentTab = MobileTab.SEARCH
                                     }
                                 )
                             }

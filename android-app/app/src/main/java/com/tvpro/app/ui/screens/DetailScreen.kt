@@ -288,7 +288,8 @@ fun DetailScreen(
                 fallbackTitle = res.title ?: movie.title,
                 fallbackBackdrop = res.backdrop ?: movie.backdrop ?: movie.image,
                 fallbackGallery = res.gallery ?: emptyList(),
-                serieUrl = movie.url
+                serieUrl = movie.url,
+                postIdStr = res.postId
             )
             seasonEpisodes = eps
         } catch (_: Exception) {

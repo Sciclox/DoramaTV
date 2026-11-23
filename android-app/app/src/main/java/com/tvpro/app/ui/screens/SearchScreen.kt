@@ -73,7 +73,9 @@ fun SearchScreen(
     val firstChipFocusRequester = remember { FocusRequester() }
     val firstResultFocusRequester = remember { FocusRequester() }
     val firstKeyFocusRequester = remember { FocusRequester() }
+    val lastRowLeftKeyFocusRequester = remember { FocusRequester() }
     val lastRowMiddleKeyFocusRequester = remember { FocusRequester() }
+    val lastRowRightKeyFocusRequester = remember { FocusRequester() }
     val spaceFocusRequester = remember { FocusRequester() }
     val backspaceFocusRequester = remember { FocusRequester() }
     val clearFocusRequester = remember { FocusRequester() }
@@ -107,18 +109,28 @@ fun SearchScreen(
 
     // Debounced search query and category filter
     LaunchedEffect(searchQuery, selectedCategory) {
-        if (searchQuery.isBlank() && selectedCategory == "Todos") {
+        val trimmed = searchQuery.trim()
+        if (trimmed.isBlank() && selectedCategory == "Todos") {
             searchResults = emptyList()
             isSearching = false
             return@LaunchedEffect
         }
 
+        if (trimmed.length == 1 && selectedCategory == "Todos") {
+            // Instant local recommendation filter for single char to protect SeriesAPI rate limits
+            searchResults = defaultRecommendations.filter {
+                it.title.contains(trimmed, ignoreCase = true)
+            }
+            isSearching = false
+            return@LaunchedEffect
+        }
+
         isSearching = true
-        delay(220)
+        delay(450)
 
         try {
-            if (searchQuery.isNotBlank()) {
-                val results = MovieRepository.searchMovies(searchQuery)
+            if (trimmed.isNotBlank()) {
+                val results = MovieRepository.searchMovies(trimmed)
                 searchResults = if (selectedCategory != "Todos") {
                     results.filter { movie ->
                         when (selectedCategory) {
@@ -388,7 +400,9 @@ fun SearchScreen(
                                     .then(
                                         when {
                                             rowIndex == 0 && colIndex == 0 -> Modifier.focusRequester(firstKeyFocusRequester)
+                                            rowIndex == keyboardRows.size - 1 && colIndex == 0 -> Modifier.focusRequester(lastRowLeftKeyFocusRequester)
                                             rowIndex == keyboardRows.size - 1 && colIndex == 2 -> Modifier.focusRequester(lastRowMiddleKeyFocusRequester)
+                                            rowIndex == keyboardRows.size - 1 && colIndex == rowKeys.size - 1 -> Modifier.focusRequester(lastRowRightKeyFocusRequester)
                                             else -> Modifier
                                         }
                                     )
@@ -482,17 +496,15 @@ fun SearchScreen(
                             if (event.type == KeyEventType.KeyDown) {
                                 when (event.nativeKeyEvent.keyCode) {
                                     KeyEvent.KEYCODE_DPAD_UP -> {
-                                        try { lastRowMiddleKeyFocusRequester.requestFocus() } catch (_: Exception) {}
+                                        try { lastRowLeftKeyFocusRequester.requestFocus() } catch (_: Exception) {}
                                         true
                                     }
                                     KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                                        if (displayMovies.isNotEmpty()) {
-                                            if (!requestGridFocus()) {
-                                                try { firstChipFocusRequester.requestFocus() } catch (_: Exception) {}
-                                            }
-                                            true
-                                        } else false
+                                        try { backspaceFocusRequester.requestFocus() } catch (_: Exception) {}
+                                        true
                                     }
+                                    KeyEvent.KEYCODE_DPAD_LEFT -> true
+                                    KeyEvent.KEYCODE_DPAD_DOWN -> true
                                     else -> false
                                 }
                             } else false
@@ -545,14 +557,26 @@ fun SearchScreen(
                                         try { lastRowMiddleKeyFocusRequester.requestFocus() } catch (_: Exception) {}
                                         true
                                     }
+                                    KeyEvent.KEYCODE_DPAD_LEFT -> {
+                                        try { spaceFocusRequester.requestFocus() } catch (_: Exception) {}
+                                        true
+                                    }
                                     KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                                        if (displayMovies.isNotEmpty()) {
-                                            if (!requestGridFocus()) {
+                                        if (searchQuery.isNotEmpty()) {
+                                            try { clearFocusRequester.requestFocus() } catch (_: Exception) {}
+                                            true
+                                        } else {
+                                            if (displayMovies.isNotEmpty()) {
+                                                if (!requestGridFocus()) {
+                                                    try { firstChipFocusRequester.requestFocus() } catch (_: Exception) {}
+                                                }
+                                            } else {
                                                 try { firstChipFocusRequester.requestFocus() } catch (_: Exception) {}
                                             }
                                             true
-                                        } else false
+                                        }
                                     }
+                                    KeyEvent.KEYCODE_DPAD_DOWN -> true
                                     else -> false
                                 }
                             } else false
@@ -607,7 +631,11 @@ fun SearchScreen(
                                 if (event.type == KeyEventType.KeyDown) {
                                     when (event.nativeKeyEvent.keyCode) {
                                         KeyEvent.KEYCODE_DPAD_UP -> {
-                                            try { lastRowMiddleKeyFocusRequester.requestFocus() } catch (_: Exception) {}
+                                            try { lastRowRightKeyFocusRequester.requestFocus() } catch (_: Exception) {}
+                                            true
+                                        }
+                                        KeyEvent.KEYCODE_DPAD_LEFT -> {
+                                            try { backspaceFocusRequester.requestFocus() } catch (_: Exception) {}
                                             true
                                         }
                                         KeyEvent.KEYCODE_DPAD_RIGHT -> {
@@ -615,9 +643,12 @@ fun SearchScreen(
                                                 if (!requestGridFocus()) {
                                                     try { firstChipFocusRequester.requestFocus() } catch (_: Exception) {}
                                                 }
-                                                true
-                                            } else false
+                                            } else {
+                                                try { firstChipFocusRequester.requestFocus() } catch (_: Exception) {}
+                                            }
+                                            true
                                         }
+                                        KeyEvent.KEYCODE_DPAD_DOWN -> true
                                         else -> false
                                     }
                                 } else false
@@ -625,7 +656,10 @@ fun SearchScreen(
                             .clickable(
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null
-                            ) { searchQuery = "" }
+                            ) {
+                                searchQuery = ""
+                                try { backspaceFocusRequester.requestFocus() } catch (_: Exception) {}
+                            }
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
